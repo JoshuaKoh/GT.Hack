@@ -1,0 +1,13 @@
+{
+  "version": 201710091530,
+  "price": 12.02,
+  "currency": "USD",
+  "effectiveDate": "2017-10-09T00:00:00Z",
+  "endDate": null,
+  "status": "ACTIVE",
+  "basePrice": true,
+  "dynamicAttributes": [
+    {
+    }
+  ]
+}

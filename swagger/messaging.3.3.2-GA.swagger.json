@@ -1,0 +1,952 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "3.3.2-GA",
+    "title" : "messaging",
+    "contact" : {
+      "name" : ""
+    },
+    "license" : {
+      "name" : "",
+      "url" : ""
+    }
+  },
+  "basePath" : "/messaging",
+  "tags" : [ {
+    "name" : "/pubsub-messages"
+  }, {
+    "name" : "/pubsub-subscriptions"
+  }, {
+    "name" : "/pubsub-topics"
+  } ],
+  "paths" : {
+    "/pubsub-messages" : {
+      "get" : {
+        "tags" : [ "/pubsub-messages" ],
+        "operationId" : "findByCriteria",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/FindMessagesResponse"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "/pubsub-messages" ],
+        "operationId" : "publish",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/PublishMessagesRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/pubsub-subscriptions" : {
+      "get" : {
+        "tags" : [ "/pubsub-subscriptions" ],
+        "operationId" : "findByCriteria",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/FindSubscriptionsResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/pubsub-subscriptions/kafka-subscriptions" : {
+      "post" : {
+        "tags" : [ "/pubsub-subscriptions" ],
+        "operationId" : "createKafkaSubscription",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreateKafkaSubscriptionRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/KafkaSubscriptionData"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/pubsub-subscriptions/kafka-subscriptions/{name}" : {
+      "get" : {
+        "tags" : [ "/pubsub-subscriptions" ],
+        "operationId" : "getKafkaSubscription",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/KafkaSubscriptionData"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/pubsub-subscriptions/service-subscriptions" : {
+      "post" : {
+        "tags" : [ "/pubsub-subscriptions" ],
+        "operationId" : "createServiceSubscription",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreateServiceSubscriptionRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/ServiceSubscriptionData"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/pubsub-subscriptions/service-subscriptions/{name}" : {
+      "get" : {
+        "tags" : [ "/pubsub-subscriptions" ],
+        "operationId" : "getServiceSubscription",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/ServiceSubscriptionData"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/pubsub-subscriptions/url-subscriptions" : {
+      "post" : {
+        "tags" : [ "/pubsub-subscriptions" ],
+        "operationId" : "createUrlSubscription",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreateUrlSubscriptionRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/UrlSubscriptionViewData"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/pubsub-subscriptions/url-subscriptions/{name}" : {
+      "get" : {
+        "tags" : [ "/pubsub-subscriptions" ],
+        "operationId" : "getUrlSubscription",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/UrlSubscriptionViewData"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/pubsub-subscriptions/{name}" : {
+      "delete" : {
+        "tags" : [ "/pubsub-subscriptions" ],
+        "operationId" : "delete",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/pubsub-topics" : {
+      "get" : {
+        "tags" : [ "/pubsub-topics" ],
+        "operationId" : "findByCriteria",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/FindTopicsResponse"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "/pubsub-topics" ],
+        "operationId" : "create",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreateTopicRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/TopicData"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/pubsub-topics/{name}" : {
+      "get" : {
+        "tags" : [ "/pubsub-topics" ],
+        "operationId" : "get",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/TopicData"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "/pubsub-topics" ],
+        "operationId" : "delete",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "ServiceSubscriptionData" : {
+      "type" : "object",
+      "required" : [ "description", "endpoint", "name", "topicId" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "topicId" : {
+          "$ref" : "#/definitions/TopicIdData"
+        },
+        "messageAttributePatterns" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/KeyValueData"
+          }
+        },
+        "payloadDelivered" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "endpoint" : {
+          "$ref" : "#/definitions/ServiceEndpointData"
+        }
+      }
+    },
+    "UrlSubscriptionViewData" : {
+      "type" : "object",
+      "required" : [ "description", "endpoint", "name", "topicId" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "topicId" : {
+          "$ref" : "#/definitions/TopicIdData"
+        },
+        "messageAttributePatterns" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/KeyValueData"
+          }
+        },
+        "payloadDelivered" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "endpoint" : {
+          "$ref" : "#/definitions/UrlEndpointData"
+        }
+      }
+    },
+    "ApplicationIdData" : {
+      "type" : "object",
+      "required" : [ "name", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\d[\\w-\\.]*"
+        }
+      }
+    },
+    "AuthenticationData" : {
+      "type" : "object",
+      "required" : [ "authenticationType", "credentials" ],
+      "properties" : {
+        "authenticationType" : {
+          "type" : "string",
+          "enum" : [ "BASIC" ]
+        },
+        "credentials" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 500
+        }
+      }
+    },
+    "TopicData" : {
+      "type" : "object",
+      "required" : [ "description", "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 256,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "journalEntryTypeId" : {
+          "$ref" : "#/definitions/EntryTypeIdData"
+        },
+        "logPayload" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "TopicBasicData" : {
+      "type" : "object",
+      "required" : [ "description", "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 256,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "journalEntryTypeId" : {
+          "$ref" : "#/definitions/EntryTypeIdData"
+        }
+      }
+    },
+    "PublishMessagesRequest" : {
+      "type" : "object",
+      "required" : [ "messages" ],
+      "properties" : {
+        "messages" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MessageWriteData"
+          }
+        }
+      }
+    },
+    "MessageWriteData" : {
+      "type" : "object",
+      "required" : [ "topicId" ],
+      "properties" : {
+        "attributes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/KeyValueData"
+          }
+        },
+        "topicId" : {
+          "$ref" : "#/definitions/TopicIdData"
+        },
+        "payload" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 1000000
+        },
+        "organizationName" : {
+          "type" : "string"
+        },
+        "correlationId" : {
+          "type" : "string"
+        },
+        "enterpriseUnitId" : {
+          "$ref" : "#/definitions/EnterpriseUnitIdData"
+        }
+      }
+    },
+    "FindMessagesResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MessageBasicViewData"
+          }
+        }
+      }
+    },
+    "CreateUrlSubscriptionRequest" : {
+      "type" : "object",
+      "required" : [ "description", "endpoint", "name", "topicId" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "topicId" : {
+          "$ref" : "#/definitions/TopicIdData"
+        },
+        "messageAttributePatterns" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/KeyValueData"
+          }
+        },
+        "payloadDelivered" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "endpoint" : {
+          "$ref" : "#/definitions/UrlEndpointData"
+        },
+        "authenticationCredentials" : {
+          "$ref" : "#/definitions/AuthenticationData"
+        }
+      }
+    },
+    "KafkaSubscriptionData" : {
+      "type" : "object",
+      "required" : [ "description", "endpoint", "name", "topicId" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "topicId" : {
+          "$ref" : "#/definitions/TopicIdData"
+        },
+        "messageAttributePatterns" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/KeyValueData"
+          }
+        },
+        "payloadDelivered" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "endpoint" : {
+          "$ref" : "#/definitions/KafkaEndpointData"
+        }
+      }
+    },
+    "MessageBasicViewData" : {
+      "type" : "object",
+      "required" : [ "correlationId", "messageId", "publishDate", "publisher", "topicId" ],
+      "properties" : {
+        "attributes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/KeyValueData"
+          }
+        },
+        "topicId" : {
+          "$ref" : "#/definitions/TopicIdData"
+        },
+        "correlationId" : {
+          "type" : "string"
+        },
+        "deliverySuccessful" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "messageId" : {
+          "type" : "string"
+        },
+        "processingComplete" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "publishDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "publisher" : {
+          "$ref" : "#/definitions/ApplicationDeploymentIdData"
+        }
+      }
+    },
+    "FindSubscriptionsResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/SubscriptionBasicViewData"
+          }
+        }
+      }
+    },
+    "KafkaEndpointData" : {
+      "type" : "object",
+      "required" : [ "description", "name", "topic" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "topic" : {
+          "type" : "string"
+        },
+        "bootstrapServers" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "acks" : {
+          "type" : "string",
+          "enum" : [ "ZERO", "ONE", "ALL" ]
+        },
+        "retries" : {
+          "type" : "integer",
+          "format" : "int32",
+          "minimum" : 0.0,
+          "maximum" : 10.0
+        }
+      }
+    },
+    "SubscriptionBasicViewData" : {
+      "type" : "object",
+      "required" : [ "description", "name", "subscriptionType", "topicId" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "topicId" : {
+          "$ref" : "#/definitions/TopicIdData"
+        },
+        "subscriptionType" : {
+          "type" : "string",
+          "enum" : [ "SERVICE", "URL", "KAFKA" ]
+        }
+      }
+    },
+    "DeploymentEnvironmentIdData" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        }
+      }
+    },
+    "ServiceEndpointData" : {
+      "type" : "object",
+      "required" : [ "applicationServiceId", "description", "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "applicationServiceId" : {
+          "$ref" : "#/definitions/ApplicationServiceIdData"
+        },
+        "extendedPath" : {
+          "type" : "string"
+        }
+      }
+    },
+    "CreateTopicRequest" : {
+      "type" : "object",
+      "required" : [ "description", "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 256,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "journalEntryTypeId" : {
+          "$ref" : "#/definitions/EntryTypeIdData"
+        },
+        "logPayload" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "ApplicationDeploymentIdData" : {
+      "type" : "object",
+      "required" : [ "applicationId", "deploymentEnvironmentId" ],
+      "properties" : {
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        },
+        "deploymentEnvironmentId" : {
+          "$ref" : "#/definitions/DeploymentEnvironmentIdData"
+        }
+      }
+    },
+    "CreateKafkaSubscriptionRequest" : {
+      "type" : "object",
+      "required" : [ "description", "endpoint", "name", "topicId" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "topicId" : {
+          "$ref" : "#/definitions/TopicIdData"
+        },
+        "messageAttributePatterns" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/KeyValueData"
+          }
+        },
+        "payloadDelivered" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "endpoint" : {
+          "$ref" : "#/definitions/KafkaEndpointData"
+        }
+      }
+    },
+    "EntryTypeIdData" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ApplicationServiceIdData" : {
+      "type" : "object",
+      "required" : [ "applicationId", "name", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 100,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        }
+      }
+    },
+    "CreateServiceSubscriptionRequest" : {
+      "type" : "object",
+      "required" : [ "description", "endpoint", "name", "topicId" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "topicId" : {
+          "$ref" : "#/definitions/TopicIdData"
+        },
+        "messageAttributePatterns" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/KeyValueData"
+          }
+        },
+        "payloadDelivered" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "endpoint" : {
+          "$ref" : "#/definitions/ServiceEndpointData"
+        }
+      }
+    },
+    "EnterpriseUnitIdData" : {
+      "type" : "object",
+      "required" : [ "enterpriseUnitId" ],
+      "properties" : {
+        "enterpriseUnitId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "FindTopicsResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TopicBasicData"
+          }
+        }
+      }
+    },
+    "UrlEndpointData" : {
+      "type" : "object",
+      "required" : [ "description", "destinationUrl", "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "destinationUrl" : {
+          "type" : "string"
+        }
+      }
+    },
+    "TopicIdData" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 256,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        }
+      }
+    },
+    "KeyValueData" : {
+      "type" : "object",
+      "required" : [ "key" ],
+      "properties" : {
+        "key" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 512
+        }
+      }
+    }
+  }
+}

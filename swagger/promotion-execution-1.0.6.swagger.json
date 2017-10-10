@@ -1,0 +1,2103 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Enables omni-channel routing of selling contexts from selling engine to promotion execution partner.",
+    "version" : "1.0.6",
+    "title" : "promotion-execution",
+    "contact" : {
+      "name" : "NCR"
+    },
+    "license" : {
+      "name" : "NCR Proprietary - All rights reserved",
+      "url" : "https://www.ncr.com"
+    }
+  },
+  "basePath" : "/promotion-execution",
+  "tags" : [ {
+    "name" : "/error",
+    "description" : "Error service"
+  }, {
+    "name" : "/partner-health",
+    "description" : "Partner Health Service API"
+  }, {
+    "name" : "/promotions",
+    "description" : "Promotions service API"
+  } ],
+  "paths" : {
+    "/error" : {
+      "post" : {
+        "tags" : [ "/error" ],
+        "summary" : "Error Service",
+        "description" : "This rest endpoint is used for errors",
+        "operationId" : "errorCall",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Data object holding details of request and failure",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/FailedResponseData"
+          }
+        } ],
+        "responses" : {
+          "400" : { }
+        }
+      }
+    },
+    "/partner-health" : {
+      "get" : {
+        "tags" : [ "/partner-health" ],
+        "summary" : "Get Partner Health Service",
+        "description" : "This method will return the health of a partner",
+        "operationId" : "getPartnerHealth",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Response entity that contains status of the health url call."
+          }
+        }
+      }
+    },
+    "/promotions/finalize" : {
+      "post" : {
+        "tags" : [ "/promotions" ],
+        "summary" : "Finalize Promotions Service",
+        "description" : "This rest endpoint is used to finalize the consumer's orders, and hence awarded rewards",
+        "operationId" : "finalizePromotions",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "order to be finalized",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/OrderData"
+          }
+        }, {
+          "name" : "nep-enterprise-unit",
+          "in" : "header",
+          "description" : "This is the specific location that the request is coming from",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "fa1c76208a3e4e319a0c7eb9a7c7b75e"
+        }, {
+          "name" : "nep-source-version",
+          "in" : "header",
+          "description" : "This indicates the POS and version of that POS that the request\n is coming from ex: Aloha:6.7.1",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Aloha:6.7.1"
+        }, {
+          "name" : "nep-device-id",
+          "in" : "header",
+          "description" : "This is the specific terminal, kiosk, phone that the request\n is coming from, ex: Term19",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Term19"
+        } ],
+        "responses" : {
+          "200" : { },
+          "400" : {
+            "description" : "Bad Request"
+          }
+        }
+      }
+    },
+    "/promotions/get" : {
+      "post" : {
+        "tags" : [ "/promotions" ],
+        "summary" : "Get Promotions Service",
+        "description" : "This rest endpoint will be called when an inquiry is being made as to if there are any applicable rewards to be given to the consumer.",
+        "operationId" : "getPromotions",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "order with all line items to consider to give out Loyalty accumulations",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/OrderData"
+          }
+        }, {
+          "name" : "nep-enterprise-unit",
+          "in" : "header",
+          "description" : "This is the specific location that the request is coming from",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "fa1c76208a3e4e319a0c7eb9a7c7b75e"
+        }, {
+          "name" : "nep-source-version",
+          "in" : "header",
+          "description" : "This indicates the POS and version of that POS that the request\n is coming from ex: Aloha:6.7.1",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Aloha:6.7.1"
+        }, {
+          "name" : "nep-device-id",
+          "in" : "header",
+          "description" : "This is the specific terminal, kiosk, phone that the request\n is coming from, ex: Term19",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Term19"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Receive the Response with rewards for the order request sent.",
+            "schema" : {
+              "$ref" : "#/definitions/GetPromotionsResponse"
+            }
+          }
+        }
+      }
+    },
+    "/promotions/void" : {
+      "post" : {
+        "tags" : [ "/promotions" ],
+        "summary" : "Void Promotions Service",
+        "description" : "This rest endpoint is used to void orders",
+        "operationId" : "voidPromotions",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Order id of the order",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/OrderIdData"
+          }
+        }, {
+          "name" : "nep-enterprise-unit",
+          "in" : "header",
+          "description" : "This is the specific location that the request is coming from",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "fa1c76208a3e4e319a0c7eb9a7c7b75e"
+        }, {
+          "name" : "nep-source-version",
+          "in" : "header",
+          "description" : "This indicates the POS and version of that POS that the request\n is coming from ex: Aloha:6.7.1",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Aloha:6.7.1"
+        }, {
+          "name" : "nep-device-id",
+          "in" : "header",
+          "description" : "This is the specific terminal, kiosk, phone that the request\n is coming from, ex: Term19",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Term19"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Success"
+          },
+          "400" : { }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "OrderLevelAdjustmentData" : {
+      "type" : "object",
+      "required" : [ "adjustmentValue", "appliesToNonDiscountableItems", "calculationType", "fundingDepartmentId", "priority", "sequenceId", "type" ],
+      "properties" : {
+        "getReturnsProrations" : {
+          "type" : "boolean",
+          "example" : true,
+          "description" : "Identifies how does Adjustment has to be applied. \nfalse = Apply Adjustment but do not send any corresponding discount messages. \ntrue = Apply Adjustment and send any corresponding discount messages ",
+          "default" : false
+        },
+        "calculationType" : {
+          "type" : "string",
+          "example" : "CENTS_OFF",
+          "description" : "Identifies the type of discount to be calculated. \nCENTS_OFF = Cents Off. \nPERCENT_OFF = Percent Off. \nPRICE_POINT = Price Point. \nPERCENT_OFF_PER_ITEM = Percent Off Per Item",
+          "enum" : [ "CENTS_OFF", "PERCENT_OFF", "PRICE_POINT", "PERCENT_OFF_PER_ITEM" ]
+        },
+        "adjustmentValue" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Adjustment to make to each unit"
+        },
+        "appliesToNonDiscountableItems" : {
+          "type" : "boolean",
+          "example" : false,
+          "description" : "Described if applicable to Non-Discountable items. \nFALSE = Do Not Apply to Non-Discountable Items. \nTRUE = Apply to Non-Discountable Items.",
+          "default" : false
+        },
+        "rewardCalculationType" : {
+          "type" : "string",
+          "example" : "DEFAULT",
+          "description" : "Identifies how other discounts (i.e., those generated by other Adjustment messages or loyalty promotions) will interact with this Adjustment message. \n DEFAULT = Use system Default Setting ( Apply Rewards NET of this Adjustment ). \n REWARDS_ON_NET = Apply Rewards NET of this Adjustment. \n REWARD_ON_GROSS = Apply Rewards GROSS of this Adjustment.",
+          "enum" : [ "DEFAULT", "REWARDS_ON_NET", "REWARD_ON_GROSS" ]
+        },
+        "fundingDepartmentId" : {
+          "type" : "string",
+          "example" : "0",
+          "description" : "Department which will fund the adjustment/promotion"
+        },
+        "priority" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Priority of the adjustment"
+        },
+        "returned" : {
+          "type" : "boolean",
+          "example" : false,
+          "description" : "This property specifies whether it is a return Adjustment or not.",
+          "default" : false
+        },
+        "type" : {
+          "type" : "string",
+          "example" : "PROMOTIONAL_DISCOUNT",
+          "description" : "Identifies which type of Adjustment is applied \nPROMOTIONAL_DISCOUNT = Promotional DiscountReward \nPRICE_OVERRIDE = Price Override \nPRICE_OVERRIDE_WITH_MARKUP = Price Override Allow Markup",
+          "enum" : [ "PROMOTIONAL_DISCOUNT", "PRICE_OVERRIDE", "PRICE_OVERRIDE_WITH_MARKUP" ]
+        },
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Adjustment sequence identifier for scan"
+        }
+      },
+      "description" : "Order Adjustment Data has information about adjustments done at order level"
+    },
+    "ItemsWithPurchaseBasicData" : {
+      "type" : "object",
+      "required" : [ "description", "itemIds", "maxSelection", "notificationFor", "notificationType", "promotionId" ],
+      "properties" : {
+        "promotionId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "PromotionData Id associated with this reward"
+        },
+        "coupons" : {
+          "type" : "array",
+          "description" : "Coupon which triggered this reward.",
+          "items" : {
+            "$ref" : "#/definitions/CouponIdData"
+          }
+        },
+        "description" : {
+          "type" : "array",
+          "description" : "Localized description of the reward",
+          "items" : {
+            "$ref" : "#/definitions/LocalizedKeyValueData"
+          }
+        },
+        "alertDuration" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Alert duration in seconds",
+          "maximum" : 5.0
+        },
+        "alertType" : {
+          "type" : "string",
+          "example" : "NO_ALERT",
+          "description" : "Action to take regarding audible alert \nNO_ALERT = Do Not Alert \nALERT = Alert \nALERT_UNTIL_CLEARED = Alert until cleared \nALERT_FOR_DURATION = Alert for duration some duration",
+          "enum" : [ "NO_ALERT", "ALERT", "ALERT_UNTIL_CLEARED", "ALERT_FOR_DURATION" ]
+        },
+        "notificationFor" : {
+          "type" : "string",
+          "example" : "CASHIER",
+          "description" : "Who needs to be notified; Cashier, Shopper or Both",
+          "enum" : [ "CASHIER", "CONSUMER", "CASHIER_AND_CONSUMER" ]
+        },
+        "notificationOrder" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "To display order of the notification message"
+        },
+        "resourceURL" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "To display digital coupon or manufacturer coupon at selling engine which could be associated with reward."
+        },
+        "maxSelection" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Maximum number of items that can be selected from the product list"
+        },
+        "itemIds" : {
+          "type" : "array",
+          "description" : "List of Product which can be given out as gift. List of sequence ids or UPC codes depending on how engine is configured",
+          "items" : {
+            "$ref" : "#/definitions/ItemIdData"
+          }
+        },
+        "notificationType" : {
+          "type" : "string",
+          "example" : "FREE_ITEMS",
+          "description" : "Item types",
+          "enum" : [ "FREE_ITEMS", "ITEMS_ELIGIBLE_FOR_DISCOUNTS" ]
+        }
+      },
+      "description" : "Notifications to consumer with items that can added for free. Notifications to consumer with items that are eligible for discounts"
+    },
+    "ReturnItemData" : {
+      "type" : "object",
+      "required" : [ "considerForOrderLevelRewards", "discountable", "itemCode", "quantity", "sequenceId", "unitPrice" ],
+      "properties" : {
+        "quantity" : {
+          "description" : "QuantityData of the product scanned",
+          "$ref" : "#/definitions/QuantityData"
+        },
+        "unitPrice" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Unit selling price for Item"
+        },
+        "discountable" : {
+          "type" : "boolean",
+          "example" : false,
+          "description" : "Identifier if item level discounts should apply to this product",
+          "default" : false
+        },
+        "considerForOrderLevelRewards" : {
+          "type" : "boolean",
+          "example" : false,
+          "description" : "Identifier if item is eligible for order level rewards",
+          "default" : false
+        },
+        "returnedLoyalties" : {
+          "type" : "array",
+          "description" : "List of Loyalty values returned since the item was returned",
+          "items" : {
+            "$ref" : "#/definitions/LoyaltyProgramBasicData"
+          }
+        },
+        "adjustments" : {
+          "type" : "array",
+          "description" : "List of Adjustments on returned item",
+          "items" : {
+            "$ref" : "#/definitions/ItemAdjustmentData"
+          }
+        },
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "sequence number for item"
+        },
+        "itemCode" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Unique item code either UPC or SKU"
+        },
+        "itemName" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Item Name"
+        }
+      },
+      "description" : "Contains details of the returned item scan."
+    },
+    "SellingEngineNotificationData" : {
+      "type" : "object",
+      "properties" : {
+        "receiptMessages" : {
+          "type" : "array",
+          "description" : "Printed messages for the Receipt",
+          "items" : {
+            "$ref" : "#/definitions/ReceiptMessageData"
+          }
+        },
+        "giftCardRewards" : {
+          "type" : "array",
+          "description" : "List of Gift card reward's Gift card as a reward based on this transaction",
+          "items" : {
+            "$ref" : "#/definitions/GiftCardRewardData"
+          }
+        },
+        "couponRewards" : {
+          "type" : "array",
+          "description" : "List of coupon's given out as a reward in the transaction for the printing purposes. Not applied to the order as discounts. Coupons to redeem in future",
+          "items" : {
+            "$ref" : "#/definitions/CouponRewardData"
+          }
+        },
+        "referencedPromotions" : {
+          "type" : "array",
+          "description" : "List of promotions triggered at the order level and item level. Meta data of the promotion for reference purpose and for auditing through POS Log.",
+          "items" : {
+            "$ref" : "#/definitions/PromotionData"
+          }
+        },
+        "unusedCoupons" : {
+          "type" : "array",
+          "description" : "List of unused trigger codes",
+          "items" : {
+            "$ref" : "#/definitions/UnusedCouponData"
+          }
+        }
+      },
+      "description" : "Information for the selling engine to take action on should the order be finalized in its current state"
+    },
+    "LocalizedTextData" : {
+      "type" : "object",
+      "required" : [ "locale", "value" ],
+      "properties" : {
+        "locale" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ComponentHealthData" : {
+      "type" : "object",
+      "required" : [ "componentName", "healthStatus" ],
+      "properties" : {
+        "healthStatus" : {
+          "type" : "string",
+          "enum" : [ "FAILURE", "OK", "UNKNOWN", "UNMONITORED", "WARNING" ]
+        },
+        "message" : {
+          "type" : "string",
+          "minLength" : 3,
+          "maxLength" : 1024
+        },
+        "componentName" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 64
+        }
+      }
+    },
+    "ShippingData" : {
+      "type" : "object",
+      "required" : [ "price", "sequenceId", "type" ],
+      "properties" : {
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "sequence number for item"
+        },
+        "type" : {
+          "type" : "string",
+          "example" : "FLAT_RATE",
+          "description" : "Identifies the mode of shipping",
+          "enum" : [ "FLAT_RATE", "TABLE_RATE", "FREE", "PICKUP", "CARRIERS" ]
+        },
+        "price" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Cost of shipping"
+        },
+        "discountReward" : {
+          "type" : "array",
+          "description" : "Rewards for the shipping entry; if shipping cost is for the complete order",
+          "items" : {
+            "$ref" : "#/definitions/DiscountRewardData"
+          }
+        }
+      },
+      "description" : "Information about order level shipping and the rewards retrieved for the shipping"
+    },
+    "CustomRewardData" : {
+      "type" : "object",
+      "required" : [ "description", "promotionId" ],
+      "properties" : {
+        "promotionId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "PromotionData Id associated with this reward"
+        },
+        "coupons" : {
+          "type" : "array",
+          "description" : "Coupon which triggered this reward.",
+          "items" : {
+            "$ref" : "#/definitions/CouponIdData"
+          }
+        },
+        "description" : {
+          "type" : "array",
+          "description" : "Localized description of the reward",
+          "items" : {
+            "$ref" : "#/definitions/LocalizedKeyValueData"
+          }
+        }
+      },
+      "description" : "Extension mechanism for delivering selling engine specific rewards"
+    },
+    "NotificationData" : {
+      "type" : "object",
+      "properties" : {
+        "rewardApprovals" : {
+          "type" : "array",
+          "description" : "List of reward approval messages for promotions in the transactions configured with consumer approval required",
+          "items" : {
+            "$ref" : "#/definitions/RewardApprovalBasicData"
+          }
+        },
+        "itemsWithPurchase" : {
+          "type" : "array",
+          "description" : " Free items with purchase and or eligible items for discounts. This is a message/notification to consumer to choose these items.",
+          "items" : {
+            "$ref" : "#/definitions/ItemsWithPurchaseBasicData"
+          }
+        },
+        "proximity" : {
+          "type" : "array",
+          "description" : "List of Proximity message reward's.",
+          "items" : {
+            "$ref" : "#/definitions/ProximityNotificationBasicData"
+          }
+        },
+        "redeemableLoyaltyPrograms" : {
+          "type" : "array",
+          "description" : "These are loyalty programs provided to consumer to choose for redemption depending on the order level Rewards and promotions.",
+          "items" : {
+            "$ref" : "#/definitions/LoyaltyData"
+          }
+        },
+        "otherNotifications" : {
+          "type" : "array",
+          "description" : "Other list of other notifications as reward. Multiple provides may have different types of consumer notifications which could be triggered through promotions and associated rewards",
+          "items" : {
+            "$ref" : "#/definitions/NotificationBasicData"
+          }
+        }
+      },
+      "description" : "NotificationData contains all the different types of notification, customer andcashier facing, that might return from a request to a partner"
+    },
+    "OrderIdData" : {
+      "type" : "object",
+      "required" : [ "orderId" ],
+      "properties" : {
+        "orderId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Identifier for order transaction; should be unique across enterprise.",
+          "minLength" : 1,
+          "maxLength" : 2147483647
+        }
+      },
+      "description" : "The ID of an order, the unique identifier for an order"
+    },
+    "DynamicAttributesData" : {
+      "type" : "object",
+      "required" : [ "attributes", "type" ],
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 64,
+          "pattern" : "\\p{Alnum}[\\w-]*"
+        },
+        "attributes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/KeyValueData"
+          }
+        }
+      }
+    },
+    "HealthData" : {
+      "type" : "object",
+      "required" : [ "healthStatus" ],
+      "properties" : {
+        "healthStatus" : {
+          "type" : "string",
+          "enum" : [ "FAILURE", "OK", "UNKNOWN", "UNMONITORED", "WARNING" ]
+        },
+        "message" : {
+          "type" : "string",
+          "minLength" : 3,
+          "maxLength" : 1024
+        },
+        "componentChecks" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ComponentHealthData"
+          }
+        }
+      }
+    },
+    "RewardApprovalsData" : {
+      "type" : "object",
+      "required" : [ "approvalFlag", "promotionId", "sequenceId" ],
+      "properties" : {
+        "promotionId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "PromotionData Id associated with this reward"
+        },
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Reward approval sequence identifier for scan"
+        },
+        "approvalFlag" : {
+          "type" : "string",
+          "example" : "APPROVE",
+          "description" : "Identifies which type of Reward Approval is applied \nAPPROVE = Apply Rewards for rewardId \nREJECT = Reject Rewards for rewardId",
+          "enum" : [ "APPROVE", "REJECT" ]
+        }
+      },
+      "description" : "Reward Approval Request has information about reward approvals done at order level"
+    },
+    "CouponIdData" : {
+      "type" : "object",
+      "required" : [ "sequenceId" ],
+      "properties" : {
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "sequence number for item"
+        },
+        "couponCode" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Coupon code entered or scanned"
+        }
+      },
+      "description" : "Coupon identifier information. Used to uniquely identify a coupon"
+    },
+    "GetPromotionsResponse" : {
+      "type" : "object",
+      "required" : [ "providerResponseTime" ],
+      "properties" : {
+        "providerResponseTime" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2017-06-28T19:32:44Z",
+          "description" : "Response data and time"
+        },
+        "consumer" : {
+          "description" : "Consumer details",
+          "$ref" : "#/definitions/ConsumerBasicData"
+        },
+        "notifications" : {
+          "type" : "array",
+          "description" : "Notifications for consumer.",
+          "items" : {
+            "$ref" : "#/definitions/NotificationData"
+          }
+        },
+        "itemLevelAppliedRewards" : {
+          "type" : "array",
+          "description" : "Will only include the list of items which has rewards associated with it, not all the items in the order request. These rewards could be targeted (loyalty) or any consumer type rewards.",
+          "items" : {
+            "$ref" : "#/definitions/ItemLevelRewardData"
+          }
+        },
+        "orderLevelAppliedRewards" : {
+          "description" : "Order level Rewards and details",
+          "$ref" : "#/definitions/OrderLevelRewardData"
+        },
+        "sellingEngineNotifications" : {
+          "type" : "array",
+          "description" : "This data is for selling engine to process. For example is receipt data.",
+          "items" : {
+            "$ref" : "#/definitions/SellingEngineNotificationData"
+          }
+        }
+      },
+      "description" : "Response to a order request"
+    },
+    "ConsumerRequestData" : {
+      "type" : "object",
+      "required" : [ "identifier" ],
+      "properties" : {
+        "identifier" : {
+          "type" : "string",
+          "example" : "john.doe@somewhere.com",
+          "description" : "Consumer identifier"
+        },
+        "type" : {
+          "type" : "string",
+          "example" : "EMAIL",
+          "description" : "Type of the identifier",
+          "enum" : [ "LOYALTY_ID", "EMAIL", "PHONE", "OTHERS" ]
+        },
+        "otherType" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Only if ConsumerIdentifierType enum does not include the type and OTHERS is been selected."
+        },
+        "consumerStatus" : {
+          "type" : "string",
+          "example" : "ACTIVE",
+          "description" : "Consumer status",
+          "enum" : [ "ACTIVE", "INACTIVE" ]
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "John",
+          "description" : "Consumer First name"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Doe",
+          "description" : "Consumer last name"
+        },
+        "internalId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Any unique number associated with the consumer. Internal unique number and is not exposed to the consumer."
+        },
+        "identifierStatus" : {
+          "type" : "string",
+          "example" : "ACTIVE",
+          "description" : "Status of the identifier",
+          "enum" : [ "ACTIVE", "INACTIVE" ]
+        }
+      },
+      "description" : "Customer identifier information to identify a specific customer"
+    },
+    "CouponData" : {
+      "type" : "object",
+      "required" : [ "couponType", "sequenceId" ],
+      "properties" : {
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "sequence number for item"
+        },
+        "couponCode" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Coupon code entered or scanned"
+        },
+        "couponType" : {
+          "type" : "string",
+          "example" : "STORE_COUPON",
+          "description" : "Contains the type of coupon",
+          "enum" : [ "TRIGGER_CODE", "TRACKABLE_COUPON", "MANUAL_COUPON", "STORE_COUPON", "MANUFACTURER_COUPON", "GS1COUPON", "DIGITAL_COUPON", "UPC5" ]
+        },
+        "numberOfUses" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 1,
+          "description" : "It determines the no of uses of coupon"
+        },
+        "rewardMultiplier" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 1,
+          "description" : "It determines the reward multiplier"
+        },
+        "couponAdjustment" : {
+          "description" : "It has information about itemToAdjust and level of the adjustment",
+          "$ref" : "#/definitions/CouponAdjustmentData"
+        }
+      },
+      "description" : "Coupon Basic Data has information about basic attributes of coupon"
+    },
+    "LoyaltyData" : {
+      "type" : "object",
+      "required" : [ "description", "programId", "programType", "promotionId" ],
+      "properties" : {
+        "promotionId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "PromotionData Id associated with this reward"
+        },
+        "description" : {
+          "type" : "array",
+          "description" : "Localized description of the reward",
+          "items" : {
+            "$ref" : "#/definitions/LocalizedKeyValueData"
+          }
+        },
+        "programId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Identifies the program uniquely in the system"
+        },
+        "programType" : {
+          "type" : "string",
+          "example" : "POINTS",
+          "description" : "Loyalty program type POINTS STORED_VALUE",
+          "enum" : [ "POINTS", "STORED_VALUE" ]
+        },
+        "expiryDate" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2017-06-28T19:32:44Z",
+          "description" : "When the accumulated value expires Optional if program has no expiration"
+        },
+        "amount" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Total Amount"
+        }
+      },
+      "description" : "Loyalty program details"
+    },
+    "ConsumerBasicData" : {
+      "type" : "object",
+      "properties" : {
+        "consumerStatus" : {
+          "type" : "string",
+          "example" : "ACTIVE",
+          "description" : "Consumer status",
+          "enum" : [ "ACTIVE", "INACTIVE" ]
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "John",
+          "description" : "Consumer First name"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Doe",
+          "description" : "Consumer last name"
+        },
+        "internalId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Any unique number associated with the consumer. Internal unique number and is not exposed to the consumer."
+        },
+        "identifierStatus" : {
+          "type" : "string",
+          "example" : "ACTIVE",
+          "description" : "Status of the identifier",
+          "enum" : [ "ACTIVE", "INACTIVE" ]
+        }
+      },
+      "description" : "Consumer Data has all information of the consumer retrieved from the system"
+    },
+    "TenderData" : {
+      "type" : "object",
+      "required" : [ "amount", "sequenceId", "tenderType" ],
+      "properties" : {
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "sequence number for item"
+        },
+        "tenderType" : {
+          "type" : "string",
+          "example" : "CREDIT",
+          "description" : "TenderData type",
+          "enum" : [ "CASH", "CREDIT_DEBIT", "CHECK", "HOUSE_ACCOUNT", "PURCHASE_ORDER", "FOOD_STAMPS", "VOUCHER", "MANUFACTURE_COUPON", "COPAY", "LOYALTY", "TRAVELERS_CHECK", "CHECK_CARD", "GIFT_CERTIFICATE", "STORED_VALUE", "WIC_CHECK", "CUSTOMER_ACCOUNT", "COUPON", "UK_MAESTRO", "CAPITALBOND", "STAFF_DRESS_ALLOWANCE", "AIR_MILES_CONVERSION", "INTERNATIONAL_MAESTRO", "ELECTRONIC_TOLL_COLLECTION", "ACCOUNTS_RECEIVABLE", "OTHER" ]
+        },
+        "tenderSubType" : {
+          "type" : "string",
+          "example" : "VISA",
+          "description" : "TenderData sub type",
+          "enum" : [ "VISA", "MASTERCARD", "DINERCLUB", "DISCOVERCARD", "FLEET", "OTHER" ]
+        },
+        "otherTenderType" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Only if TenderType enum does not covers and TenderType OTHER is been selected."
+        },
+        "otherSubTenderType" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Only if TenderSubType enum does not covers and TenderSubType OTHER is been selected."
+        },
+        "amount" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "TenderData amount for the order"
+        }
+      },
+      "description" : "TenderData details used to pay for the order"
+    },
+    "CouponRewardData" : {
+      "type" : "object",
+      "required" : [ "couponCode", "description", "printAs", "promotionId", "uses" ],
+      "properties" : {
+        "promotionId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "PromotionData Id associated with this reward"
+        },
+        "coupons" : {
+          "type" : "array",
+          "description" : "Coupon which triggered this reward.",
+          "items" : {
+            "$ref" : "#/definitions/CouponIdData"
+          }
+        },
+        "description" : {
+          "type" : "array",
+          "description" : "Localized description of the reward",
+          "items" : {
+            "$ref" : "#/definitions/LocalizedKeyValueData"
+          }
+        },
+        "couponCode" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Coupon code given out as a reward"
+        },
+        "printAs" : {
+          "type" : "string",
+          "example" : "TEXT",
+          "description" : "Describes how to print the coupon",
+          "enum" : [ "TEXT", "CODE128" ]
+        },
+        "uses" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Describes how many times this coupon can be used"
+        }
+      },
+      "description" : "Coupon sent as a reward has reward information and specific coupon information and how to present it to the consumer"
+    },
+    "ReceiptMessageData" : {
+      "type" : "object",
+      "required" : [ "lines" ],
+      "properties" : {
+        "lines" : {
+          "type" : "object",
+          "description" : "Each line that needs to be printed on the receipt",
+          "additionalProperties" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/PrintLineData"
+            }
+          }
+        }
+      },
+      "description" : "Messages that need to be printed on the receipt"
+    },
+    "FundingData" : {
+      "type" : "object",
+      "required" : [ "departmentId", "unitDiscountBreakup" ],
+      "properties" : {
+        "departmentId" : {
+          "type" : "string",
+          "example" : "0",
+          "description" : "Department or organization which is funding the promotion"
+        },
+        "unitDiscountBreakup" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Unit discount breakup if multiple department are funding the promotion"
+        }
+      },
+      "description" : "Discount funding organization and the break up of the unit discount"
+    },
+    "ItemAdjustmentData" : {
+      "type" : "object",
+      "required" : [ "adjustmentValue", "appliesToNonDiscountableItems", "calculationType", "fundingDepartmentId", "priority", "quantity", "sequenceId", "type" ],
+      "properties" : {
+        "getReturnsProrations" : {
+          "type" : "boolean",
+          "example" : true,
+          "description" : "Identifies how does Adjustment has to be applied. \nfalse = Apply Adjustment but do not send any corresponding discount messages. \ntrue = Apply Adjustment and send any corresponding discount messages ",
+          "default" : false
+        },
+        "calculationType" : {
+          "type" : "string",
+          "example" : "CENTS_OFF",
+          "description" : "Identifies the type of discount to be calculated. \nCENTS_OFF = Cents Off. \nPERCENT_OFF = Percent Off. \nPRICE_POINT = Price Point. \nPERCENT_OFF_PER_ITEM = Percent Off Per Item",
+          "enum" : [ "CENTS_OFF", "PERCENT_OFF", "PRICE_POINT", "PERCENT_OFF_PER_ITEM" ]
+        },
+        "adjustmentValue" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Adjustment to make to each unit"
+        },
+        "appliesToNonDiscountableItems" : {
+          "type" : "boolean",
+          "example" : false,
+          "description" : "Described if applicable to Non-Discountable items. \nFALSE = Do Not Apply to Non-Discountable Items. \nTRUE = Apply to Non-Discountable Items.",
+          "default" : false
+        },
+        "rewardCalculationType" : {
+          "type" : "string",
+          "example" : "DEFAULT",
+          "description" : "Identifies how other discounts (i.e., those generated by other Adjustment messages or loyalty promotions) will interact with this Adjustment message. \n DEFAULT = Use system Default Setting ( Apply Rewards NET of this Adjustment ). \n REWARDS_ON_NET = Apply Rewards NET of this Adjustment. \n REWARD_ON_GROSS = Apply Rewards GROSS of this Adjustment.",
+          "enum" : [ "DEFAULT", "REWARDS_ON_NET", "REWARD_ON_GROSS" ]
+        },
+        "fundingDepartmentId" : {
+          "type" : "string",
+          "example" : "0",
+          "description" : "Department which will fund the adjustment/promotion"
+        },
+        "priority" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Priority of the adjustment"
+        },
+        "type" : {
+          "type" : "string",
+          "example" : "PROMOTIONAL_DISCOUNT",
+          "description" : "Identifies which type of Adjustment is applied \n PROMOTIONAL_DISCOUNT = Promotional DiscountReward \nPRICE_OVERRIDE = Price Override \nPRICE_OVERRIDE_WITH_MARKUP = Price Override Allow Markup (for audit purpose)",
+          "enum" : [ "PROMOTIONAL_DISCOUNT", "PRICE_OVERRIDE", "PRICE_OVERRIDE_WITH_MARKUP" ]
+        },
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Adjustment sequence identifier for scan"
+        },
+        "quantity" : {
+          "description" : "QuantityData on which the adjustment is made.",
+          "$ref" : "#/definitions/QuantityData"
+        },
+        "itemPriceToMatch" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Match items with the net unit price"
+        }
+      },
+      "description" : "Adjustment done to the item or to the order which impacts the promotions given out"
+    },
+    "ShippingBasicData" : {
+      "type" : "object",
+      "required" : [ "price", "sequenceId", "type" ],
+      "properties" : {
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "sequence number for item"
+        },
+        "type" : {
+          "type" : "string",
+          "example" : "FLAT_RATE",
+          "description" : "Identifies the mode of shipping",
+          "enum" : [ "FLAT_RATE", "TABLE_RATE", "FREE", "PICKUP", "CARRIERS" ]
+        },
+        "price" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Cost of shipping"
+        }
+      },
+      "description" : "Basic information about order level shipping and the cost associated to it"
+    },
+    "ProximityNotificationBasicData" : {
+      "type" : "object",
+      "required" : [ "description", "items", "notificationFor", "promotionId" ],
+      "properties" : {
+        "promotionId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "PromotionData Id associated with this reward"
+        },
+        "coupons" : {
+          "type" : "array",
+          "description" : "Coupon which triggered this reward.",
+          "items" : {
+            "$ref" : "#/definitions/CouponIdData"
+          }
+        },
+        "description" : {
+          "type" : "array",
+          "description" : "Localized description of the reward",
+          "items" : {
+            "$ref" : "#/definitions/LocalizedKeyValueData"
+          }
+        },
+        "alertDuration" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Alert duration in seconds",
+          "maximum" : 5.0
+        },
+        "alertType" : {
+          "type" : "string",
+          "example" : "NO_ALERT",
+          "description" : "Action to take regarding audible alert \nNO_ALERT = Do Not Alert \nALERT = Alert \nALERT_UNTIL_CLEARED = Alert until cleared \nALERT_FOR_DURATION = Alert for duration some duration",
+          "enum" : [ "NO_ALERT", "ALERT", "ALERT_UNTIL_CLEARED", "ALERT_FOR_DURATION" ]
+        },
+        "notificationFor" : {
+          "type" : "string",
+          "example" : "CASHIER",
+          "description" : "Who needs to be notified; Cashier, Shopper or Both",
+          "enum" : [ "CASHIER", "CONSUMER", "CASHIER_AND_CONSUMER" ]
+        },
+        "notificationOrder" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "To display order of the notification message"
+        },
+        "resourceURL" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "To display digital coupon or manufacturer coupon at selling engine which could be associated with reward."
+        },
+        "items" : {
+          "type" : "array",
+          "description" : "List of sequence IDs which triggered the reward",
+          "items" : {
+            "$ref" : "#/definitions/ItemIdData"
+          }
+        }
+      },
+      "description" : "Messages for which proximity to a promotion is notified"
+    },
+    "MultiLanguageTextData" : {
+      "type" : "object",
+      "properties" : {
+        "values" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LocalizedTextData"
+          }
+        }
+      }
+    },
+    "PrintAttributesData" : {
+      "type" : "object",
+      "required" : [ "alignment", "contentType", "formats", "lineBreak", "location", "sortId", "type" ],
+      "properties" : {
+        "location" : {
+          "type" : "string",
+          "example" : "DEFAULT",
+          "description" : "Location for message to be printed. \n 0 = Default \n1 = Front \n2 = Back",
+          "enum" : [ "DEFAULT", "FRONT", "BACK" ]
+        },
+        "type" : {
+          "type" : "string",
+          "example" : "TEXT",
+          "description" : "MessageData type to be printed \nTEXT = Text \nLOGO = Logo - POS should print the store logo \nBIG_LOGO = Big Logo \nUPCA = UPCA - number to be represented by a barcode will be contained in the PrintLineData field \nCODE39 = Code39 - number to be represented by a barcode will be contained in the PrintLineData field \nCODE128 = Code128 - number to be represented by a barcode will be contained in the PrintLineData field",
+          "enum" : [ "TEXT", "LOGO", "BIG_LOGO", "UPCA", "UPCE", "EAN8", "JAN8", "EAN13", "JAN13", "CODABAR", "CODE39", "CODE93", "CODE128" ]
+        },
+        "sortId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Identifier used to order messages within a MessageType group"
+        },
+        "contentType" : {
+          "type" : "string",
+          "example" : "GENERAL_RECEIPT_MESSAGE",
+          "description" : "Identifier of content of message \n1 = GeneralReceiptMessage \n2 = RewardSummaryMessge \n3 = ReceiptTrailerMessage",
+          "enum" : [ "GENERAL_RECEIPT_MESSAGE", "REWARD_SUMMARY_MESSAGE", "RECIEPT_TRAILER_MESSAGE" ]
+        },
+        "alignment" : {
+          "type" : "string",
+          "example" : "LEFT",
+          "description" : "Alignment of the message to be print LEFT = Left CENTRE = Center RIGHT = Right",
+          "enum" : [ "LEFT", "CENTER", "RIGHT" ]
+        },
+        "formats" : {
+          "type" : "array",
+          "description" : "Attribute bitmap \nNO_FORMATTING = 00000000 = No Formatting \nDOUBLE_WIDE = 00000001 = Double Wide \nDOUBLE_HIGH = 00000010 = Double High \nBOLD = 00000100 = Bold \nITALICS = 00001000  Italics \nUNDERLINE = 00010000 = Underline \nINVERT = 00100000 = Invert \nALTERNATE_COLOR = 01000000 = Alternate Color \nRESERVED = 10000000 = Reserved",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "NO_FORMATTING", "DOUBLE_WIDE", "DOUBLE_HIGH", "BOLD", "ITALICS", "UNDERLINE", "INVERT", "ALTERNATE_COLOR", "RESERVED" ]
+          }
+        },
+        "lineBreak" : {
+          "type" : "string",
+          "example" : "NO_LINE_BREAK",
+          "description" : "Identifier to configure line break in message to be print \nNO_LINE_BREAK = No forced line break \nLINE_BREAK_BEFORE_PRINTLINE = Forced line break to be applied before print line \nLINE_BREAK_AFTER_PRINTLINE = Forced line break to be applied after print line \nLINE_BREAK_BEFORE_AFTER_PRINTLINE = Forced line break to be applied before AND after print line \nPRINTER_CUT_AFTER_PRINTLINE = Printer cut to be applied after print line \nLINE_BREAK_BEFORE_PRINTER_CUT_AFTER_PRINTLINE = Forced line break be applied before print line, printer cut to be applied after print line",
+          "enum" : [ "NO_LINE_BREAK", "LINE_BREAK_BEFORE_PRINTLINE", "LINE_BREAK_AFTER_PRINTLINE", "LINE_BREAK_BEFORE_AFTER_PRINTLINE", "PRINTER_CUT_AFTER_PRINTLINE", "LINE_BREAK_BEFORE_PRINTER_CUT_AFTER_PRINTLINE" ]
+        }
+      },
+      "description" : "Printed message Information for how an line should be printed"
+    },
+    "LocalizedKeyValueData" : {
+      "type" : "object",
+      "required" : [ "key" ],
+      "properties" : {
+        "key" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 512
+        },
+        "localizedValue" : {
+          "$ref" : "#/definitions/MultiLanguageTextData"
+        }
+      }
+    },
+    "DiscountRewardData" : {
+      "type" : "object",
+      "required" : [ "discounts", "promotionId" ],
+      "properties" : {
+        "promotionId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "PromotionData Id associated with this reward"
+        },
+        "discounts" : {
+          "type" : "array",
+          "description" : "List of Discounts",
+          "items" : {
+            "$ref" : "#/definitions/DiscountBasicData"
+          }
+        }
+      },
+      "description" : "Discount information given out as a reward"
+    },
+    "QuantityData" : {
+      "type" : "object",
+      "required" : [ "unitType", "units" ],
+      "properties" : {
+        "units" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Amount of quantity under consideration for transaction"
+        },
+        "unitType" : {
+          "type" : "string",
+          "example" : "GRAMS",
+          "description" : "Type of Unit of Measure",
+          "enum" : [ "GRAMS", "GRAINS", "OUNCES", "POUNDS", "STONES", "KILOGRAMS", "TONS_LONG", "TONS_METRIC", "CENTILITER", "CUBIC_CENTIMETER", "CUBIC_DECIMETER", "CUBIC_DECAMETER", "CUBIC_FOOT", "CUBIC_INCH", "CUBIC_METER", "CUBIC_MILLIMETER", "CUBIC_YARD", "DECILITER", "DRAM", "GALLON_UK", "GALLON_US_DRY", "GALLON_US_LIQUID", "GILL_UK", "GILL_US", "IMPERIAL_GALLON", "JIGGER", "KILOLITER", "LITER", "MILLILITER", "OUNCE_UK_LIQUID", "OUNCE_US_LIQUID", "PINT_UK", "PINT_US_DRY", "PINT_US_LIQUID", "QUART_UK", "QUART_US_DRY", "QUART_US_LIQUID", "SHOT", "YARDS", "METERS", "SQUARE_YARDS", "SQUARE_METERS", "SIMPLE_QUANTITY", "GENERIC_UNIT_SALES" ]
+        }
+      },
+      "description" : "Holds information about the units of measure"
+    },
+    "CouponAdjustmentData" : {
+      "type" : "object",
+      "required" : [ "adjustmentLevel", "adjustmentValue", "appliesToNonDiscountableItems", "calculationType", "fundingDepartmentId", "priority" ],
+      "properties" : {
+        "getReturnsProrations" : {
+          "type" : "boolean",
+          "example" : true,
+          "description" : "Identifies how does Adjustment has to be applied. \nfalse = Apply Adjustment but do not send any corresponding discount messages. \ntrue = Apply Adjustment and send any corresponding discount messages ",
+          "default" : false
+        },
+        "calculationType" : {
+          "type" : "string",
+          "example" : "CENTS_OFF",
+          "description" : "Identifies the type of discount to be calculated. \nCENTS_OFF = Cents Off. \nPERCENT_OFF = Percent Off. \nPRICE_POINT = Price Point. \nPERCENT_OFF_PER_ITEM = Percent Off Per Item",
+          "enum" : [ "CENTS_OFF", "PERCENT_OFF", "PRICE_POINT", "PERCENT_OFF_PER_ITEM" ]
+        },
+        "adjustmentValue" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Adjustment to make to each unit"
+        },
+        "appliesToNonDiscountableItems" : {
+          "type" : "boolean",
+          "example" : false,
+          "description" : "Described if applicable to Non-Discountable items. \nFALSE = Do Not Apply to Non-Discountable Items. \nTRUE = Apply to Non-Discountable Items.",
+          "default" : false
+        },
+        "rewardCalculationType" : {
+          "type" : "string",
+          "example" : "DEFAULT",
+          "description" : "Identifies how other discounts (i.e., those generated by other Adjustment messages or loyalty promotions) will interact with this Adjustment message. \n DEFAULT = Use system Default Setting ( Apply Rewards NET of this Adjustment ). \n REWARDS_ON_NET = Apply Rewards NET of this Adjustment. \n REWARD_ON_GROSS = Apply Rewards GROSS of this Adjustment.",
+          "enum" : [ "DEFAULT", "REWARDS_ON_NET", "REWARD_ON_GROSS" ]
+        },
+        "fundingDepartmentId" : {
+          "type" : "string",
+          "example" : "0",
+          "description" : "Department which will fund the adjustment/promotion"
+        },
+        "priority" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Priority of the adjustment"
+        },
+        "itemSequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Item to which this Adjustment to be applied"
+        },
+        "adjustmentLevel" : {
+          "type" : "string",
+          "example" : "ITEM_LEVEL",
+          "description" : "Identifies how does Adjustment has to be applied",
+          "enum" : [ "ITEM_LEVEL", "ORDER_LEVEL" ]
+        },
+        "itemPriceToMatch" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Match items with the net unit price"
+        },
+        "quantityLimit" : {
+          "description" : "QuantityData on which the adjustment is made",
+          "$ref" : "#/definitions/QuantityData"
+        },
+        "returned" : {
+          "type" : "boolean",
+          "example" : false,
+          "description" : "Is it a return Adjustment or not ?",
+          "default" : false
+        }
+      },
+      "description" : "Coupon Adjustment has information about the itemToAdjust and level of the adjustment"
+    },
+    "NotificationBasicData" : {
+      "type" : "object",
+      "required" : [ "description", "notificationFor", "promotionId" ],
+      "properties" : {
+        "promotionId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "PromotionData Id associated with this reward"
+        },
+        "coupons" : {
+          "type" : "array",
+          "description" : "Coupon which triggered this reward.",
+          "items" : {
+            "$ref" : "#/definitions/CouponIdData"
+          }
+        },
+        "description" : {
+          "type" : "array",
+          "description" : "Localized description of the reward",
+          "items" : {
+            "$ref" : "#/definitions/LocalizedKeyValueData"
+          }
+        },
+        "alertDuration" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Alert duration in seconds",
+          "maximum" : 5.0
+        },
+        "alertType" : {
+          "type" : "string",
+          "example" : "NO_ALERT",
+          "description" : "Action to take regarding audible alert \nNO_ALERT = Do Not Alert \nALERT = Alert \nALERT_UNTIL_CLEARED = Alert until cleared \nALERT_FOR_DURATION = Alert for duration some duration",
+          "enum" : [ "NO_ALERT", "ALERT", "ALERT_UNTIL_CLEARED", "ALERT_FOR_DURATION" ]
+        },
+        "notificationFor" : {
+          "type" : "string",
+          "example" : "CASHIER",
+          "description" : "Who needs to be notified; Cashier, Shopper or Both",
+          "enum" : [ "CASHIER", "CONSUMER", "CASHIER_AND_CONSUMER" ]
+        },
+        "notificationOrder" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "To display order of the notification message"
+        },
+        "resourceURL" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "To display digital coupon or manufacturer coupon at selling engine which could be associated with reward."
+        }
+      },
+      "description" : "Data common across several types of notifications"
+    },
+    "LoyaltyProgramBasicData" : {
+      "type" : "object",
+      "required" : [ "description", "itemQuantity", "matchNetUnitPrice", "programId", "programType", "promotionId", "subSequenceIds", "units" ],
+      "properties" : {
+        "promotionId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "PromotionData Id associated with this reward"
+        },
+        "description" : {
+          "type" : "array",
+          "description" : "Localized description of the reward",
+          "items" : {
+            "$ref" : "#/definitions/LocalizedKeyValueData"
+          }
+        },
+        "programId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Identifies the program uniquely in the system"
+        },
+        "programType" : {
+          "type" : "string",
+          "example" : "POINTS",
+          "description" : "Loyalty program type POINTS STORED_VALUE",
+          "enum" : [ "POINTS", "STORED_VALUE" ]
+        },
+        "itemQuantity" : {
+          "type" : "integer",
+          "format" : "int64",
+          "example" : 0,
+          "description" : "The quantity or number of units of the item that the units were originally applied to."
+        },
+        "units" : {
+          "type" : "integer",
+          "format" : "int64",
+          "example" : 0,
+          "description" : "The number of units earned into the program"
+        },
+        "expiration" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2017-06-28T19:32:44Z",
+          "description" : "When the accumulated value expires Optional if program has no expiration"
+        },
+        "matchNetUnitPrice" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "no comments"
+        },
+        "subSequenceIds" : {
+          "type" : "array",
+          "description" : "Subsequence ids, List of unit elements on which the program is rewarded",
+          "items" : {
+            "type" : "number"
+          }
+        },
+        "amount" : {
+          "type" : "number",
+          "description" : "Total Amount"
+        }
+      },
+      "description" : "Loyalty program details"
+    },
+    "ItemLevelRewardData" : {
+      "type" : "object",
+      "required" : [ "itemCode", "sequenceId" ],
+      "properties" : {
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "sequence number for item"
+        },
+        "itemCode" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Unique item code either UPC or SKU"
+        },
+        "itemName" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Item Name"
+        },
+        "earnedLoyalty" : {
+          "type" : "array",
+          "description" : "List of Loyalty value earned for this item",
+          "items" : {
+            "$ref" : "#/definitions/LoyaltyProgramBasicData"
+          }
+        },
+        "discountRewards" : {
+          "type" : "array",
+          "description" : "List of discounts earned for item added",
+          "items" : {
+            "$ref" : "#/definitions/DiscountRewardData"
+          }
+        }
+      },
+      "description" : "Rewards information specific to an Item"
+    },
+    "FailedResponseData" : {
+      "type" : "object",
+      "properties" : {
+        "datetime" : {
+          "type" : "string",
+          "example" : "2017-06-28T19:32:44Z",
+          "description" : "Time in which error occurred"
+        },
+        "referenceId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Reference to link error to other data"
+        },
+        "errorDetail" : {
+          "type" : "string",
+          "example" : "The request did not contain all the required data",
+          "description" : "Details describing error"
+        },
+        "failedUrl" : {
+          "type" : "string",
+          "example" : "/promotions/get",
+          "description" : "URL where error occurred"
+        }
+      },
+      "description" : "Object returned back to partner in the event response was not accepted by application"
+    },
+    "OrderData" : {
+      "type" : "object",
+      "required" : [ "items", "orderBeginDateTime", "orderId" ],
+      "properties" : {
+        "orderBeginDateTime" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2017-06-28T19:32:44Z",
+          "description" : "order transaction begin date and time, Used to filter the promotions"
+        },
+        "items" : {
+          "type" : "array",
+          "description" : "list of sale items",
+          "items" : {
+            "$ref" : "#/definitions/ItemData"
+          }
+        },
+        "returnItems" : {
+          "type" : "array",
+          "description" : "list of returned items",
+          "items" : {
+            "$ref" : "#/definitions/ReturnItemData"
+          }
+        },
+        "coupons" : {
+          "type" : "array",
+          "description" : "List of Trigger code coupons applied",
+          "items" : {
+            "$ref" : "#/definitions/CouponData"
+          }
+        },
+        "consumerIds" : {
+          "type" : "array",
+          "description" : "List of Customer Identifiers",
+          "items" : {
+            "$ref" : "#/definitions/ConsumerRequestData"
+          }
+        },
+        "shipping" : {
+          "description" : "Shipping details for the complete order",
+          "$ref" : "#/definitions/ShippingBasicData"
+        },
+        "redeemLoyalty" : {
+          "type" : "array",
+          "description" : "List of Loyalty Program RedeemLoyaltyData",
+          "items" : {
+            "$ref" : "#/definitions/RedeemLoyaltyData"
+          }
+        },
+        "tenders" : {
+          "type" : "array",
+          "description" : "List of TenderData details",
+          "items" : {
+            "$ref" : "#/definitions/TenderData"
+          }
+        },
+        "orderLevelAdjustments" : {
+          "type" : "array",
+          "description" : "List of order level Adjustments",
+          "items" : {
+            "$ref" : "#/definitions/OrderLevelAdjustmentData"
+          }
+        },
+        "rewardApprovals" : {
+          "type" : "array",
+          "description" : "List of order level reward approvals",
+          "items" : {
+            "$ref" : "#/definitions/RewardApprovalsData"
+          }
+        },
+        "totals" : {
+          "type" : "boolean",
+          "example" : false,
+          "description" : "Show rewards which are given out when total is hit on POS. Will be defaulted to false. There are some rewards which only applies when totals is hit.",
+          "default" : false
+        },
+        "dynamicAttributes" : {
+          "type" : "array",
+          "description" : "Customer specific dynamic attributes to support extensibility. These can contain any number of attributes that may drive selling engine application behavior.",
+          "items" : {
+            "$ref" : "#/definitions/DynamicAttributesData"
+          }
+        },
+        "orderId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Identifier for order transaction; should be unique across enterprise.",
+          "minLength" : 1,
+          "maxLength" : 2147483647
+        }
+      },
+      "description" : "The order request containing all elements of the shopping cart which will be evaluated for rewards"
+    },
+    "DiscountBasicData" : {
+      "type" : "object",
+      "required" : [ "amount", "flexNegative", "fundingDepts", "matchNetUnitPrice", "quantity", "returnsAmount", "subSequenceIds", "triggeredItems", "unitCalculateAmount" ],
+      "properties" : {
+        "flexNegative" : {
+          "type" : "string",
+          "example" : "NOT_FLEXED",
+          "description" : "Indicates whether or not the discount was partially applied to prevent a price below zero. \nNOT_FLEXED = Not flexed FLEXED_COUPON_APPLIED = Flexed (Manufacturer Coupon Applied) \nFLEXED_COUPON_NOT_APPLIED = Flexed (No Manufacturer Coupon Applied) \n FLEXED_GO_NEGATIVE_COUPON_APPLIED = Flexed - Go Negative (Manufacturer Coupon Applied)",
+          "enum" : [ "NOT_FLEXED", "FLEXED_COUPON_APPLIED", "FLEXED_COUPON_NOT_APPLIED", "FLEXED_GO_NEGATIVE_COUPON_APPLIED" ]
+        },
+        "amount" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Amount given out as discount"
+        },
+        "quantity" : {
+          "description" : "QuantityData on which the discount should be applied",
+          "$ref" : "#/definitions/QuantityData"
+        },
+        "matchNetUnitPrice" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Match items with the net unit price"
+        },
+        "unitCalculateAmount" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "DiscountReward amount per unit discounted"
+        },
+        "returnsAmount" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Amount to be return it item is returned back;"
+        },
+        "fundingDepts" : {
+          "type" : "array",
+          "description" : "Department which DiscountReward is assigned",
+          "items" : {
+            "$ref" : "#/definitions/FundingData"
+          }
+        },
+        "subSequenceIds" : {
+          "type" : "array",
+          "description" : "Subsequence ids, List of unit elements on which the discount is applied",
+          "items" : {
+            "type" : "number"
+          }
+        },
+        "triggeredItems" : {
+          "type" : "array",
+          "description" : "List of triggered items on which the discount is applied",
+          "items" : {
+            "$ref" : "#/definitions/TriggeredItemData"
+          }
+        },
+        "applyMarkup" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "returnsProration" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "applyAsTender" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      },
+      "description" : "Basic discount data which is sent for an item,promotion combination"
+    },
+    "RedeemLoyaltyData" : {
+      "type" : "object",
+      "required" : [ "description", "programId", "programType", "promotionId", "sequenceId" ],
+      "properties" : {
+        "promotionId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "PromotionData Id associated with this reward"
+        },
+        "description" : {
+          "type" : "array",
+          "description" : "Localized description of the reward",
+          "items" : {
+            "$ref" : "#/definitions/LocalizedKeyValueData"
+          }
+        },
+        "programId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Identifies the program uniquely in the system"
+        },
+        "programType" : {
+          "type" : "string",
+          "example" : "POINTS",
+          "description" : "Loyalty program type POINTS STORED_VALUE",
+          "enum" : [ "POINTS", "STORED_VALUE" ]
+        },
+        "amount" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Total Amount"
+        },
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Sequence Id of the RedeemLoyaltyData"
+        }
+      },
+      "description" : "RedeemLoyaltyData of loyalty program value for reward"
+    },
+    "PrintLineData" : {
+      "type" : "object",
+      "required" : [ "attributes", "content" ],
+      "properties" : {
+        "attributes" : {
+          "description" : "Print attributes of line",
+          "$ref" : "#/definitions/PrintAttributesData"
+        },
+        "content" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Content of string to be print"
+        }
+      },
+      "description" : "Information on how to print a line on receipt"
+    },
+    "OrderLevelRewardData" : {
+      "type" : "object",
+      "properties" : {
+        "acceptedLoyaltyRedemptions" : {
+          "type" : "array",
+          "description" : "Accepted Loyalty redemption reward. Reflects only this order specific loyalty for the consumer. Applies to only this order. Does not reflect the entire history of the orders",
+          "items" : {
+            "$ref" : "#/definitions/LoyaltyData"
+          }
+        },
+        "discountRewards" : {
+          "type" : "array",
+          "description" : "List of discounts given out for adjustments at transaction level",
+          "items" : {
+            "$ref" : "#/definitions/DiscountRewardData"
+          }
+        },
+        "customRewards" : {
+          "type" : "array",
+          "description" : "Providers can define customer specific promotions at enterprise/cloud which can not be executed by provider promotion execution engines but customers want these specific promotions to be executed by selling engine itself. This is to support these kind of pass through promotions/rewards to the selling engines",
+          "items" : {
+            "$ref" : "#/definitions/CustomRewardData"
+          }
+        },
+        "shippingRewards" : {
+          "description" : "Order level Shipping Details and rewards on the shipping",
+          "$ref" : "#/definitions/ShippingData"
+        }
+      },
+      "description" : "Order Level Reward Data has information about all rewards applicable at the order level"
+    },
+    "PromotionData" : {
+      "type" : "object",
+      "required" : [ "description", "promotionId" ],
+      "properties" : {
+        "promotionId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "PromotionData Id associated with this reward"
+        },
+        "coupons" : {
+          "type" : "array",
+          "description" : "Coupon which triggered this reward.",
+          "items" : {
+            "$ref" : "#/definitions/CouponIdData"
+          }
+        },
+        "description" : {
+          "type" : "array",
+          "description" : "Localized description of the reward",
+          "items" : {
+            "$ref" : "#/definitions/LocalizedKeyValueData"
+          }
+        },
+        "externalPromotionId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "In the context when NCR is a loyalty provider and executing the promotions but importing the manufacturer coupons from third parties."
+        },
+        "externalPromotionSource" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "In case these coupons or promotions are fed from third parties."
+        },
+        "promotionName" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "PromotionData Name"
+        },
+        "discountType" : {
+          "type" : "string",
+          "example" : "CENTS_OFF",
+          "description" : "Identifies how the discount was calculated \n00 = Cents Off \n01 = Percent Off \n02 = Cents Off per Weight/Volume \n03 = Price Point \n04 = Price Point per Weight/Volume \n05 = Free Item \n06 = Stored Value \n07 = Stored Value per Weight/Volume \n08 = Cents Off Alternate Price \n09 = Percent Off Alternate Price",
+          "enum" : [ "CENTS_OFF", "PERCENT_OFF", "CENTS_OFF_PER_MEASURE", "PRICE_POINT", "PRICE_POINT_PER_MEASURE", "FREE_ITEM", "STORED_VALUE", "STORED_VALUE_PER_MEASURE", "CENTS_OFF_ALTERNATE_PRICE", "PERCENT_OFF_ALTERNATE_PRICE" ]
+        },
+        "promotionType" : {
+          "type" : "string",
+          "example" : "STORE_COUPON",
+          "description" : "DiscountReward Type \n0 = Store Coupon \n1 = Promotional DiscountReward \n2 = Manufacturer Coupon (Used for GS1 or other MFGR) \n3 = Price Override \n4 = Price Override Allow Markup \n5 = Gift Card Reward",
+          "enum" : [ "STORE_COUPON", "PROMOTIONAL_DISCOUNT", "MANUFACTURER_COUPON", "PRICE_OVERRIDE", "PRICE_OVERRIDE_WITH_MARKUP", "GIFT_CARD_REWARD", "DIGITAL_STORE_COUPON", "DIGITAL_MANUFACTURER_COUPON", "GS1_MANUFACTURER_COUPON", "GS1_STORE_COUPON", "UPC5_COUPON" ]
+        },
+        "level" : {
+          "type" : "string",
+          "description" : "DiscountReward \nLevel 0 = Item \nLevel 1 = Department \nLevel 2 = Transaction Level",
+          "enum" : [ "ITEM_LEVEL", "DEPARTMENT_LEVEL", "ORDER_LEVEL" ]
+        },
+        "redemptionQuantity" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "No of time offer applied in transaction"
+        }
+      },
+      "description" : "The discount promotion details how the discount is calculated."
+    },
+    "UnusedCouponData" : {
+      "type" : "object",
+      "required" : [ "noOfCoupons", "reasonCode", "sequenceId" ],
+      "properties" : {
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "sequence number for item"
+        },
+        "couponCode" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Coupon code entered or scanned"
+        },
+        "reasonCode" : {
+          "type" : "string",
+          "example" : "POINTS_NOT_MET",
+          "description" : "Reason code explaning why the coupon was not applied in the transaction\nOFFER_LIMIT_EXCEDED = The trigger code is attached to an offer with a limit and the limit was met.\nITEM_VALUE_NOT_MET = The trigger code is attached to an offer for which the required item value was not met.\nITEM_QUANTITY_NOT_MET = The trigger code is attached to an offer for which the required item quantity was not met.\nPOINTS_NOT_MET = The trigger code is attached to an offer for which the points requirement was not met.\nSTORED_VALUE_NOT_MET = The trigger code is attached to an offer for which the stored value requirement was not met.\nTENDER_CONDITION_NOT_MET = The trigger code is attached to an offer for which the tender requirement was not met.\nPREFERENCE_NOT_MET = The trigger code is attached to an offer for which the preference requirement was not met.\nINSTANT_WIN_NOT_MET = The trigger code is attached to an offer for which the instant win requirement was not met.\nMESSAGE_UNDELIVERED = The trigger code is attached to an offer and the messaging rewards could not be delivered.\nDISCOUNT_UNDELIVERED = The trigger code is attached to an offer and the discount could not be delivered.\nMUTUAL_EXCLUSION_OFFER = When the trigger code is attached to an offer that is (offer-level) mutually exclusive with a previously earned offer.\nTRIGGER_NOT_MATCHED = No offers were active during the transaction to match the trigger code.\nMULTIPLE_OFFERS = The trigger code is attached to multiple offers and was not used.\nTRIGGER_NOT_NEEDED = The trigger code is attached to one or more offers, all of which have been earned in the transaction.\nMULTIPLE_OFFERS = The trigger code is attached to multiple offers and was not used. \nTRIGGER_NOT_NEEDED = The trigger code is attached to one or more offers, all of which have been earned in the transaction.\nINVALID_CODE = The trigger code is not used by any offer available in the system\nNO_REMAINING_USAGE = The trigger code has exceeded the number of times it can be used and no more usage is left\nLOCKED = The trigger code is being locked and cannot be used\nUNDETERMINED = Could not determine reason the trigger code was unused.\nPurchaseRequirementsNotMet = Purchase Requirements Not met\nItemBelowZero = UPC5_ItemBelowZero\nCollision = UPC5_Collision",
+          "enum" : [ "OFFER_LIMIT_EXCEDED", "ITEM_VALUE_NOT_MET", "ITEM_QUANTITY_NOT_MET", "POINTS_NOT_MET", "STORED_VALUE_NOT_MET", "TENDER_CONDITION_NOT_MET", "PREFERENCE_NOT_MET", "INSTANT_WIN_NOT_MET", "MESSAGE_UNDELIVERED", "DISCOUNT_UNDELIVERED", "MUTUAL_EXCLUSION_OFFER", "TRIGGER_NOT_MATCHED", "MULTIPLE_OFFERS", "TRIGGER_NOT_NEEDED", "INVALID_CODE", "NO_REMAINING_USAGE", "LOCKED", "UNDETERMINED", "PurchaseRequirementsNotMet", "ItemBelowZero", "Collision" ]
+        },
+        "noOfCoupons" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Number Of UnUsedCoupons"
+        }
+      },
+      "description" : "Contains details of why the coupon was not applied in the transaction"
+    },
+    "ItemIdData" : {
+      "type" : "object",
+      "required" : [ "itemCode", "sequenceId" ],
+      "properties" : {
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "sequence number for item"
+        },
+        "itemCode" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Unique item code either UPC or SKU"
+        },
+        "itemName" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Item Name"
+        }
+      },
+      "description" : "Item identifier; Unique code used by retailer to identify a product either UPC or SKU"
+    },
+    "RewardApprovalBasicData" : {
+      "type" : "object",
+      "required" : [ "description", "notificationFor", "promotionId" ],
+      "properties" : {
+        "promotionId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "PromotionData Id associated with this reward"
+        },
+        "coupons" : {
+          "type" : "array",
+          "description" : "Coupon which triggered this reward.",
+          "items" : {
+            "$ref" : "#/definitions/CouponIdData"
+          }
+        },
+        "description" : {
+          "type" : "array",
+          "description" : "Localized description of the reward",
+          "items" : {
+            "$ref" : "#/definitions/LocalizedKeyValueData"
+          }
+        },
+        "alertDuration" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Alert duration in seconds",
+          "maximum" : 5.0
+        },
+        "alertType" : {
+          "type" : "string",
+          "example" : "NO_ALERT",
+          "description" : "Action to take regarding audible alert \nNO_ALERT = Do Not Alert \nALERT = Alert \nALERT_UNTIL_CLEARED = Alert until cleared \nALERT_FOR_DURATION = Alert for duration some duration",
+          "enum" : [ "NO_ALERT", "ALERT", "ALERT_UNTIL_CLEARED", "ALERT_FOR_DURATION" ]
+        },
+        "notificationFor" : {
+          "type" : "string",
+          "example" : "CASHIER",
+          "description" : "Who needs to be notified; Cashier, Shopper or Both",
+          "enum" : [ "CASHIER", "CONSUMER", "CASHIER_AND_CONSUMER" ]
+        },
+        "notificationOrder" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "To display order of the notification message"
+        },
+        "resourceURL" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "To display digital coupon or manufacturer coupon at selling engine which could be associated with reward."
+        }
+      },
+      "description" : "Reward Approval message for promotions going to be applied in transaction"
+    },
+    "TriggeredItemData" : {
+      "type" : "object",
+      "required" : [ "sequenceId" ],
+      "properties" : {
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "sequence number for item"
+        },
+        "quantity" : {
+          "description" : "Used QuantityData",
+          "$ref" : "#/definitions/QuantityData"
+        }
+      },
+      "description" : "Discount Extension message, which contains buy Items and its quantities for the specified discount"
+    },
+    "GiftCardRewardData" : {
+      "type" : "object",
+      "required" : [ "amount", "description", "promotionId", "type" ],
+      "properties" : {
+        "promotionId" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "PromotionData Id associated with this reward"
+        },
+        "coupons" : {
+          "type" : "array",
+          "description" : "Coupon which triggered this reward.",
+          "items" : {
+            "$ref" : "#/definitions/CouponIdData"
+          }
+        },
+        "description" : {
+          "type" : "array",
+          "description" : "Localized description of the reward",
+          "items" : {
+            "$ref" : "#/definitions/LocalizedKeyValueData"
+          }
+        },
+        "amount" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Monetary value of the gift card"
+        },
+        "type" : {
+          "type" : "string",
+          "example" : "STORE_CARD",
+          "description" : "Descriptor for the type of card to be awarded"
+        }
+      },
+      "description" : "Gift card given out as a reward"
+    },
+    "ItemData" : {
+      "type" : "object",
+      "required" : [ "considerForOrderLevelRewards", "discountable", "itemCode", "quantity", "sequenceId", "unitPrice" ],
+      "properties" : {
+        "sequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "sequence number for item"
+        },
+        "itemCode" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Unique item code either UPC or SKU"
+        },
+        "itemName" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Item Name"
+        },
+        "parentSequenceId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Parent's sequence number for item."
+        },
+        "quantity" : {
+          "description" : "QuantityData of the product scanned",
+          "$ref" : "#/definitions/QuantityData"
+        },
+        "unitPrice" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Unit selling price for Item"
+        },
+        "alternatePrice" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Price other than the unit selling price"
+        },
+        "discountable" : {
+          "type" : "boolean",
+          "example" : true,
+          "description" : "Identifier if item level discounts should apply to this product",
+          "default" : false
+        },
+        "considerForOrderLevelRewards" : {
+          "type" : "boolean",
+          "example" : true,
+          "description" : "Identifier if item is eligible for order level rewards",
+          "default" : false
+        },
+        "clearanceLevel" : {
+          "type" : "string",
+          "example" : "NOT_ON_CLEARANCE",
+          "description" : "Clearance level identifier for item \nNOT_ON_CLEARANCE = Not a clearance \nLEVEL_1 = Clearance Level 1 \nLEVEL_2 = Clearance Level 2 \n..\n LEVEL_10 = Clearance Level 10 \ndefaulted to NOT_ON_CLEARANCE",
+          "enum" : [ "NOT_ON_CLEARANCE", "LEVEL_1", "LEVEL_2", "LEVEL_3", "LEVEL_4", "LEVEL_5", "LEVEL_6", "LEVEL_7", "LEVEL_8", "LEVEL_9", "LEVEL_10" ]
+        },
+        "departmentId" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Identifies the department the product belongs to (range 0000-9999) defaulted to 0"
+        },
+        "familyCode" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0,
+          "description" : "Manufacturer's Family Code for the item defaulted to 0"
+        },
+        "companyPrefix" : {
+          "type" : "string",
+          "example" : "string",
+          "description" : "Manufacturer's Company Prefix / Manufacturer Code for the Item"
+        },
+        "shippingPrice" : {
+          "type" : "number",
+          "example" : 0.0,
+          "description" : "Shipping cost for the Item"
+        },
+        "adjustments" : {
+          "type" : "array",
+          "description" : "List of Item level Adjustments",
+          "items" : {
+            "$ref" : "#/definitions/ItemAdjustmentData"
+          }
+        }
+      },
+      "description" : "Contains details of the Item scan"
+    },
+    "KeyValueData" : {
+      "type" : "object",
+      "required" : [ "key" ],
+      "properties" : {
+        "key" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 512
+        }
+      }
+    }
+  }
+}

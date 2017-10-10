@@ -1,0 +1,47 @@
+{
+    "status": "ACTIVE",
+    "version": 201710091530,
+    "packageIdentifiers": [
+        {
+            "type": "prod_id",
+            "value": "36235"
+        }
+    ],
+    "longDescription": {
+        "values": [
+            {
+                "locale": "en-US",
+                "value": "Organic Pure Extra Virgin Coconut Oil"
+            }
+        ]
+    },
+    "shortDescription": {
+        "values": [
+            {
+                "locale": "en-US",
+                "value": "Coconut Oil"
+            }
+        ]
+    },
+    "merchandiseCategory": {
+        "nodeId": "Food"
+    },
+    "departmentId": "13",
+    "familyCode": "NA",
+    "manufacturerCode": "NA",
+    "nonMerchandise": false,
+    "dynamicAttributes": [
+        {
+            "type": "OnlineImageLink",
+            "attributes": [
+                {
+                    "key": "url",
+                    "value": "https://some.image.com/CocoOil.png"
+                }
+            ]
+        }
+    ],
+    "itemId": {
+        "itemCode": "658540dc-8dc9-42c9-97f1-b7e5d3bc6f71"
+    }
+}

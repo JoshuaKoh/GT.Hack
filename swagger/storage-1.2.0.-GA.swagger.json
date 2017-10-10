@@ -1,0 +1,779 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.2.0-GA",
+    "title" : "storage-service",
+    "contact" : {
+      "name" : ""
+    },
+    "license" : {
+      "name" : "",
+      "url" : ""
+    }
+  },
+  "basePath" : "/storage",
+  "tags" : [ {
+    "name" : "/storage-containers"
+  }, {
+    "name" : "/storage-management"
+  }, {
+    "name" : "/storage-objects"
+  } ],
+  "paths" : {
+    "/storage-containers" : {
+      "get" : {
+        "tags" : [ "/storage-containers" ],
+        "operationId" : "findByCriteria",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "pageNumber",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "maximum" : 214748.0,
+          "minimum" : 0.0,
+          "format" : "int32"
+        }, {
+          "name" : "pageSize",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 200,
+          "maximum" : 10000.0,
+          "minimum" : 10.0,
+          "format" : "int32"
+        }, {
+          "name" : "namePattern",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "maximum" : 1024.0,
+          "minimum" : 0.0,
+          "maxItems" : 1024,
+          "minItems" : 0
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/FindContainersResponse"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "/storage-containers" ],
+        "operationId" : "create",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreateContainerRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/storage-containers/{containerName}" : {
+      "get" : {
+        "tags" : [ "/storage-containers" ],
+        "operationId" : "get",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "containerName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/ContainerBasicViewData"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "/storage-containers" ],
+        "operationId" : "update",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "containerName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ContainerData"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/storage-management/expiration-trigger" : {
+      "post" : {
+        "tags" : [ "/storage-management" ],
+        "operationId" : "triggerExpirationsCleanup",
+        "parameters" : [ ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/storage-management/{containerName}/{objectName}/sessions" : {
+      "delete" : {
+        "tags" : [ "/storage-management" ],
+        "operationId" : "deleteSession",
+        "parameters" : [ {
+          "name" : "containerName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "objectName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/storage-management/{containerName}/{objectName}/write-lock" : {
+      "post" : {
+        "tags" : [ "/storage-management" ],
+        "operationId" : "addWriteLock",
+        "parameters" : [ {
+          "name" : "containerName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "objectName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      },
+      "delete" : {
+        "tags" : [ "/storage-management" ],
+        "operationId" : "removeWriteLock",
+        "parameters" : [ {
+          "name" : "containerName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "objectName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/storage-objects" : {
+      "get" : {
+        "tags" : [ "/storage-objects" ],
+        "operationId" : "findByCriteria",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "pageNumber",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "maximum" : 214748.0,
+          "minimum" : 0.0,
+          "format" : "int32"
+        }, {
+          "name" : "pageSize",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 200,
+          "maximum" : 10000.0,
+          "minimum" : 10.0,
+          "format" : "int32"
+        }, {
+          "name" : "containerName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "namePattern",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "maximum" : 255.0,
+          "minimum" : 0.0,
+          "maxItems" : 255,
+          "minItems" : 0
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/FindObjectsResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/storage-objects/{containerName}/{objectName}" : {
+      "get" : {
+        "tags" : [ "/storage-objects" ],
+        "operationId" : "get",
+        "parameters" : [ {
+          "name" : "containerName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "objectName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "Range",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "enterprise-unit-exact-match",
+          "in" : "query",
+          "required" : false,
+          "type" : "boolean",
+          "default" : false
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      },
+      "put" : {
+        "tags" : [ "/storage-objects" ],
+        "operationId" : "save",
+        "parameters" : [ {
+          "name" : "containerName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "objectName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "Content-Length",
+          "in" : "header",
+          "required" : false,
+          "type" : "integer",
+          "maximum" : 1.073741824E9,
+          "minimum" : 0.0,
+          "format" : "int64"
+        }, {
+          "name" : "Content-Type",
+          "in" : "header",
+          "required" : false,
+          "type" : "string",
+          "default" : "application/octet-stream"
+        }, {
+          "name" : "Content-MD5",
+          "in" : "header",
+          "required" : false,
+          "type" : "string",
+          "maximum" : 32.0,
+          "minimum" : 32.0,
+          "maxItems" : 32,
+          "minItems" : 32
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/InputStream"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      },
+      "delete" : {
+        "tags" : [ "/storage-objects" ],
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "containerName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "objectName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/storage-objects/{containerName}/{objectName}/append" : {
+      "put" : {
+        "tags" : [ "/storage-objects" ],
+        "operationId" : "append",
+        "parameters" : [ {
+          "name" : "containerName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "objectName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "Content-Length",
+          "in" : "header",
+          "required" : false,
+          "type" : "integer",
+          "maximum" : 1.073741824E9,
+          "minimum" : 0.0,
+          "format" : "int64"
+        }, {
+          "name" : "Content-Type",
+          "in" : "header",
+          "required" : false,
+          "type" : "string",
+          "default" : "application/octet-stream"
+        }, {
+          "name" : "Content-MD5",
+          "in" : "header",
+          "required" : false,
+          "type" : "string",
+          "maximum" : 32.0,
+          "minimum" : 32.0,
+          "maxItems" : 32,
+          "minItems" : 32
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/InputStream"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        },
+        "deprecated" : true
+      }
+    },
+    "/storage-objects/{containerName}/{objectName}/sessions" : {
+      "post" : {
+        "tags" : [ "/storage-objects" ],
+        "operationId" : "open",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "containerName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "objectName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "Content-Length",
+          "in" : "header",
+          "required" : false,
+          "type" : "integer",
+          "maximum" : 1.073741824E9,
+          "minimum" : 0.0,
+          "format" : "int64"
+        }, {
+          "name" : "Content-Type",
+          "in" : "header",
+          "required" : false,
+          "type" : "string",
+          "default" : "application/octet-stream"
+        }, {
+          "name" : "Content-MD5",
+          "in" : "header",
+          "required" : false,
+          "type" : "string",
+          "maximum" : 32.0,
+          "minimum" : 32.0,
+          "maxItems" : 32,
+          "minItems" : 32
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/ObjectWriteSessionIdData"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/storage-objects/{containerName}/{objectName}/sessions/{writeSessionId}" : {
+      "delete" : {
+        "tags" : [ "/storage-objects" ],
+        "operationId" : "close",
+        "parameters" : [ {
+          "name" : "containerName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "objectName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "Content-Length",
+          "in" : "header",
+          "required" : false,
+          "type" : "integer",
+          "maximum" : 1.073741824E9,
+          "minimum" : 0.0,
+          "format" : "int64"
+        }, {
+          "name" : "Content-Type",
+          "in" : "header",
+          "required" : false,
+          "type" : "string",
+          "default" : "application/octet-stream"
+        }, {
+          "name" : "Content-MD5",
+          "in" : "header",
+          "required" : false,
+          "type" : "string",
+          "maximum" : 32.0,
+          "minimum" : 32.0,
+          "maxItems" : 32,
+          "minItems" : 32
+        }, {
+          "name" : "writeSessionId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/storage-objects/{containerName}/{objectName}/sessions/{writeSessionId}/append" : {
+      "put" : {
+        "tags" : [ "/storage-objects" ],
+        "operationId" : "append",
+        "parameters" : [ {
+          "name" : "containerName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "objectName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "Content-Length",
+          "in" : "header",
+          "required" : false,
+          "type" : "integer",
+          "maximum" : 1.073741824E9,
+          "minimum" : 0.0,
+          "format" : "int64"
+        }, {
+          "name" : "Content-Type",
+          "in" : "header",
+          "required" : false,
+          "type" : "string",
+          "default" : "application/octet-stream"
+        }, {
+          "name" : "Content-MD5",
+          "in" : "header",
+          "required" : false,
+          "type" : "string",
+          "maximum" : 32.0,
+          "minimum" : 32.0,
+          "maxItems" : 32,
+          "minItems" : 32
+        }, {
+          "name" : "writeSessionId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/InputStream"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "ObjectBasicViewData" : {
+      "type" : "object",
+      "required" : [ "contentType", "createdBy", "dateCreated", "objectId" ],
+      "properties" : {
+        "objectId" : {
+          "$ref" : "#/definitions/ObjectIdData"
+        },
+        "size" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "enterpriseUnitId" : {
+          "type" : "string"
+        },
+        "dateCreated" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "createdBy" : {
+          "$ref" : "#/definitions/OrganizationUserIdData"
+        },
+        "lastAccessed" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "downloadCount" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "contentType" : {
+          "type" : "string"
+        }
+      }
+    },
+    "FindContainersResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ContainerBasicViewData"
+          }
+        }
+      }
+    },
+    "CreateContainerRequest" : {
+      "type" : "object",
+      "required" : [ "containerId", "readPolicy", "writePolicy" ],
+      "properties" : {
+        "expirationPolicy" : {
+          "$ref" : "#/definitions/ExpirationPolicyData"
+        },
+        "readPolicy" : {
+          "type" : "string",
+          "enum" : [ "CONTAINER_USER", "ENTERPRISE_UNIT", "ORGANIZATION", "AUTHENTICATED_USERS" ]
+        },
+        "writePolicy" : {
+          "type" : "string",
+          "enum" : [ "CONTAINER_USER", "ENTERPRISE_UNIT", "ORGANIZATION", "AUTHENTICATED_USERS" ]
+        },
+        "owner" : {
+          "$ref" : "#/definitions/OrganizationUserIdData"
+        },
+        "containerId" : {
+          "$ref" : "#/definitions/ContainerIdData"
+        }
+      }
+    },
+    "ContainerIdData" : {
+      "type" : "object",
+      "required" : [ "containerName" ],
+      "properties" : {
+        "containerName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ObjectIdData" : {
+      "type" : "object",
+      "required" : [ "containerName", "objectName" ],
+      "properties" : {
+        "containerName" : {
+          "type" : "string"
+        },
+        "objectName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ContainerBasicViewData" : {
+      "type" : "object",
+      "required" : [ "containerId", "readPolicy", "writePolicy" ],
+      "properties" : {
+        "expirationPolicy" : {
+          "$ref" : "#/definitions/ExpirationPolicyData"
+        },
+        "readPolicy" : {
+          "type" : "string",
+          "enum" : [ "CONTAINER_USER", "ENTERPRISE_UNIT", "ORGANIZATION", "AUTHENTICATED_USERS" ]
+        },
+        "writePolicy" : {
+          "type" : "string",
+          "enum" : [ "CONTAINER_USER", "ENTERPRISE_UNIT", "ORGANIZATION", "AUTHENTICATED_USERS" ]
+        },
+        "owner" : {
+          "$ref" : "#/definitions/OrganizationUserIdData"
+        },
+        "containerId" : {
+          "$ref" : "#/definitions/ContainerIdData"
+        }
+      }
+    },
+    "InputStream" : {
+      "type" : "object"
+    },
+    "ObjectWriteSessionIdData" : {
+      "type" : "object",
+      "required" : [ "containerName", "objectName", "writeSessionId" ],
+      "properties" : {
+        "containerName" : {
+          "type" : "string"
+        },
+        "objectName" : {
+          "type" : "string"
+        },
+        "contentLength" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0,
+          "maximum" : 1.073741824E9
+        },
+        "contentType" : {
+          "type" : "string"
+        },
+        "contentMD5" : {
+          "type" : "string",
+          "minLength" : 32,
+          "maxLength" : 32
+        },
+        "writeSessionId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ExpirationPolicyData" : {
+      "type" : "object",
+      "properties" : {
+        "hours" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "OrganizationUserIdData" : {
+      "type" : "object",
+      "required" : [ "organizationName", "username" ],
+      "properties" : {
+        "username" : {
+          "type" : "string"
+        },
+        "organizationName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "FindObjectsResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ObjectBasicViewData"
+          }
+        }
+      }
+    },
+    "ContainerData" : {
+      "type" : "object",
+      "required" : [ "readPolicy", "writePolicy" ],
+      "properties" : {
+        "expirationPolicy" : {
+          "$ref" : "#/definitions/ExpirationPolicyData"
+        },
+        "readPolicy" : {
+          "type" : "string",
+          "enum" : [ "CONTAINER_USER", "ENTERPRISE_UNIT", "ORGANIZATION", "AUTHENTICATED_USERS" ]
+        },
+        "writePolicy" : {
+          "type" : "string",
+          "enum" : [ "CONTAINER_USER", "ENTERPRISE_UNIT", "ORGANIZATION", "AUTHENTICATED_USERS" ]
+        },
+        "owner" : {
+          "$ref" : "#/definitions/OrganizationUserIdData"
+        }
+      }
+    }
+  }
+}

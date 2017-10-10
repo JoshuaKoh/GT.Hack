@@ -1,0 +1,2652 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "NEP application for application / service registry management",
+    "version" : "3.1.2-GA",
+    "title" : "apimanagement",
+    "contact" : {
+      "name" : "NCR"
+    },
+    "license" : {
+      "name" : "NCR Proprietary - All rights reserved",
+      "url" : "https://www.ncr.com"
+    }
+  },
+  "basePath" : "/apimanagement",
+  "tags" : [ {
+    "name" : "/application-activities"
+  }, {
+    "name" : "/application-deployments"
+  }, {
+    "name" : "/application-grants"
+  }, {
+    "name" : "/application-keys"
+  }, {
+    "name" : "/application-services"
+  }, {
+    "name" : "/application-team-members"
+  }, {
+    "name" : "/application-usage"
+  }, {
+    "name" : "/applications"
+  }, {
+    "name" : "/deployment-environments"
+  }, {
+    "name" : "/policies"
+  } ],
+  "paths" : {
+    "/application-activities" : {
+      "get" : {
+        "tags" : [ "/application-activities" ],
+        "operationId" : "findByCriteria",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/FindApplicationActivitiesResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/application-deployments" : {
+      "get" : {
+        "tags" : [ "/application-deployments" ],
+        "operationId" : "findByApplication",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/ApplicationDeploymentDataListResponse"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "/application-deployments" ],
+        "operationId" : "deploy",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/DeployApplicationRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      },
+      "put" : {
+        "tags" : [ "/application-deployments" ],
+        "operationId" : "update",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UpdateApplicationDeploymentRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/ApplicationDeploymentData"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/application-deployments/deploy-client" : {
+      "post" : {
+        "tags" : [ "/application-deployments" ],
+        "operationId" : "deployClient",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/DeployApplicationClientRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/application-deployments/deployment-nodes" : {
+      "post" : {
+        "tags" : [ "/application-deployments" ],
+        "operationId" : "addDeploymentNodes",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AddApplicationDeploymentNodesRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/application-deployments/deployment-nodes/scale-in" : {
+      "post" : {
+        "tags" : [ "/application-deployments" ],
+        "operationId" : "removeDeploymentNodes",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/RemoveApplicationDeploymentNodesRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/application-deployments/{deploymentEnvironmentId.name}/{applicationId.name}/{applicationId.version}" : {
+      "delete" : {
+        "tags" : [ "/application-deployments" ],
+        "operationId" : "undeploy",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/application-grants/organization-grants" : {
+      "get" : {
+        "tags" : [ "/application-grants" ],
+        "operationId" : "findOrganizationGrantsByCriteria",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/OrganizationGrantDataListResponse"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "/application-grants" ],
+        "operationId" : "grantToOrganization",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/GrantApplicationToOrganizationRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/application-grants/organization-grants/revoke" : {
+      "post" : {
+        "tags" : [ "/application-grants" ],
+        "operationId" : "revokeFromOrganization",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/RevokeApplicationFromOrganizationRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/application-keys/validate" : {
+      "post" : {
+        "tags" : [ "/application-keys" ],
+        "operationId" : "validate",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ValidateApplicationKeyRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/ApplicationIdData"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/application-services" : {
+      "post" : {
+        "tags" : [ "/application-services" ],
+        "operationId" : "register",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/RegisterServiceRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      },
+      "put" : {
+        "tags" : [ "/application-services" ],
+        "operationId" : "update",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UpdateServiceRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/UpdateServiceResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/application-services/find-by-criteria" : {
+      "get" : {
+        "tags" : [ "/application-services" ],
+        "operationId" : "findByCriteria",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/FindServicesResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/application-services/registry" : {
+      "get" : {
+        "tags" : [ "/application-services" ],
+        "operationId" : "getServiceRegistry",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/GetServiceRegistryResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/application-services/{applicationId.name}/{applicationId.version}/{name}/{version}" : {
+      "get" : {
+        "tags" : [ "/application-services" ],
+        "operationId" : "get",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/GetServiceResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/application-team-members" : {
+      "get" : {
+        "tags" : [ "/application-team-members" ],
+        "operationId" : "getMembers",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/ApplicationTeamData"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "/application-team-members" ],
+        "operationId" : "addMembers",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AddApplicationTeamMembersRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/application-team-members/remove" : {
+      "post" : {
+        "tags" : [ "/application-team-members" ],
+        "operationId" : "removeMembers",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/RemoveApplicationTeamMembersRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/application-usage" : {
+      "get" : {
+        "tags" : [ "/application-usage" ],
+        "operationId" : "get",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/GetApplicationUsageResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/application-usage/consumed-service-usage" : {
+      "get" : {
+        "tags" : [ "/application-usage" ],
+        "operationId" : "getServiceDependencyUsage",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/GetServiceUsageResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/application-usage/service-usage" : {
+      "get" : {
+        "tags" : [ "/application-usage" ],
+        "operationId" : "getServiceUsage",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/GetServiceUsageResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/applications" : {
+      "get" : {
+        "tags" : [ "/applications" ],
+        "operationId" : "getAllByCriteria",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/GetApplicationsResponse"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "/applications" ],
+        "operationId" : "register",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/RegisterApplicationRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/ApplicationData"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "/applications" ],
+        "operationId" : "update",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UpdateApplicationRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/ApplicationData"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/applications/dependencies" : {
+      "post" : {
+        "tags" : [ "/applications" ],
+        "operationId" : "addDependencies",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AddApplicationDependenciesRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/applications/dependencies/remove" : {
+      "post" : {
+        "tags" : [ "/applications" ],
+        "operationId" : "removeDependencies",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/RemoveApplicationDependenciesRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/applications/find-by-criteria" : {
+      "get" : {
+        "tags" : [ "/applications" ],
+        "operationId" : "findByCriteria",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/FindApplicationsResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/applications/find-by-dependent-service" : {
+      "get" : {
+        "tags" : [ "/applications" ],
+        "operationId" : "findByDependentService",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/FindApplicationsResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/applications/find-by-environment" : {
+      "get" : {
+        "tags" : [ "/applications" ],
+        "operationId" : "findByDeploymentEnvironment",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/ApplicationBasicDataListResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/applications/keys/revoke/{applicationKey}" : {
+      "delete" : {
+        "tags" : [ "/applications" ],
+        "operationId" : "revokeKey",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/applications/registry" : {
+      "get" : {
+        "tags" : [ "/applications" ],
+        "operationId" : "getApplicationRegistry",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/GetApplicationRegistryResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/applications/{name}/{version}" : {
+      "get" : {
+        "tags" : [ "/applications" ],
+        "operationId" : "get",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/ApplicationReadData"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "/applications" ],
+        "operationId" : "unregister",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/applications/{name}/{version}/keys" : {
+      "get" : {
+        "tags" : [ "/applications" ],
+        "operationId" : "getKey",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/ApplicationKeyData"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "/applications" ],
+        "operationId" : "generateKey",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/GenerateApplicationKeyResponse"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/deployment-environments" : {
+      "get" : {
+        "tags" : [ "/deployment-environments" ],
+        "operationId" : "findAll",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/DeploymentEnvironmentBasicDataListResponse"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "/deployment-environments" ],
+        "operationId" : "create",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreateDeploymentEnvironmentRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/DeploymentEnvironmentData"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "/deployment-environments" ],
+        "operationId" : "update",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UpdateDeploymentEnvironmentRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/DeploymentEnvironmentData"
+            },
+            "headers" : { }
+          }
+        }
+      }
+    },
+    "/deployment-environments/{name}" : {
+      "get" : {
+        "tags" : [ "/deployment-environments" ],
+        "operationId" : "get",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/DeploymentEnvironmentData"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "/deployment-environments" ],
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/policies" : {
+      "get" : {
+        "tags" : [ "/policies" ],
+        "operationId" : "findByCriteria",
+        "parameters" : [ {
+          "name" : "pageNumber",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "maximum" : 214748.0,
+          "minimum" : 0.0,
+          "format" : "int32"
+        }, {
+          "name" : "pageSize",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 200,
+          "maximum" : 10000.0,
+          "minimum" : 10.0,
+          "format" : "int32"
+        }, {
+          "name" : "namePattern",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "maximum" : 256.0,
+          "minimum" : 1.0,
+          "maxItems" : 256,
+          "minItems" : 1
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/FindPoliciesResponse"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "/policies" ],
+        "operationId" : "create",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreatePolicyRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      },
+      "put" : {
+        "tags" : [ "/policies" ],
+        "operationId" : "update",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UpdatePolicyRequest"
+          }
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    },
+    "/policies/{policyName}" : {
+      "get" : {
+        "tags" : [ "/policies" ],
+        "operationId" : "get",
+        "parameters" : [ {
+          "name" : "policyName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "maximum" : 256.0,
+          "minimum" : 1.0,
+          "pattern" : "\\p{Alpha}[\\w-]*",
+          "maxItems" : 256,
+          "minItems" : 1
+        } ],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/PolicyData"
+            },
+            "headers" : { }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "/policies" ],
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "policyName",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "maximum" : 256.0,
+          "minimum" : 1.0,
+          "pattern" : "\\p{Alpha}[\\w-]*",
+          "maxItems" : 256,
+          "minItems" : 1
+        } ],
+        "responses" : {
+          "default" : { }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "ApplicationIdData" : {
+      "type" : "object",
+      "required" : [ "name", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\d[\\w-\\.]*"
+        }
+      }
+    },
+    "PolicyIdData" : {
+      "type" : "object",
+      "required" : [ "policyName" ],
+      "properties" : {
+        "policyName" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 256,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        }
+      }
+    },
+    "CreatePolicyRequest" : {
+      "type" : "object",
+      "required" : [ "policyName" ],
+      "properties" : {
+        "policyName" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 256,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "configurationSetId" : {
+          "$ref" : "#/definitions/ConfigurationSetIdData"
+        },
+        "requiredFields" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ConfigurationFieldIdData"
+          }
+        }
+      }
+    },
+    "DeployApplicationClientRequest" : {
+      "type" : "object",
+      "required" : [ "applicationId", "deploymentEnvironmentId" ],
+      "properties" : {
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        },
+        "deploymentEnvironmentId" : {
+          "$ref" : "#/definitions/DeploymentEnvironmentIdData"
+        }
+      }
+    },
+    "RevokeApplicationFromOrganizationRequest" : {
+      "type" : "object",
+      "required" : [ "applicationId" ],
+      "properties" : {
+        "organizationName" : {
+          "type" : "string"
+        },
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        }
+      }
+    },
+    "FindApplicationActivitiesResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationActivityBasicData"
+          }
+        }
+      }
+    },
+    "ValidateApplicationKeyRequest" : {
+      "type" : "object",
+      "required" : [ "applicationKey", "deploymentEnvironment" ],
+      "properties" : {
+        "applicationKey" : {
+          "type" : "string"
+        },
+        "deploymentEnvironment" : {
+          "$ref" : "#/definitions/DeploymentEnvironmentIdData"
+        }
+      }
+    },
+    "ServiceUsageData" : {
+      "type" : "object",
+      "properties" : {
+        "invocationCount" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "numberOfErrors" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "processingTime" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "serviceId" : {
+          "$ref" : "#/definitions/ServiceIdData"
+        }
+      }
+    },
+    "ApplicationDeploymentReadData" : {
+      "type" : "object",
+      "required" : [ "applicationId", "deployedByUsername", "deploymentEnvironmentId" ],
+      "properties" : {
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        },
+        "deploymentEnvironmentId" : {
+          "$ref" : "#/definitions/DeploymentEnvironmentIdData"
+        },
+        "deploymentNodes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationDeploymentNodeData"
+          }
+        },
+        "healthMonitor" : {
+          "$ref" : "#/definitions/ApplicationDeploymentHealthMonitorData"
+        },
+        "serviceDeployments" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ServiceDeploymentData"
+          }
+        },
+        "deployedByUsername" : {
+          "type" : "string"
+        },
+        "deploymentTimestamp" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "GenerateApplicationKeyResponse" : {
+      "type" : "object",
+      "required" : [ "applicationKey" ],
+      "properties" : {
+        "applicationKey" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AddApplicationDeploymentNodesRequest" : {
+      "type" : "object",
+      "required" : [ "applicationId", "deploymentEnvironmentId", "deploymentNodes" ],
+      "properties" : {
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        },
+        "deploymentEnvironmentId" : {
+          "$ref" : "#/definitions/DeploymentEnvironmentIdData"
+        },
+        "deploymentNodes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationDeploymentNodeData"
+          }
+        }
+      }
+    },
+    "ApplicationDeploymentDataListResponse" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationDeploymentData"
+          }
+        }
+      }
+    },
+    "DeployApplicationRequest" : {
+      "type" : "object",
+      "required" : [ "applicationId", "deploymentEnvironmentId" ],
+      "properties" : {
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        },
+        "deploymentEnvironmentId" : {
+          "$ref" : "#/definitions/DeploymentEnvironmentIdData"
+        },
+        "deploymentNodes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationDeploymentNodeData"
+          }
+        },
+        "healthMonitor" : {
+          "$ref" : "#/definitions/ApplicationDeploymentHealthMonitorData"
+        },
+        "serviceDeployments" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ServiceDeploymentData"
+          }
+        }
+      }
+    },
+    "ServiceUsageGroupData" : {
+      "type" : "object",
+      "properties" : {
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        },
+        "groupValue" : {
+          "type" : "string"
+        },
+        "serviceUsage" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ServiceUsageData"
+          }
+        }
+      }
+    },
+    "CreateDeploymentEnvironmentRequest" : {
+      "type" : "object",
+      "required" : [ "name", "serviceGatewayUrl" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "serviceGatewayUrl" : {
+          "type" : "string"
+        }
+      }
+    },
+    "DeploymentEnvironmentIdData" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        }
+      }
+    },
+    "RoleIdData" : {
+      "type" : "object",
+      "required" : [ "roleName" ],
+      "properties" : {
+        "roleName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ServiceDeploymentData" : {
+      "type" : "object",
+      "required" : [ "serviceId" ],
+      "properties" : {
+        "policyDeployments" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PolicyDeploymentData"
+          }
+        },
+        "serviceId" : {
+          "$ref" : "#/definitions/ServiceIdData"
+        }
+      }
+    },
+    "GetApplicationRegistryResponse" : {
+      "type" : "object",
+      "required" : [ "applications", "deploymentEnvironment" ],
+      "properties" : {
+        "applications" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationRoutingData"
+          }
+        },
+        "deploymentEnvironment" : {
+          "$ref" : "#/definitions/DeploymentEnvironmentBasicData"
+        }
+      }
+    },
+    "GetServiceUsageResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ServiceUsageGroupData"
+          }
+        }
+      }
+    },
+    "RemoveApplicationDependenciesRequest" : {
+      "type" : "object",
+      "required" : [ "dependenciesToRemove", "name", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "dependenciesToRemove" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationDependencyData"
+          }
+        }
+      }
+    },
+    "ServiceIdData" : {
+      "type" : "object",
+      "required" : [ "name", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 100,
+          "pattern" : "\\d[\\w-\\.]*"
+        }
+      }
+    },
+    "ApplicationKeyData" : {
+      "type" : "object",
+      "required" : [ "applicationKey" ],
+      "properties" : {
+        "applicationKey" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ServiceData" : {
+      "type" : "object",
+      "required" : [ "description", "documentationUrl", "name", "serviceState", "serviceType", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 100,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "basicAuthenticationAllowed" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "contractUrl" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "documentationUrl" : {
+          "type" : "string"
+        },
+        "serviceState" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE", "DEPRECATED", "INACTIVE", "RETIRED" ]
+        },
+        "serviceType" : {
+          "type" : "string",
+          "enum" : [ "REST", "SOAP" ]
+        },
+        "serviceUri" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ApplicationTeamMemberData" : {
+      "type" : "object",
+      "required" : [ "teamRole", "username" ],
+      "properties" : {
+        "username" : {
+          "type" : "string"
+        },
+        "teamRole" : {
+          "type" : "string",
+          "enum" : [ "DEVELOPER", "SPECTATOR" ]
+        }
+      }
+    },
+    "ApplicationReadData" : {
+      "type" : "object",
+      "required" : [ "applicationState", "name", "ownerUsername", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "applicationRole" : {
+          "$ref" : "#/definitions/RoleIdData"
+        },
+        "displayName" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 200
+        },
+        "applicationState" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE", "INACTIVE" ]
+        },
+        "applicationUri" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "documentationUrl" : {
+          "type" : "string"
+        },
+        "ownerUsername" : {
+          "type" : "string"
+        },
+        "applicationServices" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ServiceData"
+          }
+        },
+        "applicationTeamMembers" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationTeamMemberData"
+          }
+        },
+        "dependencies" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationDependencyData"
+          }
+        },
+        "deployments" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationDeploymentReadData"
+          }
+        }
+      }
+    },
+    "ApplicationTeamMemberIdData" : {
+      "type" : "object",
+      "required" : [ "username" ],
+      "properties" : {
+        "username" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ApplicationTeamData" : {
+      "type" : "object",
+      "required" : [ "applicationId" ],
+      "properties" : {
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        },
+        "teamMembers" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationTeamMemberData"
+          }
+        }
+      }
+    },
+    "ServiceBasicReadData" : {
+      "type" : "object",
+      "required" : [ "applicationId", "description", "documentationUrl", "name", "serviceState", "serviceType", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 100,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "basicAuthenticationAllowed" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "contractUrl" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "documentationUrl" : {
+          "type" : "string"
+        },
+        "serviceState" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE", "DEPRECATED", "INACTIVE", "RETIRED" ]
+        },
+        "serviceType" : {
+          "type" : "string",
+          "enum" : [ "REST", "SOAP" ]
+        },
+        "serviceUri" : {
+          "type" : "string"
+        },
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        }
+      }
+    },
+    "PolicyDeploymentData" : {
+      "type" : "object",
+      "required" : [ "policyId" ],
+      "properties" : {
+        "attributes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/KeyValueData"
+          }
+        },
+        "policyId" : {
+          "$ref" : "#/definitions/PolicyIdData"
+        },
+        "policyName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "UpdateApplicationRequest" : {
+      "type" : "object",
+      "required" : [ "applicationState", "name", "ownerUsername", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "applicationRole" : {
+          "$ref" : "#/definitions/RoleIdData"
+        },
+        "displayName" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 200
+        },
+        "applicationState" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE", "INACTIVE" ]
+        },
+        "applicationUri" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "documentationUrl" : {
+          "type" : "string"
+        },
+        "ownerUsername" : {
+          "type" : "string"
+        }
+      }
+    },
+    "UpdateDeploymentEnvironmentRequest" : {
+      "type" : "object",
+      "required" : [ "name", "serviceGatewayUrl" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "serviceGatewayUrl" : {
+          "type" : "string"
+        }
+      }
+    },
+    "GrantApplicationToOrganizationRequest" : {
+      "type" : "object",
+      "required" : [ "applicationId" ],
+      "properties" : {
+        "organizationName" : {
+          "type" : "string"
+        },
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        }
+      }
+    },
+    "GetApplicationsResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationReadData"
+          }
+        }
+      }
+    },
+    "GetServiceResponse" : {
+      "type" : "object",
+      "required" : [ "applicationId", "description", "documentationUrl", "name", "serviceState", "serviceType", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 100,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "basicAuthenticationAllowed" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "contractUrl" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "documentationUrl" : {
+          "type" : "string"
+        },
+        "serviceState" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE", "DEPRECATED", "INACTIVE", "RETIRED" ]
+        },
+        "serviceType" : {
+          "type" : "string",
+          "enum" : [ "REST", "SOAP" ]
+        },
+        "serviceUri" : {
+          "type" : "string"
+        },
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        }
+      }
+    },
+    "RegisterServiceRequest" : {
+      "type" : "object",
+      "required" : [ "applicationId", "description", "documentationUrl", "name", "serviceState", "serviceType", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 100,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "basicAuthenticationAllowed" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "contractUrl" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "documentationUrl" : {
+          "type" : "string"
+        },
+        "serviceState" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE", "DEPRECATED", "INACTIVE", "RETIRED" ]
+        },
+        "serviceType" : {
+          "type" : "string",
+          "enum" : [ "REST", "SOAP" ]
+        },
+        "serviceUri" : {
+          "type" : "string"
+        },
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        }
+      }
+    },
+    "ApplicationDeploymentHealthMonitorData" : {
+      "type" : "object",
+      "required" : [ "monitorUri" ],
+      "properties" : {
+        "monitorUri" : {
+          "type" : "string"
+        }
+      }
+    },
+    "UpdateServiceRequest" : {
+      "type" : "object",
+      "required" : [ "applicationId", "description", "documentationUrl", "name", "serviceState", "serviceType", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 100,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "basicAuthenticationAllowed" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "contractUrl" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "documentationUrl" : {
+          "type" : "string"
+        },
+        "serviceState" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE", "DEPRECATED", "INACTIVE", "RETIRED" ]
+        },
+        "serviceType" : {
+          "type" : "string",
+          "enum" : [ "REST", "SOAP" ]
+        },
+        "serviceUri" : {
+          "type" : "string"
+        },
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        }
+      }
+    },
+    "ApplicationActivityBasicData" : {
+      "type" : "object",
+      "required" : [ "activityType", "applicationId", "timestamp", "username" ],
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 500
+        },
+        "timestamp" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "username" : {
+          "type" : "string"
+        },
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        },
+        "activityType" : {
+          "type" : "string",
+          "enum" : [ "APPLICATION_CREATED", "APPLICATION_DEPLOYED", "APPLICATION_STATE_CHANGE", "APPLICATION_UNDEPLOYED", "OTHER", "SERVICE_CONSUMED", "SERVICE_CREATED" ]
+        }
+      }
+    },
+    "ApplicationDeploymentNodeData" : {
+      "type" : "object",
+      "required" : [ "routingUrl" ],
+      "properties" : {
+        "routingUrl" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ApplicationUsageData" : {
+      "type" : "object",
+      "properties" : {
+        "invocationCount" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "numberOfErrors" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "processingTime" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        }
+      }
+    },
+    "ServiceRoutingData" : {
+      "type" : "object",
+      "required" : [ "description", "documentationUrl", "name", "serviceState", "serviceType", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 100,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "basicAuthenticationAllowed" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "contractUrl" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "documentationUrl" : {
+          "type" : "string"
+        },
+        "serviceState" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE", "DEPRECATED", "INACTIVE", "RETIRED" ]
+        },
+        "serviceType" : {
+          "type" : "string",
+          "enum" : [ "REST", "SOAP" ]
+        },
+        "serviceUri" : {
+          "type" : "string"
+        },
+        "serviceDeployments" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ServiceDeploymentRoutingData"
+          }
+        }
+      }
+    },
+    "ApplicationBasicData" : {
+      "type" : "object",
+      "required" : [ "applicationState", "name", "ownerUsername", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "applicationRole" : {
+          "$ref" : "#/definitions/RoleIdData"
+        },
+        "displayName" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 200
+        },
+        "applicationState" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE", "INACTIVE" ]
+        },
+        "applicationUri" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "documentationUrl" : {
+          "type" : "string"
+        },
+        "ownerUsername" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ApplicationData" : {
+      "type" : "object",
+      "required" : [ "applicationState", "name", "ownerUsername", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "applicationRole" : {
+          "$ref" : "#/definitions/RoleIdData"
+        },
+        "displayName" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 200
+        },
+        "applicationState" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE", "INACTIVE" ]
+        },
+        "applicationUri" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "documentationUrl" : {
+          "type" : "string"
+        },
+        "ownerUsername" : {
+          "type" : "string"
+        },
+        "applicationServices" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ServiceData"
+          }
+        }
+      }
+    },
+    "DeploymentEnvironmentBasicDataListResponse" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/DeploymentEnvironmentBasicData"
+          }
+        }
+      }
+    },
+    "FindPoliciesResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PolicyBasicData"
+          }
+        }
+      }
+    },
+    "RemoveApplicationDeploymentNodesRequest" : {
+      "type" : "object",
+      "required" : [ "applicationId", "deploymentEnvironmentId", "deploymentNodes" ],
+      "properties" : {
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        },
+        "deploymentEnvironmentId" : {
+          "$ref" : "#/definitions/DeploymentEnvironmentIdData"
+        },
+        "deploymentNodes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationDeploymentNodeData"
+          }
+        }
+      }
+    },
+    "PolicyData" : {
+      "type" : "object",
+      "required" : [ "policyName" ],
+      "properties" : {
+        "policyName" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 256,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "configurationSetId" : {
+          "$ref" : "#/definitions/ConfigurationSetIdData"
+        },
+        "requiredFields" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ConfigurationFieldIdData"
+          }
+        }
+      }
+    },
+    "RemoveApplicationTeamMembersRequest" : {
+      "type" : "object",
+      "required" : [ "applicationId" ],
+      "properties" : {
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        },
+        "teamMembers" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationTeamMemberIdData"
+          }
+        }
+      }
+    },
+    "ApplicationServiceGroupData" : {
+      "type" : "object",
+      "required" : [ "applicationState", "name", "ownerUsername", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "applicationRole" : {
+          "$ref" : "#/definitions/RoleIdData"
+        },
+        "displayName" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 200
+        },
+        "applicationState" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE", "INACTIVE" ]
+        },
+        "applicationUri" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "documentationUrl" : {
+          "type" : "string"
+        },
+        "ownerUsername" : {
+          "type" : "string"
+        },
+        "routedServices" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ServiceRoutingData"
+          }
+        }
+      }
+    },
+    "AddApplicationTeamMembersRequest" : {
+      "type" : "object",
+      "required" : [ "applicationId", "teamMembers" ],
+      "properties" : {
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        },
+        "teamMembers" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationTeamMemberData"
+          }
+        }
+      }
+    },
+    "ConfigurationFieldIdData" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "AddApplicationDependenciesRequest" : {
+      "type" : "object",
+      "required" : [ "name", "newDependencies", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "newDependencies" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationDependencyData"
+          }
+        }
+      }
+    },
+    "GetServiceRegistryResponse" : {
+      "type" : "object",
+      "properties" : {
+        "serviceApplicationGroups" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationServiceGroupData"
+          }
+        }
+      }
+    },
+    "DeploymentEnvironmentBasicData" : {
+      "type" : "object",
+      "required" : [ "name", "serviceGatewayUrl" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "serviceGatewayUrl" : {
+          "type" : "string"
+        }
+      }
+    },
+    "RegisterApplicationRequest" : {
+      "type" : "object",
+      "required" : [ "applicationState", "name", "ownerUsername", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "applicationRole" : {
+          "$ref" : "#/definitions/RoleIdData"
+        },
+        "displayName" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 200
+        },
+        "applicationState" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE", "INACTIVE" ]
+        },
+        "applicationUri" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "documentationUrl" : {
+          "type" : "string"
+        },
+        "ownerUsername" : {
+          "type" : "string"
+        },
+        "applicationServices" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ServiceData"
+          }
+        }
+      }
+    },
+    "ConfigurationSetIdData" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "UpdatePolicyRequest" : {
+      "type" : "object",
+      "required" : [ "policyName" ],
+      "properties" : {
+        "policyName" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 256,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "configurationSetId" : {
+          "$ref" : "#/definitions/ConfigurationSetIdData"
+        },
+        "requiredFields" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ConfigurationFieldIdData"
+          }
+        }
+      }
+    },
+    "FindApplicationsResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationBasicData"
+          }
+        }
+      }
+    },
+    "ApplicationUsageGroupData" : {
+      "type" : "object",
+      "properties" : {
+        "applicationUsage" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationUsageData"
+          }
+        },
+        "groupValue" : {
+          "type" : "string"
+        }
+      }
+    },
+    "PolicyBasicData" : {
+      "type" : "object",
+      "required" : [ "policyName" ],
+      "properties" : {
+        "policyName" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 256,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ServiceDeploymentRoutingData" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "serviceGatewayUrl" : {
+          "type" : "string"
+        }
+      }
+    },
+    "UpdateApplicationDeploymentRequest" : {
+      "type" : "object",
+      "required" : [ "applicationId", "deploymentEnvironmentId" ],
+      "properties" : {
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        },
+        "deploymentEnvironmentId" : {
+          "$ref" : "#/definitions/DeploymentEnvironmentIdData"
+        },
+        "healthMonitor" : {
+          "$ref" : "#/definitions/ApplicationDeploymentHealthMonitorData"
+        },
+        "updatedServiceDeployments" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ServiceDeploymentData"
+          }
+        }
+      }
+    },
+    "ApplicationServiceIdData" : {
+      "type" : "object",
+      "required" : [ "applicationId", "name", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 100,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        }
+      }
+    },
+    "FindServicesResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ServiceBasicReadData"
+          }
+        }
+      }
+    },
+    "GetApplicationUsageResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationUsageGroupData"
+          }
+        }
+      }
+    },
+    "ApplicationDependencyData" : {
+      "type" : "object",
+      "required" : [ "targetService" ],
+      "properties" : {
+        "targetService" : {
+          "$ref" : "#/definitions/ApplicationServiceIdData"
+        }
+      }
+    },
+    "ApplicationDeploymentData" : {
+      "type" : "object",
+      "required" : [ "applicationId", "deploymentEnvironmentId" ],
+      "properties" : {
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        },
+        "deploymentEnvironmentId" : {
+          "$ref" : "#/definitions/DeploymentEnvironmentIdData"
+        },
+        "deploymentNodes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationDeploymentNodeData"
+          }
+        },
+        "healthMonitor" : {
+          "$ref" : "#/definitions/ApplicationDeploymentHealthMonitorData"
+        },
+        "serviceDeployments" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ServiceDeploymentData"
+          }
+        }
+      }
+    },
+    "OrganizationGrantDataListResponse" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/OrganizationGrantData"
+          }
+        }
+      }
+    },
+    "UpdateServiceResponse" : {
+      "type" : "object",
+      "required" : [ "applicationId", "description", "documentationUrl", "name", "serviceState", "serviceType", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 100,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "basicAuthenticationAllowed" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "contractUrl" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "documentationUrl" : {
+          "type" : "string"
+        },
+        "serviceState" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE", "DEPRECATED", "INACTIVE", "RETIRED" ]
+        },
+        "serviceType" : {
+          "type" : "string",
+          "enum" : [ "REST", "SOAP" ]
+        },
+        "serviceUri" : {
+          "type" : "string"
+        },
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        }
+      }
+    },
+    "ApplicationRoutingData" : {
+      "type" : "object",
+      "required" : [ "applicationDeployment", "applicationState", "name", "ownerUsername", "version" ],
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "version" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\d[\\w-\\.]*"
+        },
+        "applicationRole" : {
+          "$ref" : "#/definitions/RoleIdData"
+        },
+        "displayName" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 200
+        },
+        "applicationState" : {
+          "type" : "string",
+          "enum" : [ "ACTIVE", "INACTIVE" ]
+        },
+        "applicationUri" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "documentationUrl" : {
+          "type" : "string"
+        },
+        "ownerUsername" : {
+          "type" : "string"
+        },
+        "applicationServices" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ServiceData"
+          }
+        },
+        "applicationDeployment" : {
+          "$ref" : "#/definitions/ApplicationDeploymentData"
+        },
+        "applicationKey" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OrganizationGrantData" : {
+      "type" : "object",
+      "required" : [ "applicationId", "grantedByUsername" ],
+      "properties" : {
+        "organizationName" : {
+          "type" : "string"
+        },
+        "applicationId" : {
+          "$ref" : "#/definitions/ApplicationIdData"
+        },
+        "creationDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "grantedByUsername" : {
+          "type" : "string"
+        },
+        "grantedRoleName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ApplicationBasicDataListResponse" : {
+      "type" : "object",
+      "properties" : {
+        "content" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ApplicationBasicData"
+          }
+        }
+      }
+    },
+    "KeyValueData" : {
+      "type" : "object",
+      "required" : [ "key" ],
+      "properties" : {
+        "key" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 512
+        }
+      }
+    },
+    "DeploymentEnvironmentData" : {
+      "type" : "object",
+      "required" : [ "name", "serviceGatewayUrl" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 2,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "serviceGatewayUrl" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

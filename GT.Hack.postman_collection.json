@@ -1,0 +1,730 @@
+{
+	"variables": [],
+	"info": {
+		"name": "GT.Hack",
+		"_postman_id": "0373f94f-7fca-964e-ffec-182dc45128ca",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Platform",
+			"description": "",
+			"item": [
+				{
+					"name": "GET applications",
+					"request": {
+						"url": "https://hackgt-api.ncrcloud.com/apimanagement/applications",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET organizations",
+					"request": {
+						"url": "https://hackgt-api.ncrcloud.com/platform-administration/api/organizations",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET Services",
+					"request": {
+						"url": "https://hackgt-api.ncrcloud.com/apimanagement/application-services/find-by-criteria",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "POST EU",
+					"request": {
+						"url": "https://hackgt-api.ncrcloud.com/provisioning/enterprise-units",
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Store1\",\"description\":\"First demo store\",\"enterpriseTypeName\":\"Store\",\"referenceId\":\"2a473e9d-a526-4e3d-81d6-57fc328bc1cd\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "POST EU-Type",
+					"request": {
+						"url": "https://hackgt-api.ncrcloud.com/provisioning/enterprise-types",
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Store\",\"description\":\"Demo store\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET EUs",
+					"request": {
+						"url": "https://hackgt-api.ncrcloud.com/provisioning/enterprise-units/find-by-name",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Store1\",\"description\":\"First demo store\",\"enterpriseTypeName\":\"Store\",\"referenceId\":\"2a473e9d-a526-4e3d-81d6-57fc328bc1cd\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Catalog",
+			"description": "",
+			"item": [
+				{
+					"name": "GET items",
+					"request": {
+						"url": "https://hackgt-api.ncrcloud.com/catalog/items/snapshot",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "PUT items",
+					"request": {
+						"url": "https://hackgt-api.ncrcloud.com/catalog/items/658540dc-8dc9-42c9-97f1-b7e5d3bc6f71",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"ACTIVE\",\r\n    \"version\": 201710091530,\r\n    \"packageIdentifiers\": [\r\n        {\r\n            \"type\": \"prod_id\",\r\n            \"value\": \"36235\"\r\n        }\r\n    ],\r\n    \"longDescription\": {\r\n        \"values\": [\r\n            {\r\n                \"locale\": \"en-US\",\r\n                \"value\": \"Organic Pure Extra Virgin Coconut Oil\"\r\n            }\r\n        ]\r\n    },\r\n    \"shortDescription\": {\r\n        \"values\": [\r\n            {\r\n                \"locale\": \"en-US\",\r\n                \"value\": \"Coconut Oil\"\r\n            }\r\n        ]\r\n    },\r\n    \"merchandiseCategory\": {\r\n        \"nodeId\": \"Food\"\r\n    },\r\n    \"departmentId\": \"13\",\r\n    \"familyCode\": \"NA\",\r\n    \"manufacturerCode\": \"NA\",\r\n    \"nonMerchandise\": false,\r\n    \"dynamicAttributes\": [\r\n        {\r\n            \"type\": \"OnlineImageLink\",\r\n            \"attributes\": [\r\n                {\r\n                    \"key\": \"url\",\r\n                    \"value\": \"https://some.image.com/CocoOil.png\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET item prices",
+					"request": {
+						"url": "https://hackgt-api.ncrcloud.com/catalog/item-prices/snapshot",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"value": "{{nepunit}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "PUT item prices",
+					"request": {
+						"url": "https://hackgt-api.ncrcloud.com/catalog/item-prices/658540dc-8dc9-42c9-97f1-b7e5d3bc6f71/4fa14fc3-ca20-44fb-b920-14320f7b7f8c",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"value": "{{nepunit}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"version\": 201710091530,\r\n  \"price\": 12.02,\r\n  \"currency\": \"USD\",\r\n  \"effectiveDate\": \"2017-10-09T00:00:00Z\",\r\n  \"endDate\": null,\r\n  \"status\": \"ACTIVE\",\r\n  \"basePrice\": true,\r\n  \"dynamicAttributes\": [\r\n  ]\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"description": "",
+			"item": [
+				{
+					"name": "GET Orders",
+					"request": {
+						"url": "https://hackgt-api.ncrcloud.com/order/orders/find",
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "POST Order",
+					"request": {
+						"url": "https://nep-gateway.swenglabs.ncr.com/order/orders",
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fulfillment\": {\r\n    \"pickupLocation\": \"Brooklyn\",\r\n    \"pickupDate\": \"2015-12-31T17:50:00Z\"\r\n  },\r\n  \"payments\": [\r\n    {\r\n      \"lineId\": \"PaymentLineId1\",\r\n      \"type\": \"CreditDebit\",\r\n      \"referenceId\": \"REF-123\",\r\n      \"amount\": 5.00,\r\n      \"status\": \"Paid\",\r\n      \"description\": \"Payment description 1\",\r\n      \"token\": \"fdsh\",\r\n      \"maskedPAN\": \"123456*******1234\",\r\n      \"subType\": \"Visa\"\r\n    }\r\n  ],\r\n  \"orderLines\": [\r\n    {\r\n      \"lineId\": \"orderLineId1\",\r\n      \"comments\": \"item Comments\",\r\n      \"productId\": {\r\n        \"value\": \"444505\",\r\n        \"type\": \"SKU\"\r\n      },\r\n      \"description\": \"Sandwich Tray\",\r\n      \"itemType\": \"Fee\",\r\n      \"quantity\": {\r\n        \"value\": 1,\r\n        \"unitOfMeasure\": \"EA\",\r\n        \"unitOfMeasureLabel\": \"\"\r\n      },\r\n      \"unitPrice\": 3.00,\r\n      \"extendedAmount\": 5.00,\r\n      \"taxes\": [\r\n        {\r\n          \"amount\": 0.5,\r\n          \"code\": \"TaxCode1\",\r\n          \"percentage\": \"1.0\",\r\n          \"isIncluded\": true\r\n        }\r\n      ],\r\n      \"priceModifiers\": [\r\n        {\r\n          \"amount\": 0.1,\r\n          \"referenceId\": \"PriceModifierRef1\",\r\n          \"description\": \"PriceModifier1\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"lineId\": \"orderLineId2\",\r\n      \"comments\": \"item Comments\",\r\n      \"productId\": {\r\n        \"value\": \"276073\",\r\n        \"type\": \"SKU\"\r\n      },\r\n      \"description\": \"Balloons\",\r\n      \"itemType\": \"Fee\",\r\n      \"quantity\": {\r\n        \"value\": 1,\r\n        \"unitOfMeasure\": \"EA\",\r\n        \"unitOfMeasureLabel\": \"\"\r\n      },\r\n      \"unitPrice\": 9.00,\r\n      \"extendedAmount\": 5.00,\r\n      \"taxes\": [\r\n        {\r\n          \"amount\": 0.5,\r\n          \"code\": \"TaxCode1\",\r\n          \"percentage\": \"1.0\",\r\n          \"isIncluded\": true\r\n        }\r\n      ],\r\n      \"priceModifiers\": [\r\n        {\r\n          \"amount\": 0.1,\r\n          \"referenceId\": \"PriceModifierRef1\",\r\n          \"description\": \"PriceModifier1\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"taxes\": [\r\n    {\r\n      \"amount\": 4.0,\r\n      \"code\": \"TaxCode2\",\r\n      \"percentage\": \"0.4\",\r\n      \"isIncluded\": false,\r\n      \"description\": \"TaxDescription2\"\r\n    }\r\n  ],\r\n  \"totalModifiers\": [\r\n    {\r\n      \"amount\": 0.3,\r\n      \"referenceId\": \"TicketTotalModifierRef1\",\r\n      \"description\": \"TicketTotalModifier1\"\r\n    }\r\n  ],\r\n  \"referenceId\": \"Pavel's lunch 7/25/2017 - 2\",\r\n  \"customer\": {\r\n    \"email\": \"test@test.com\",\r\n    \"id\": \"Cust1\",\r\n    \"name\": \"test test\",\r\n    \"phone\": \"098765543\"\r\n  },\r\n  \"status\": \"ReadyForPickup\",\r\n  \"comments\": \"Lorem\",\r\n  \"currency\": \"USD\",\r\n  \"errorDescription\": \"errorDesc\",\r\n  \"totals\": [\r\n    {\r\n      \"type\": \"Net\",\r\n      \"value\": 456.00\r\n    }\r\n  ]\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TDM",
+			"description": "",
+			"item": [
+				{
+					"name": "GET Transactions",
+					"request": {
+						"url": "https://hackgt-api.ncrcloud.com/transaction-document/transaction-documents/find",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"ACTIVE\",\r\n    \"version\": 201710091530,\r\n    \"packageIdentifiers\": [\r\n        {\r\n            \"type\": \"prod_id\",\r\n            \"value\": \"36235\"\r\n        }\r\n    ],\r\n    \"longDescription\": {\r\n        \"values\": [\r\n            {\r\n                \"locale\": \"en-US\",\r\n                \"value\": \"Organic Pure Extra Virgin Coconut Oil\"\r\n            }\r\n        ]\r\n    },\r\n    \"shortDescription\": {\r\n        \"values\": [\r\n            {\r\n                \"locale\": \"en-US\",\r\n                \"value\": \"Coconut Oil\"\r\n            }\r\n        ]\r\n    },\r\n    \"merchandiseCategory\": {\r\n        \"nodeId\": \"Food\"\r\n    },\r\n    \"departmentId\": \"13\",\r\n    \"familyCode\": \"NA\",\r\n    \"manufacturerCode\": \"NA\",\r\n    \"nonMerchandise\": false,\r\n    \"dynamicAttributes\": [\r\n        {\r\n            \"type\": \"OnlineImageLink\",\r\n            \"attributes\": [\r\n                {\r\n                    \"key\": \"url\",\r\n                    \"value\": \"https://some.image.com/CocoOil.png\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Messaging",
+			"description": "",
+			"item": [
+				{
+					"name": "GET topics",
+					"request": {
+						"url": "https://hackgt-api.ncrcloud.com/messaging/pubsub-topics",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"t\", jsonData.token);"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var o=1;",
+							"var password = 'Chang3m3!!-admin-org-'+o;",
+							"var appkeys=[",
+							"                \"8a82859f5ef21870015ef2fa5e5f0000\",",
+							"                \"8a82859f5ef21870015ef2faab6b0001\",",
+							"                \"8a82859f5ef21870015ef2fafbd90002\",",
+							"                \"8a82859f5ef21870015ef2fb47c60003\",",
+							"                \"8a82859f5ef21870015ef2fb86e00004\"",
+							"                ];",
+							"var nepunits=[",
+							"        \"eafe5b77b5594e9ab575ed4b41d6ee37\",",
+							"        \"3dc8dc4689584404ae66c91fb946ba3e\",",
+							"        \"9e6316a01ee14bafb9cb3c8423386b8d\",",
+							"        \"5b622c3e0d2448aca62aeef6de15065f\",",
+							"        \"f2b0e54931f54138a0224946e0d4d841\"",
+							"    ];",
+							"var org=\"org-\"+o;",
+							"var user=\"/\"+org+\"/admin\"",
+							"user=\"acct:\"+org+\"@admin\"",
+							"postman.setEnvironmentVariable(\"org\", org);",
+							"postman.setEnvironmentVariable(\"auth\", \"Basic \"+btoa(user+\":\" + password));",
+							"postman.setEnvironmentVariable(\"appkey\", appkeys[o-1]);",
+							"postman.setEnvironmentVariable(\"nepunit\", nepunits[o-1]);",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://hackgt-api.ncrcloud.com/security/authentication/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{auth}}",
+						"description": ""
+					},
+					{
+						"key": "nep-application-key",
+						"value": "{{appkey}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -4,6 +4,7 @@
   "description": "GT.HACK demo application",
   "main": "index.js",
   "dependencies": {
+    "jade": "~1.11.0", 
     "debug": "~2.6.9",
     "morgan": "~1.9.0",
     "express": "^4.16.2"

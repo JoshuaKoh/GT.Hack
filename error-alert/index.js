@@ -1,9 +1,10 @@
-var debug = require('debug')('error-alert:server'); 
+//var debug = require('debug')('error-alert:server'); 
 var express = require('express')
 var app = express()
 var logger = require('morgan'); 
 
 app.use(logger('dev'));
+app.set('view engine', 'jade');
 app.get('/', function (req, res) {
   res.send('Hello World')
 })

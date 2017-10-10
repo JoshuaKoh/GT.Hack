@@ -1,0 +1,166 @@
+{
+  "businessDay": {
+    "dateTime": "2017-01-01T00:00:01Z"
+  },
+  "closeDateTimeUTC": {
+    "dateTime": "2017-01-01T00:00:01Z"
+  },
+  "configurationDateTimeUtc": {
+    "dateTime": "2017-01-01T00:00:01Z"
+  },
+  "dataProviderName": "Adam",
+  "dataProviderVersion": "1.0",
+  "documentExpirationDate": {
+    "dateTime": "2017-01-01T00:00:00Z"
+  },
+  "id": "<GUID-Adam>",
+  "isTrainingMode": false,
+  "linkedTransactions": [],
+  "modelVersion": 1,
+  "openDateTimeUTC": {
+    "dateTime": "2017-01-01T00:00:00Z"
+  },
+  "siteInfo": {
+    "id": "Adam1",
+    "name": "Adam's store",
+    "siteTimeZone": {
+      "timeZone": "Z"
+    }
+  },
+  "tlog": {
+    "coupons": [
+    ],
+    "customer": null,
+    "customerCount": 1,
+    "deleted": false,
+    "employees": [
+      {
+        "action": "TRANSACTION_CLOSED",
+        "actionLabel": "dElsxvSebu",
+        "id": "similarEmployeeId",
+        "name": "Pavel",
+        "roleId": "Cashier1",
+        "roleName": "Master Cashier",
+        "shiftId": "Morning",
+        "tippableEmployee": true
+      }
+    ],
+    "items": [
+      {
+        "actualAmount": {
+          "amount": 7
+        },
+        "actualUnitPrice": {
+          "amount": 7
+        },
+        "beginDateTimeUtc": {
+          "dateTime": "2017-01-01T00:00:00Z"
+        },
+        "category": {
+          "id": "Food",
+          "name": "Food"
+        },
+        "conceptId": "Adam's BBQ",
+        "departmentId": "13",
+        "endTimestampUtc": {
+          "dateTime": "2017-01-01T00:00:00Z"
+        },
+        "extendedAmount": {
+          "amount": 80
+        },
+        "extendedUnitPrice": {
+          "amount": 8
+        },
+        "id": "itemGUID-ADAM4-egg",
+        "itemDiscounts": [],
+        "itemPromotions": [],
+        "itemTaxes": [],
+        "nonSaleItem": false,
+        "orderNumber": null,
+        "overridden": false,
+        "overrideInfo": null,
+        "parentItemId": null,
+        "productId": "itemGUID-ADAM4-egg",
+        "productName": "Eggs",
+        "quantity": {
+          "quantity": 10,
+          "unitOfMeasurement": "EA",
+          "unitOfMeasurementLabel": "EACH"
+        },
+        "regularUnitPrice": {
+          "amount": 2
+        },
+        "return": true,
+        "returnAffectsInventory": true,
+        "revenueCenter": {
+          "id": "6c599675-3db0-49e5-a1b4-c5a85f671e1e",
+          "name": "qOeBUVuVbU"
+        },
+        "surcharges": [
+        ],
+        "variations": [],
+        "voidInfo": null,
+        "voided": false,
+        "weighted": true
+      }
+    ],
+    "localCurrency": {
+      "code": "USD"
+    },
+    "location": "Atlanta",
+    "loyaltyAccount": [],
+    "orders": [],
+    "recalled": false,
+    "receiptId": "ADAM-GUID2",
+    "receiptInfo": null,
+    "resumed": true,
+    "revenueCenter": {
+      "id": "ADAM-GUID3",
+      "name": "Food Stores"
+    },
+    "surcharges": [
+    ],
+    "suspended": false,
+    "tenders": [],
+    "totalTaxes": [],
+    "totals": {
+      "discountAmount": {
+        "amount": 0
+      },
+      "grandAmount": {
+        "amount": 100
+      },
+      "grossAmount": {
+        "amount": 100
+      },
+      "returnItemsTaxExclusive": {
+        "amount": 0
+      },
+      "returnItemsTaxInclusive": {
+        "amount": 0
+      },
+      "taxExclusive": {
+        "amount": 0
+      },
+      "taxExemptAmount": {
+        "amount": 0
+      },
+      "taxInclusive": {
+        "amount": 0
+      },
+      "voidsAmount": {
+        "amount": 0
+      }
+    },
+    "transactionDiscounts": [],
+    "transactionPromotions": [],
+    "transactionType": "SALES",
+    "voidInfo": null,
+    "voided": false
+  },
+  "touchPointGroup": "TP1",
+  "touchPointId": "TP1",
+  "touchPointType": "TP1-Type",
+  "transactionCategory": "SALE_OR_RETURN",
+  "transactionNumber": "1"
+}

@@ -23,5 +23,7 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-}); 
-app.listen(1337)
+});
+var port = process.env.PORT || 1337; 
+app.listen(port);
+console.log("Server running at http://localhost:%d", port);

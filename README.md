@@ -9,4 +9,4 @@ In this repository you could find
 - API description in `swagger` folder 
 - sample collection of Postman HTTP calls in `GT.Hack.postman_collection.json` file
 - sample jsons in `sample-jsons`
-- sample nodeJS application consuming messages in `error-alert` folder
+- sample nodeJS application consuming messages at https://github.com/pavelsavara/GT.Hack.Alert

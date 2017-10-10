@@ -567,8 +567,8 @@
 				{
 					"name": "GET Transactions",
 					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/transaction-document/transaction-documents/find",
-						"method": "GET",
+						"url": "https://hackgt-api.ncrcloud.com/transaction-document/2.0.0-M1/transaction-documents/2.0/find",
+						"method": "POST",
 						"header": [
 							{
 								"key": "authorization",
@@ -603,7 +603,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n\t\"pageNumber\":0,\n\t\"pageSize\": 20\n}"
 						},
 						"description": ""
 					},
@@ -701,6 +701,37 @@
 						"description": ""
 					},
 					"response": []
+				},
+				{
+					"name": "GET Azure Status",
+					"request": {
+						"url": "http://hackgt-alert.azurewebsites.net/status",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "POST notification",
+					"request": {
+						"url": "http://hackgt-alert.azurewebsites.net/notify/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"topicId\": {\r\n        \"name\": \"test1\"\r\n    },\r\n    \"payload\": \"message1\"\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
 				}
 			]
 		},
@@ -723,7 +754,7 @@
 						"type": "text/javascript",
 						"exec": [
 							"var o=1;",
-							"var password = 'Chang3m3!!-admin-org-'+o;",
+							"var password = 'XXXXXXX!!-admin-org-'+o;",
 							"var appkeys=[",
 							"                \"8a82859f5ef21870015ef2fa5e5f0000\",",
 							"                \"8a82859f5ef21870015ef2faab6b0001\",",

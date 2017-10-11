@@ -14,49 +14,7 @@
 				{
 					"name": "GET applications",
 					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/apimanagement/applications",
-						"method": "GET",
-						"header": [
-							{
-								"key": "authorization",
-								"value": "AccessToken {{t}}",
-								"description": ""
-							},
-							{
-								"key": "cache-control",
-								"value": "no-cache",
-								"description": ""
-							},
-							{
-								"key": "nep-organization",
-								"value": "/{{org}}/",
-								"description": ""
-							},
-							{
-								"key": "nep-application-key",
-								"value": "{{appkey}}",
-								"description": ""
-							},
-							{
-								"key": "Accept",
-								"value": "application/json, text/plain, */*",
-								"description": ""
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "GET organizations",
-					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/platform-administration/api/organizations",
+						"url": "https://hackgt-api.ncrcloud.com/apimanagement/3.1.2-GA/applications/1.0",
 						"method": "GET",
 						"header": [
 							{
@@ -98,7 +56,7 @@
 				{
 					"name": "GET Services",
 					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/apimanagement/application-services/find-by-criteria",
+						"url": "https://hackgt-api.ncrcloud.com/apimanagement/3.1.2-GA/application-services/1.0/find-by-criteria",
 						"method": "GET",
 						"header": [
 							{
@@ -140,7 +98,7 @@
 				{
 					"name": "POST EU",
 					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/provisioning/enterprise-units",
+						"url": "https://hackgt-api.ncrcloud.com/provisioning/3.2.0-GA/enterprise-units/1.0",
 						"method": "POST",
 						"header": [
 							{
@@ -185,7 +143,7 @@
 				{
 					"name": "POST EU-Type",
 					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/provisioning/enterprise-types",
+						"url": "https://hackgt-api.ncrcloud.com/provisioning/3.2.0-GA/enterprise-types/1.0",
 						"method": "POST",
 						"header": [
 							{
@@ -230,7 +188,7 @@
 				{
 					"name": "GET EUs",
 					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/provisioning/enterprise-units/find-by-name",
+						"url": "https://hackgt-api.ncrcloud.com/provisioning/3.2.0-GA/enterprise-units/1.0/find-by-name",
 						"method": "GET",
 						"header": [
 							{
@@ -281,7 +239,7 @@
 				{
 					"name": "GET items",
 					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/catalog/items/snapshot",
+						"url": "https://hackgt-api.ncrcloud.com/catalog/2.0.2/items/1.0/snapshot",
 						"method": "GET",
 						"header": [
 							{
@@ -323,7 +281,7 @@
 				{
 					"name": "PUT items",
 					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/catalog/items/658540dc-8dc9-42c9-97f1-b7e5d3bc6f71",
+						"url": "https://hackgt-api.ncrcloud.com/catalog/2.0.2/items/1.0/658540dc-8dc9-42c9-97f1-b7e5d3bc6f71",
 						"method": "PUT",
 						"header": [
 							{
@@ -368,7 +326,7 @@
 				{
 					"name": "GET item prices",
 					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/catalog/item-prices/snapshot",
+						"url": "https://hackgt-api.ncrcloud.com/catalog/2.0.2/item-prices/1.0/snapshot",
 						"method": "GET",
 						"header": [
 							{
@@ -415,7 +373,7 @@
 				{
 					"name": "PUT item prices",
 					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/catalog/item-prices/658540dc-8dc9-42c9-97f1-b7e5d3bc6f71/4fa14fc3-ca20-44fb-b920-14320f7b7f8c",
+						"url": "https://hackgt-api.ncrcloud.com/catalog/2.0.2/item-prices/1.0/658540dc-8dc9-42c9-97f1-b7e5d3bc6f71/4fa14fc3-ca20-44fb-b920-14320f7b7f8c",
 						"method": "PUT",
 						"header": [
 							{
@@ -471,7 +429,7 @@
 				{
 					"name": "GET Orders",
 					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/order/orders/find",
+						"url": "https://hackgt-api.ncrcloud.com/order/2.3.0/orders/1.0/find",
 						"method": "POST",
 						"header": [
 							{
@@ -516,7 +474,7 @@
 				{
 					"name": "POST Order",
 					"request": {
-						"url": "https://nep-gateway.swenglabs.ncr.com/order/orders",
+						"url": "https://hackgt-api.ncrcloud.com/order/2.3.0/orders/1.0",
 						"method": "POST",
 						"header": [
 							{
@@ -552,7 +510,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"fulfillment\": {\r\n    \"address\": {\r\n      \"type\": \"Business\",\r\n      \"typeLabel\": \"string\",\r\n      \"line1\": \"string\",\r\n      \"line2\": \"string\",\r\n      \"city\": \"string\",\r\n      \"state\": \"string\",\r\n      \"postalCode\": \"string\",\r\n      \"notes\": \"string\",\r\n      \"businessInfo\": {\r\n        \"name\": \"string\",\r\n        \"department\": \"string\"\r\n      }\r\n    },\r\n    \"leadTimes\": [\r\n      {\r\n        \"type\": \"Transit\",\r\n        \"typeLabel\": \"string\",\r\n        \"interval\": 0,\r\n        \"intervalUnits\": \"Minutes\"\r\n      }\r\n    ],\r\n    \"notes\": \"string\",\r\n    \"pickupDate\": \"2017-10-10T10:13:08.875Z\",\r\n    \"pickupLocation\": \"string\",\r\n    \"type\": \"Delivery\",\r\n    \"typeLabel\": \"string\",\r\n    \"autoRelease\": true\r\n  },\r\n  \"fees\": [\r\n    {\r\n      \"type\": \"None\",\r\n      \"typeLabel\": \"string\",\r\n      \"provider\": \"string\",\r\n      \"amount\": 0,\r\n      \"override\": true,\r\n      \"lineId\": \"string\"\r\n    }\r\n  ],\r\n  \"orderLines\": [\r\n    {\r\n      \"comments\": \"string\",\r\n      \"description\": \"string\",\r\n      \"extendedAmount\": 0,\r\n      \"itemType\": \"string\",\r\n      \"notes\": [\r\n        {\r\n          \"type\": \"Substitutions\",\r\n          \"typeLabel\": \"string\",\r\n          \"value\": \"string\"\r\n        }\r\n      ],\r\n      \"parentLineId\": \"string\",\r\n      \"priceModifiers\": [\r\n        {\r\n          \"amount\": 0,\r\n          \"description\": \"string\",\r\n          \"referenceId\": \"string\"\r\n        }\r\n      ],\r\n      \"productId\": {\r\n        \"type\": \"string\",\r\n        \"value\": \"string\"\r\n      },\r\n      \"quantity\": {\r\n        \"unitOfMeasure\": \"EA\",\r\n        \"unitOfMeasureLabel\": \"string\",\r\n        \"value\": 0\r\n      },\r\n      \"substitutionAllowed\": true,\r\n      \"taxes\": [\r\n        {\r\n          \"amount\": 0,\r\n          \"code\": \"string\",\r\n          \"isIncluded\": true,\r\n          \"percentage\": 0\r\n        }\r\n      ],\r\n      \"unitPrice\": 0,\r\n      \"scanData\": \"string\",\r\n      \"supplementalData\": \"string\",\r\n      \"modifierCode\": \"string\",\r\n      \"linkGroupCode\": \"string\",\r\n      \"lineId\": \"string\"\r\n    }\r\n  ],\r\n  \"payments\": [\r\n    {\r\n      \"amount\": 0,\r\n      \"description\": \"string\",\r\n      \"gratuity\": 0,\r\n      \"referenceId\": \"string\",\r\n      \"status\": \"string\",\r\n      \"type\": \"AccountsReceivable\",\r\n      \"subType\": \"string\",\r\n      \"maskedPAN\": \"string\",\r\n      \"token\": \"string\",\r\n      \"lineId\": \"string\"\r\n    }\r\n  ],\r\n  \"taxes\": [\r\n    {\r\n      \"amount\": 0,\r\n      \"code\": \"string\",\r\n      \"description\": \"string\",\r\n      \"isIncluded\": true,\r\n      \"percentage\": 0,\r\n      \"lineId\": \"string\"\r\n    }\r\n  ],\r\n  \"taxExempt\": true,\r\n  \"totalModifiers\": [\r\n    {\r\n      \"amount\": 0,\r\n      \"description\": \"string\",\r\n      \"referenceId\": \"string\",\r\n      \"lineId\": \"string\"\r\n    }\r\n  ],\r\n  \"partySize\": 0,\r\n  \"comments\": \"string\",\r\n  \"channel\": \"PhoneIn\",\r\n  \"currency\": \"string\",\r\n  \"customer\": {\r\n    \"id\": \"string\",\r\n    \"externalIds\": [\r\n      {\r\n        \"type\": \"Reference\",\r\n        \"typeLabel\": \"string\",\r\n        \"value\": \"string\"\r\n      }\r\n    ],\r\n    \"name\": \"string\",\r\n    \"firstName\": \"string\",\r\n    \"lastName\": \"string\",\r\n    \"phone\": \"string\",\r\n    \"phoneExtension\": \"string\",\r\n    \"email\": \"string\"\r\n  },\r\n  \"errorDescription\": \"string\",\r\n  \"owner\": \"string\",\r\n  \"referenceId\": \"string\",\r\n  \"source\": \"string\",\r\n  \"status\": \"Canceled\",\r\n  \"totals\": [\r\n    {\r\n      \"type\": \"Net\",\r\n      \"value\": 0,\r\n      \"lineId\": \"string\"\r\n    }\r\n  ]\r\n}"
+							"raw": "{\r\n  \"fulfillment\": {\r\n    \"pickupLocation\": \"Atlanta\",\r\n    \"pickupDate\": \"2017-10-11T17:50:00Z\"\r\n  },\r\n  \"payments\": [],\r\n  \"orderLines\": [\r\n    {\r\n      \"lineId\": \"f7bed72f-4d74-4557-b184-87fddf2423bd\",\r\n      \"comments\": \"\",\r\n      \"productId\": {\r\n        \"value\": \"36235\",\r\n        \"type\": \"prod_id\"\r\n      },\r\n      \"description\": \"Organic Pure Extra Virgin Coconut Oil\",\r\n      \"itemType\": \"Food\",\r\n      \"quantity\": {\r\n        \"value\": 1,\r\n        \"unitOfMeasure\": \"ea\",\r\n        \"unitOfMeasureLabel\": \"each\"\r\n      },\r\n      \"unitPrice\": 3.00,\r\n      \"extendedAmount\": 5.00,\r\n      \"taxes\": [],\r\n      \"priceModifiers\": []\r\n    },\r\n    {\r\n      \"lineId\": \"674a5cf6-6c73-4e84-9bb6-0884a9b4d037\",\r\n      \"comments\": \"\",\r\n      \"productId\": {\r\n        \"value\": \"16490\",\r\n        \"type\": \"prod_id\"\r\n      },\r\n      \"description\": \"Old Fashioned Whole Wheat Bread\",\r\n      \"itemType\": \"Food\",\r\n      \"quantity\": {\r\n        \"value\": 1,\r\n        \"unitOfMeasure\": \"ea\",\r\n        \"unitOfMeasureLabel\": \"each\"\r\n      },\r\n      \"unitPrice\": 9.00,\r\n      \"extendedAmount\": 5.00,\r\n      \"taxes\": [],\r\n      \"priceModifiers\": []\r\n    }\r\n  ],\r\n  \"taxes\": [],\r\n  \"totalModifiers\": [],\r\n  \"referenceId\": \"4442dada-17b8-480f-bda1-4a1dfa326290\",\r\n  \"customer\": {\r\n    \"email\": \"pavel.savara@ncr.com\",\r\n    \"id\": \"ps185162\",\r\n    \"name\": \"Pavel Savara\",\r\n    \"phone\": \"+420123456\"\r\n  },\r\n  \"status\": \"ReadyForPickup\",\r\n  \"comments\": \"\",\r\n  \"currency\": \"USD\",\r\n  \"errorDescription\": \"\",\r\n  \"totals\": [\r\n    {\r\n      \"type\": \"Net\",\r\n      \"value\": 456.00\r\n    }\r\n  ]\r\n}"
 						},
 						"description": ""
 					},
@@ -567,7 +525,7 @@
 				{
 					"name": "GET Transactions",
 					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/transaction-document/2.0.0-M1/transaction-documents/2.0/find",
+						"url": "https://hackgt-api.ncrcloud.com/transaction-document/2.0.0-M3/transaction-documents/2.0/find",
 						"method": "POST",
 						"header": [
 							{
@@ -603,7 +561,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"pageNumber\":0,\n\t\"pageSize\": 20\n}"
+							"raw": "{\n\t\"pageNumber\":0,\n\t\"pageSize\": 20,\n\t\"returnedFields\": [\"businessDayUTC\"]\n}"
 						},
 						"description": ""
 					},
@@ -612,7 +570,7 @@
 				{
 					"name": "POST Transactions",
 					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/transaction-document/transaction-documents",
+						"url": "https://hackgt-api.ncrcloud.com/transaction-document/2.0.0-M3/transaction-documents/2.0",
 						"method": "POST",
 						"header": [
 							{
@@ -648,7 +606,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"businessDay\": {\r\n    \"dateTime\": \"2017-10-10T00:00:01Z\"\r\n  },\r\n  \"closeDateTimeUTC\": {\r\n    \"dateTime\": \"2017-10-10T00:00:01Z\"\r\n  },\r\n  \"configurationDateTimeUtc\": {\r\n    \"dateTime\": \"2017-10-10T00:00:01Z\"\r\n  },\r\n  \"dataProviderName\": \"Pavel\",\r\n  \"dataProviderVersion\": \"1.0\",\r\n  \"documentExpirationDate\": {\r\n    \"dateTime\": \"2017-10-10T00:00:00Z\"\r\n  },\r\n  \"id\": \"4615160b-ffeb-4486-8764-e86ed84254af\",\r\n  \"isTrainingMode\": false,\r\n  \"linkedTransactions\": [],\r\n  \"modelVersion\": 1,\r\n  \"openDateTimeUTC\": {\r\n    \"dateTime\": \"2017-10-10T00:00:00Z\"\r\n  },\r\n  \"siteInfo\": {\r\n    \"id\": \"Adam1\",\r\n    \"name\": \"Adam's store\",\r\n    \"siteTimeZone\": {\r\n      \"timeZone\": \"Z\"\r\n    }\r\n  },\r\n  \"tlog\": {\r\n    \"coupons\": [\r\n    ],\r\n    \"customer\": null,\r\n    \"customerCount\": 1,\r\n    \"deleted\": false,\r\n    \"employees\": [\r\n      {\r\n        \"action\": \"TRANSACTION_CLOSED\",\r\n        \"actionLabel\": \"Sold!\",\r\n        \"id\": \"22\",\r\n        \"name\": \"Pavel\",\r\n        \"roleId\": \"Cashier1\",\r\n        \"roleName\": \"Master Cashier\",\r\n        \"shiftId\": \"Morning\",\r\n        \"tippableEmployee\": true\r\n      }\r\n    ],\r\n    \"items\": [\r\n      {\r\n        \"actualAmount\": {\r\n          \"amount\": 1\r\n        },\r\n        \"actualUnitPrice\": {\r\n          \"amount\": 5.33\r\n        },\r\n        \"beginDateTimeUtc\": {\r\n          \"dateTime\": \"2017-01-01T00:00:00Z\"\r\n        },\r\n        \"category\": {\r\n          \"id\": \"Food\",\r\n          \"name\": \"Food\"\r\n        },\r\n        \"conceptId\": \"Adam's BBQ\",\r\n        \"departmentId\": \"13\",\r\n        \"endTimestampUtc\": {\r\n          \"dateTime\": \"2017-10-10T00:00:00Z\"\r\n        },\r\n        \"extendedAmount\": {\r\n          \"amount\": 80\r\n        },\r\n        \"extendedUnitPrice\": {\r\n          \"amount\": 8\r\n        },\r\n        \"id\": \"98f32e1a-1f69-44ac-9ea3-b7bb28ac1796\",\r\n        \"itemDiscounts\": [],\r\n        \"itemPromotions\": [],\r\n        \"itemTaxes\": [],\r\n        \"nonSaleItem\": false,\r\n        \"orderNumber\": null,\r\n        \"overridden\": false,\r\n        \"overrideInfo\": null,\r\n        \"parentItemId\": null,\r\n        \"productId\": \"33120\",\r\n        \"productName\": \"Organic Egg Whites\",\r\n        \"quantity\": {\r\n          \"quantity\": 1,\r\n          \"unitOfMeasurement\": \"CARTON\",\r\n          \"unitOfMeasurementLabel\": \"CARTON\"\r\n        },\r\n        \"regularUnitPrice\": {\r\n          \"amount\": 2\r\n        },\r\n        \"return\": true,\r\n        \"returnAffectsInventory\": true,\r\n        \"revenueCenter\": {\r\n          \"id\": \"d4b12ac1-173f-4b5f-b385-4235853c89a5\",\r\n          \"name\": \"Adam's shops\"\r\n        },\r\n        \"surcharges\": [\r\n        ],\r\n        \"variations\": [],\r\n        \"voidInfo\": null,\r\n        \"voided\": false,\r\n        \"weighted\": true\r\n      }\r\n    ],\r\n    \"localCurrency\": {\r\n      \"code\": \"USD\"\r\n    },\r\n    \"location\": \"Atlanta\",\r\n    \"loyaltyAccount\": [],\r\n    \"orders\": [],\r\n    \"recalled\": false,\r\n    \"receiptId\": \"4615160b-ffeb-4486-8764-e86ed84254af\",\r\n    \"receiptInfo\": null,\r\n    \"resumed\": true,\r\n    \"revenueCenter\": {\r\n      \"id\": \"d4b12ac1-173f-4b5f-b385-4235853c89a5\",\r\n      \"name\": \"Adam's shops\"\r\n    },\r\n    \"surcharges\": [\r\n    ],\r\n    \"suspended\": false,\r\n    \"tenders\": [],\r\n    \"totalTaxes\": [],\r\n    \"totals\": {\r\n      \"discountAmount\": {\r\n        \"amount\": 0\r\n      },\r\n      \"grandAmount\": {\r\n        \"amount\": 100\r\n      },\r\n      \"grossAmount\": {\r\n        \"amount\": 100\r\n      },\r\n      \"returnItemsTaxExclusive\": {\r\n        \"amount\": 0\r\n      },\r\n      \"returnItemsTaxInclusive\": {\r\n        \"amount\": 0\r\n      },\r\n      \"taxExclusive\": {\r\n        \"amount\": 0\r\n      },\r\n      \"taxExemptAmount\": {\r\n        \"amount\": 0\r\n      },\r\n      \"taxInclusive\": {\r\n        \"amount\": 0\r\n      },\r\n      \"voidsAmount\": {\r\n        \"amount\": 0\r\n      }\r\n    },\r\n    \"transactionDiscounts\": [],\r\n    \"transactionPromotions\": [],\r\n    \"transactionType\": \"SALES\",\r\n    \"voidInfo\": null,\r\n    \"voided\": false\r\n  },\r\n  \"touchPointGroup\": \"TP1\",\r\n  \"touchPointId\": \"TP1\",\r\n  \"touchPointType\": \"TP1-Type\",\r\n  \"transactionCategory\": \"SALE_OR_RETURN\",\r\n  \"transactionNumber\": \"1\"\r\n}"
+							"raw": "{\r\n  \"businessDay\": {\r\n    \"dateTime\": \"2017-10-10T00:00:01Z\"\r\n  },\r\n  \"closeDateTimeUTC\": {\r\n    \"dateTime\": \"2017-10-10T00:00:01Z\"\r\n  },\r\n  \"configurationDateTimeUtc\": {\r\n    \"dateTime\": \"2017-10-10T00:00:01Z\"\r\n  },\r\n  \"dataProviderName\": \"Pavel\",\r\n  \"dataProviderVersion\": \"1.0\",\r\n  \"documentExpirationDate\": {\r\n    \"dateTime\": \"2017-10-10T00:00:00Z\"\r\n  },\r\n  \"id\": \"4615160b-ffeb-4486-8764-e86ed84254af\",\r\n  \"isTrainingMode\": false,\r\n  \"linkedTransactions\": [],\r\n  \"modelVersion\": 1,\r\n  \"openDateTimeUTC\": {\r\n    \"dateTime\": \"2017-10-10T00:00:00Z\"\r\n  },\r\n  \"siteInfo\": {\r\n    \"id\": \"Adam1\",\r\n    \"name\": \"Adam's store\",\r\n    \"siteTimeZone\": {\r\n      \"timeZone\": \"Z\"\r\n    }\r\n  },\r\n  \"tlog\": {\r\n    \"coupons\": [\r\n    ],\r\n    \"customer\": null,\r\n    \"customerCount\": 1,\r\n    \"deleted\": false,\r\n    \"employees\": [\r\n      {\r\n        \"action\": \"TRANSACTION_CLOSED\",\r\n        \"actionLabel\": \"Sold!\",\r\n        \"id\": \"22\",\r\n        \"name\": \"Pavel\",\r\n        \"roleId\": \"Cashier1\",\r\n        \"roleName\": \"Master Cashier\",\r\n        \"shiftId\": \"Morning\",\r\n        \"tippableEmployee\": true\r\n      }\r\n    ],\r\n    \"items\": [\r\n      {\r\n        \"actualAmount\": {\r\n          \"amount\": 1\r\n        },\r\n        \"actualUnitPrice\": {\r\n          \"amount\": 5.33\r\n        },\r\n        \"beginDateTimeUtc\": {\r\n          \"dateTime\": \"2017-01-01T00:00:00Z\"\r\n        },\r\n        \"category\": {\r\n          \"id\": \"Food\",\r\n          \"name\": \"Food\"\r\n        },\r\n        \"conceptId\": \"Adam's BBQ\",\r\n        \"departmentId\": \"13\",\r\n        \"endTimestampUtc\": {\r\n          \"dateTime\": \"2017-10-10T00:00:00Z\"\r\n        },\r\n        \"extendedAmount\": {\r\n          \"amount\": 80\r\n        },\r\n        \"extendedUnitPrice\": {\r\n          \"amount\": 8\r\n        },\r\n        \"id\": \"98f32e1a-1f69-44ac-9ea3-b7bb28ac1796\",\r\n        \"itemDiscounts\": [],\r\n        \"itemPromotions\": [],\r\n        \"itemTaxes\": [],\r\n        \"nonSaleItem\": false,\r\n        \"orderNumber\": null,\r\n        \"overridden\": false,\r\n        \"overrideInfo\": null,\r\n        \"parentItemId\": null,\r\n        \"productId\": \"33120\",\r\n        \"productName\": \"Organic Egg Whites\",\r\n        \"quantity\": {\r\n          \"quantity\": 1,\r\n          \"unitOfMeasurement\": \"PIECE\",\r\n          \"unitOfMeasurementLabel\": \"PIECE\"\r\n        },\r\n        \"regularUnitPrice\": {\r\n          \"amount\": 2\r\n        },\r\n        \"return\": true,\r\n        \"returnAffectsInventory\": true,\r\n        \"revenueCenter\": {\r\n          \"id\": \"d4b12ac1-173f-4b5f-b385-4235853c89a5\",\r\n          \"name\": \"Adam's shops\"\r\n        },\r\n        \"surcharges\": [\r\n        ],\r\n        \"variations\": [],\r\n        \"voidInfo\": null,\r\n        \"voided\": false,\r\n        \"weighted\": true\r\n      }\r\n    ],\r\n    \"localCurrency\": {\r\n      \"code\": \"USD\"\r\n    },\r\n    \"location\": \"Atlanta\",\r\n    \"loyaltyAccount\": [],\r\n    \"orders\": [],\r\n    \"recalled\": false,\r\n    \"receiptId\": \"4615160b-ffeb-4486-8764-e86ed84254af\",\r\n    \"receiptInfo\": null,\r\n    \"resumed\": true,\r\n    \"revenueCenter\": {\r\n      \"id\": \"d4b12ac1-173f-4b5f-b385-4235853c89a5\",\r\n      \"name\": \"Adam's shops\"\r\n    },\r\n    \"surcharges\": [\r\n    ],\r\n    \"suspended\": false,\r\n    \"tenders\": [],\r\n    \"totalTaxes\": [],\r\n    \"totals\": {\r\n      \"discountAmount\": {\r\n        \"amount\": 0\r\n      },\r\n      \"grandAmount\": {\r\n        \"amount\": 100\r\n      },\r\n      \"grossAmount\": {\r\n        \"amount\": 100\r\n      },\r\n      \"returnItemsTaxExclusive\": {\r\n        \"amount\": 0\r\n      },\r\n      \"returnItemsTaxInclusive\": {\r\n        \"amount\": 0\r\n      },\r\n      \"taxExclusive\": {\r\n        \"amount\": 0\r\n      },\r\n      \"taxExemptAmount\": {\r\n        \"amount\": 0\r\n      },\r\n      \"taxInclusive\": {\r\n        \"amount\": 0\r\n      },\r\n      \"voidsAmount\": {\r\n        \"amount\": 0\r\n      }\r\n    },\r\n    \"transactionDiscounts\": [],\r\n    \"transactionPromotions\": [],\r\n    \"transactionType\": \"SALES\",\r\n    \"voidInfo\": null,\r\n    \"voided\": false\r\n  },\r\n  \"touchPointGroup\": \"TP1\",\r\n  \"touchPointId\": \"TP1\",\r\n  \"touchPointType\": \"TP1-Type\",\r\n  \"transactionCategory\": \"SALE_OR_RETURN\",\r\n  \"transactionNumber\": \"1\"\r\n}"
 						},
 						"description": ""
 					},
@@ -663,7 +621,7 @@
 				{
 					"name": "GET topics",
 					"request": {
-						"url": "https://hackgt-api.ncrcloud.com/messaging/pubsub-topics",
+						"url": "https://hackgt-api.ncrcloud.com/messaging/3.3.2-GA/pubsub-topics/1.0",
 						"method": "GET",
 						"header": [
 							{
@@ -714,7 +672,7 @@
 					"response": []
 				},
 				{
-					"name": "POST notification",
+					"name": "POST Azure notification",
 					"request": {
 						"url": "http://hackgt-alert.azurewebsites.net/notify/",
 						"method": "POST",
@@ -728,6 +686,51 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"topicId\": {\r\n        \"name\": \"test1\"\r\n    },\r\n    \"payload\": \"message1\"\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET messages",
+					"request": {
+						"url": "https://hackgt-api.ncrcloud.com/messaging/3.3.2-GA/pubsub-messages/1.0",
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "AccessToken {{t}}",
+								"description": ""
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"description": ""
+							},
+							{
+								"key": "nep-organization",
+								"value": "/{{org}}/",
+								"description": ""
+							},
+							{
+								"key": "nep-application-key",
+								"value": "{{appkey}}",
+								"description": ""
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pageNumber\":0,\n\t\"pageSize\": 20\n}"
 						},
 						"description": ""
 					},
@@ -754,7 +757,7 @@
 						"type": "text/javascript",
 						"exec": [
 							"var o=1;",
-							"var password = 'XXXXXXX!!-admin-org-'+o;",
+							"var password = 'XXXX!!-admin-org-'+o;",
 							"var appkeys=[",
 							"                \"8a82859f5ef21870015ef2fa5e5f0000\",",
 							"                \"8a82859f5ef21870015ef2faab6b0001\",",

@@ -1,0 +1,1521 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "2.0.0-M3",
+    "title" : "tdm",
+    "contact" : {
+      "name" : ""
+    },
+    "license" : {
+      "name" : "",
+      "url" : ""
+    }
+  },
+  "basePath" : "/transaction-document",
+  "tags" : [ {
+    "name" : "/transaction-document",
+    "description" : "Service API for TDM Document handling."
+  } ],
+  "paths" : {
+    "/transaction-documents" : {
+      "post" : {
+        "tags" : [ "/transaction-document" ],
+        "summary" : "Saves one or more TDM documents.",
+        "description" : "Requires CanonicalTLogData to save the TDM documents.<br/><br/>Input Parameters: <br/>TLog of any type either transaction, sales or control management data to save.",
+        "operationId" : "saveCanonical",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "- the structured/raw canonical TLOG to save",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CanonicalTLogDataObject"
+          }
+        } ],
+        "responses" : {
+          "200" : { },
+          "400" : {
+            "description" : "Bad Request: The request is invalid"
+          },
+          "401" : {
+            "description" : "Unauthorized:  The request requires user authentication."
+          },
+          "500" : {
+            "description" : "Internal server error"
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          }
+        }
+      }
+    },
+    "/transaction-documents/find" : {
+      "post" : {
+        "tags" : [ "/transaction-document" ],
+        "summary" : "Finds TDM documents matching the specified criteria and filter the results.",
+        "description" : "Finds TDM documents matching the specified criteria and filter the results.<br/><br/>Input Parameters: <br/>queryFilter: FindTLogRequest, The class containing the fields to filter the results by in JSON Pointer format. If empty or null, then the results should still contain valid CanonicalTLogIdData fields via inherited fields. <br/>Returns: The collection of matched documents or empty collection of the CanonicalTLogIdData.",
+        "operationId" : "findByQueryCriteria",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "The class containing the fields to search by.",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/FindTLogRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "response object containing a page of search results",
+            "schema" : {
+              "$ref" : "#/definitions/FindTLogResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid"
+          },
+          "401" : {
+            "description" : "Unauthorized:  The request requires user authentication."
+          },
+          "404" : {
+            "description" : "No documents found"
+          },
+          "500" : {
+            "description" : "Server error"
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          }
+        }
+      }
+    },
+    "/transaction-documents/find/count" : {
+      "post" : {
+        "tags" : [ "/transaction-document" ],
+        "summary" : "Finds TDM documents matching the specified criteria and returns the count.",
+        "description" : "Finds TDM documents matching the specified criteria and returns the count.<br/><br/>Input Parameters: <br/>request: FindTLogRequest, The class containing the fields to filter the results by in JSON Pointer format. <br/>Returns: TLogCountResponse The count of objects that match the specified search criteria.",
+        "operationId" : "getCountByCriteria",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "request the search criteria",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/FindTLogRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Response object containing the document count.",
+            "schema" : {
+              "$ref" : "#/definitions/TLogCountResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid"
+          },
+          "401" : {
+            "description" : "Unauthorized:  The request requires user authentication."
+          },
+          "404" : {
+            "description" : "No documents found"
+          },
+          "500" : {
+            "description" : "Server error"
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          }
+        }
+      }
+    },
+    "/transaction-documents/{id}" : {
+      "get" : {
+        "tags" : [ "/transaction-document" ],
+        "summary" : "Finds and returns a TLog based on the id.",
+        "description" : "Finds and returns a TLog based on the id.<br/><br/>Input Parameters: <br/>Id: id, The id of the TLog.<br/>Accept Value: acceptValue, tlog/raw returns a String with the appropriate Content-Type (text/plain, text/xml, text/html, application/json, etc.). <br/>Returns: Response, response object containing the result. <br/>Example: tlog/canonical returns a CanonicalTLogData response.",
+        "operationId" : "findCanonicalTlogsById",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The id of the TLog.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "Accept",
+          "in" : "header",
+          "description" : "tlog/raw returns a String with the appropriate Content-Type (text/plain, text/xml, text/html,\r\n application/json, etc.) Note that pure binary, application/octet-stream, is not supported. tlog/canonical returns\r\n a CanonicalTLogData response. Content-Type will be application/json tlog/image returns receipt image as String\r\n with the Content-Type set to text/html",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "response object containing the result",
+            "schema" : {
+              "$ref" : "#/definitions/CanonicalTLogData"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid"
+          },
+          "401" : {
+            "description" : "Unauthorized:  The request requires user authentication."
+          },
+          "404" : {
+            "description" : "Not found:  The document was not found."
+          },
+          "500" : {
+            "description" : "Server error"
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          }
+        }
+      }
+    },
+    "/transaction-documents/{id}/linked-documents" : {
+      "get" : {
+        "tags" : [ "/transaction-document" ],
+        "summary" : "Returns the documents (TLogs) linked to a specific document (TLog).",
+        "description" : "Returns the documents (TLogs) linked to a specific document (TLog).<br/><br/>Input Parameters: <br/>request: LinkedTLogRequest The Id and type of the TLog for which to return linked documents.<br/>Accept Header: acceptHeader, Based on the accept header, either a collection documents in raw or canonical format, application/json, etc.). <br/>Returns: Response, response object containing the result based upon the response. <br/>Example: if accept header is tlog/canonical Return LinkedCanonicalTLogResponse",
+        "operationId" : "getLinkedCanonicalDocuments",
+        "parameters" : [ {
+          "name" : "pageNumber",
+          "in" : "query",
+          "description" : "The page Number.",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "maximum" : 214748.0,
+          "minimum" : 0.0,
+          "format" : "int32"
+        }, {
+          "name" : "pageSize",
+          "in" : "query",
+          "description" : "The page Size.",
+          "required" : false,
+          "type" : "integer",
+          "default" : 200,
+          "maximum" : 10000.0,
+          "minimum" : 10.0,
+          "format" : "int32"
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The Id and type of the TLog for which to return linked documents.",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns the set of canonical tlogs whose id's are linked to this tlog, specified by id.",
+            "schema" : {
+              "$ref" : "#/definitions/LinkedCanonicalTLogResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid"
+          },
+          "401" : {
+            "description" : "Unauthorized:  The request requires user authentication."
+          },
+          "404" : {
+            "description" : "Not found:  The document was not found."
+          },
+          "500" : {
+            "description" : "Server error"
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          }
+        }
+      }
+    },
+    "/transaction-documents/{id}/linked-documents/raw" : {
+      "get" : {
+        "tags" : [ "/transaction-document" ],
+        "summary" : "Returns the raw documents (TLogs) linked to a specific document (TLog).",
+        "description" : "Returns the raw documents (TLogs) linked to a specific document (TLog).<br/><br/>Input Parameters: <br/>request: LinkedTLogRequest The Id and type of the TLog for which to return linked documents.<br/>Accept Header: acceptHeader, Based on the accept header, either a collection documents in raw or canonical format, application/json, etc.). <br/>Returns: Response, response object containing the linked documents for the specific id. <br/>Example: if accept header is tlog/raw Return LinkedRawTLogContentResponse",
+        "operationId" : "getLinkedRawDocuments",
+        "parameters" : [ {
+          "name" : "pageNumber",
+          "in" : "query",
+          "description" : "The page Number.",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "maximum" : 214748.0,
+          "minimum" : 0.0,
+          "format" : "int32"
+        }, {
+          "name" : "pageSize",
+          "in" : "query",
+          "description" : "The page Size.",
+          "required" : false,
+          "type" : "integer",
+          "default" : 200,
+          "maximum" : 10000.0,
+          "minimum" : 10.0,
+          "format" : "int32"
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The Id of the tlog to retrieve the raw documents linked to specific TLog.",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns the set of raw tlogs whose id's are linked to this tlog, specified by id.",
+            "schema" : {
+              "$ref" : "#/definitions/LinkedRawTLogContentResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid"
+          },
+          "401" : {
+            "description" : "Unauthorized:  The request requires user authentication."
+          },
+          "404" : {
+            "description" : "Not found:  The document was not found."
+          },
+          "500" : {
+            "description" : "Server error"
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          }
+        }
+      }
+    },
+    "/transaction-documents/{id}/raw" : {
+      "get" : {
+        "tags" : [ "/transaction-document" ],
+        "summary" : "Finds and returns a raw TLog by id.",
+        "description" : "Returns the raw documents (TLogs) linked to a specific document (TLog).<br/><br/>Input Parameters: <br/>Id: request The Id and type of the TLog for which to return linked documents.<br/>Accept Header: acceptHeader, Based on the accept header, either a collection documents in raw format, application/json, etc.). <br/>Returns: Response, response object containing the result. <br/>Example: if accept header is tlog/raw Return LinkedRawTLogContentResponse",
+        "operationId" : "findRawTlogsById",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The id of the TLog.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "Accept",
+          "in" : "header",
+          "description" : "tlog/raw returns a String with the appropriate Content-Type (text/plain, text/xml, text/html,\r\n application/json, etc.) Note that pure binary, application/octet-stream, is not supported. tlog/canonical returns\r\n a CanonicalTLogData response. Content-Type will be application/json tlog/image returns receipt image as String\r\n with the Content-Type set to text/html",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Response object containing the result",
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid"
+          },
+          "401" : {
+            "description" : "Unauthorized:  The request requires user authentication."
+          },
+          "404" : {
+            "description" : "Not found:  The document was not found."
+          },
+          "500" : {
+            "description" : "Server error"
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          }
+        }
+      }
+    },
+    "/transaction-documents/{id}/receipt" : {
+      "get" : {
+        "tags" : [ "/transaction-document" ],
+        "summary" : "Retrieves receipt image by TLog id",
+        "description" : "Returns the receipt image for a specified document (Tlog). <br/><br/>Input Parameters: <br/>tlog id: request The identifier of the tlog <br/>Returns: ReceiptInfo containing the image, mime type, and encoding method.",
+        "operationId" : "getReceiptInfoById",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of the TLog",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "ReceiptInfo object containing (possibly encoded) receipt image",
+            "schema" : {
+              "$ref" : "#/definitions/ReceiptInfo"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid"
+          },
+          "401" : {
+            "description" : "Unauthorized:  The request requires user authentication."
+          },
+          "404" : {
+            "description" : "Not found:  The document was not found."
+          },
+          "500" : {
+            "description" : "Server error"
+          },
+          "503" : {
+            "description" : "Service unavailable"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "CanonicalTLogData" : {
+      "type" : "object",
+      "required" : [ "closeDateTimeUTC", "id", "siteInfo", "tenant", "transactionNumber" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 2147483647
+        },
+        "tenant" : {
+          "$ref" : "#/definitions/OrganizationContext"
+        },
+        "modelVersion" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "siteInfo" : {
+          "$ref" : "#/definitions/SiteInfo"
+        },
+        "transactionNumber" : {
+          "type" : "string"
+        },
+        "openDateTimeUTC" : {
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "documentExpirationDate" : {
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "closeDateTimeUTC" : {
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "touchPointId" : {
+          "type" : "string"
+        },
+        "configurationDateTimeUtc" : {
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "touchPointType" : {
+          "type" : "string"
+        },
+        "touchPointGroup" : {
+          "type" : "string"
+        },
+        "dataProviderName" : {
+          "type" : "string"
+        },
+        "dataProviderVersion" : {
+          "type" : "string"
+        },
+        "businessDay" : {
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "isTrainingMode" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "linkedTransactions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LinkedTransactionInfo"
+          }
+        },
+        "tlog" : {
+          "$ref" : "#/definitions/CanonicalTransaction"
+        },
+        "rawTlog" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "format" : "byte"
+          }
+        },
+        "transactionCategory" : {
+          "type" : "string"
+        }
+      }
+    },
+    "TimeZoneInfo" : {
+      "type" : "object",
+      "properties" : {
+        "timeZone" : {
+          "description" : "Time Zone based on ZoneId.",
+          "$ref" : "#/definitions/ZoneId"
+        }
+      },
+      "description" : "Time zone according to TZDB."
+    },
+    "CanonicalTLogDataCanonicalTransaction" : {
+      "type" : "object",
+      "required" : [ "closeDateTimeUTC", "dataProviderName", "dataProviderVersion", "siteInfo", "tlog", "touchPointId", "transactionCategory", "transactionNumber" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "Primary unique opaque identification of the transaction"
+        },
+        "modelVersion" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "Version of the model."
+        },
+        "siteInfo" : {
+          "description" : "Location of the business, in Hospitality, PCR this is Site / Store",
+          "$ref" : "#/definitions/SiteInfo"
+        },
+        "transactionNumber" : {
+          "type" : "string",
+          "description" : "Transaction number based on POS (fully up to POS whether this is unique within a site or business day or terminal or all)."
+        },
+        "openDateTimeUTC" : {
+          "description" : "Time when the transaction has been opened in UTC.",
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "documentExpirationDate" : {
+          "description" : "Time when document expires",
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "closeDateTimeUTC" : {
+          "description" : "Time when the transaction has been closed in UTC. Fill in the same value as in open_date_time_utc if the transaction takes zero time.",
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "touchPointId" : {
+          "type" : "string",
+          "description" : "The ID of the last terminal / touch point / POS id where the transaction occurred. Unique within the site."
+        },
+        "configurationDateTimeUtc" : {
+          "description" : "Timestamp of the configuration relevant to the transaction.",
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "touchPointType" : {
+          "type" : "string",
+          "description" : "The last front end register type in which the transaction was performed such as: POS, Mobile, e-Commerce, fuel POS etc."
+        },
+        "touchPointGroup" : {
+          "type" : "string",
+          "description" : "A logical grouping of touch point. A Touchpoint can be any client, e.g. a POS Terminal, Self Checkout."
+        },
+        "dataProviderName" : {
+          "type" : "string",
+          "description" : "Name of the originating system or channel that provided the transaction. e.g. 'Aloha'"
+        },
+        "dataProviderVersion" : {
+          "type" : "string",
+          "description" : "Version of the originating system or channel that provided the transaction. e.g. '16.2'"
+        },
+        "businessDay" : {
+          "description" : "Business day the transaction. For this field, the required format is 'YYYY-MM-DDThh:mm:ssZ",
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "isTrainingMode" : {
+          "type" : "boolean",
+          "description" : "Flag indicating training mode. Allows this document to be excluded from data processing.",
+          "default" : false
+        },
+        "linkedTransactions" : {
+          "type" : "array",
+          "description" : "List of linked (related) transactions",
+          "items" : {
+            "$ref" : "#/definitions/LinkedTransactionInfo"
+          }
+        },
+        "tlog" : {
+          "description" : "The document described by the transaction category field.",
+          "$ref" : "#/definitions/CanonicalTransaction"
+        },
+        "transactionCategory" : {
+          "type" : "string",
+          "description" : "The category of the transaction",
+          "enum" : [ "SALE_OR_RETURN", "CONTROL", "CASH_OFFICE" ]
+        }
+      },
+      "description" : "The generic type of canonical tlog object."
+    },
+    "ZoneOffset" : {
+      "type" : "object",
+      "properties" : {
+        "totalSeconds" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "rules" : {
+          "$ref" : "#/definitions/ZoneRules"
+        }
+      }
+    },
+    "OrganizationContext" : {
+      "type" : "object",
+      "properties" : {
+        "targetOrganizationName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ZoneOffsetTransition" : {
+      "type" : "object",
+      "properties" : {
+        "offsetBefore" : {
+          "$ref" : "#/definitions/ZoneOffset"
+        },
+        "offsetAfter" : {
+          "$ref" : "#/definitions/ZoneOffset"
+        },
+        "duration" : {
+          "type" : "string",
+          "format" : "duration",
+          "description" : "ISO-8601 time-based time representation, such as 'PT24H' or 'PT8H6M12.345S"
+        },
+        "gap" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "overlap" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "dateTimeAfter" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "dateTimeBefore" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "instant" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "EnterpriseUnitNodeInfo" : {
+      "type" : "object",
+      "required" : [ "id" ],
+      "properties" : {
+        "level" : {
+          "type" : "integer",
+          "format" : "int32",
+          "minimum" : 0.0
+        },
+        "id" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 2147483647
+        }
+      }
+    },
+    "ZoneOffsetTransitionRule" : {
+      "type" : "object",
+      "properties" : {
+        "month" : {
+          "type" : "string",
+          "enum" : [ "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER" ]
+        },
+        "timeDefinition" : {
+          "type" : "string",
+          "enum" : [ "UTC", "WALL", "STANDARD" ]
+        },
+        "standardOffset" : {
+          "$ref" : "#/definitions/ZoneOffset"
+        },
+        "offsetBefore" : {
+          "$ref" : "#/definitions/ZoneOffset"
+        },
+        "offsetAfter" : {
+          "$ref" : "#/definitions/ZoneOffset"
+        },
+        "dayOfWeek" : {
+          "type" : "string",
+          "enum" : [ "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" ]
+        },
+        "dayOfMonthIndicator" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "localTime" : {
+          "$ref" : "#/definitions/LocalTime"
+        },
+        "midnightEndOfDay" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "SiteInfo" : {
+      "type" : "object",
+      "required" : [ "id" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "The name of the site in which the transaction was performed."
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "Site identification as known by customer. Unique within one tenant."
+        },
+        "siteTimeZone" : {
+          "description" : "Time zone of the site according to TZDB.",
+          "$ref" : "#/definitions/TimeZoneInfo"
+        }
+      },
+      "description" : "Site Information associated with the Transaction."
+    },
+    "CanonicalTLogDataObject" : {
+      "type" : "object",
+      "required" : [ "closeDateTimeUTC", "dataProviderName", "dataProviderVersion", "siteInfo", "tlog", "touchPointId", "transactionCategory", "transactionNumber" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "Primary unique opaque identification of the transaction"
+        },
+        "modelVersion" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "Version of the model."
+        },
+        "siteInfo" : {
+          "description" : "Location of the business, in Hospitality, PCR this is Site / Store",
+          "$ref" : "#/definitions/SiteInfo"
+        },
+        "transactionNumber" : {
+          "type" : "string",
+          "description" : "Transaction number based on POS (fully up to POS whether this is unique within a site or business day or terminal or all)."
+        },
+        "openDateTimeUTC" : {
+          "description" : "Time when the transaction has been opened in UTC.",
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "documentExpirationDate" : {
+          "description" : "Time when document expires",
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "closeDateTimeUTC" : {
+          "description" : "Time when the transaction has been closed in UTC. Fill in the same value as in open_date_time_utc if the transaction takes zero time.",
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "touchPointId" : {
+          "type" : "string",
+          "description" : "The ID of the last terminal / touch point / POS id where the transaction occurred. Unique within the site."
+        },
+        "configurationDateTimeUtc" : {
+          "description" : "Timestamp of the configuration relevant to the transaction.",
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "touchPointType" : {
+          "type" : "string",
+          "description" : "The last front end register type in which the transaction was performed such as: POS, Mobile, e-Commerce, fuel POS etc."
+        },
+        "touchPointGroup" : {
+          "type" : "string",
+          "description" : "A logical grouping of touch point. A Touchpoint can be any client, e.g. a POS Terminal, Self Checkout."
+        },
+        "dataProviderName" : {
+          "type" : "string",
+          "description" : "Name of the originating system or channel that provided the transaction. e.g. 'Aloha'"
+        },
+        "dataProviderVersion" : {
+          "type" : "string",
+          "description" : "Version of the originating system or channel that provided the transaction. e.g. '16.2'"
+        },
+        "businessDay" : {
+          "description" : "Business day the transaction. For this field, the required format is 'YYYY-MM-DDThh:mm:ssZ",
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "isTrainingMode" : {
+          "type" : "boolean",
+          "description" : "Flag indicating training mode. Allows this document to be excluded from data processing.",
+          "default" : false
+        },
+        "linkedTransactions" : {
+          "type" : "array",
+          "description" : "List of linked (related) transactions",
+          "items" : {
+            "$ref" : "#/definitions/LinkedTransactionInfo"
+          }
+        },
+        "tlog" : {
+          "type" : "object",
+          "description" : "The document described by the transaction category field.",
+          "properties" : { }
+        },
+        "transactionCategory" : {
+          "type" : "string",
+          "description" : "The category of the transaction",
+          "enum" : [ "SALE_OR_RETURN", "CONTROL", "CASH_OFFICE" ]
+        }
+      },
+      "description" : "The generic type of canonical tlog object."
+    },
+    "TLogCountResponse" : {
+      "type" : "object",
+      "properties" : {
+        "count" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Count for the search criteria"
+        }
+      },
+      "description" : "Response object to tell count of TLogs for search criteria."
+    },
+    "MoneyInfo" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "number",
+          "description" : "Value in Decimal Format - no spaces, decimal point is '.', negative number sign is '-' character."
+        }
+      },
+      "description" : "Money Information"
+    },
+    "LocalTime" : {
+      "type" : "object",
+      "properties" : {
+        "hour" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "minute" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "second" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "nano" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "ZoneId" : {
+      "type" : "object",
+      "properties" : {
+        "rules" : {
+          "$ref" : "#/definitions/ZoneRules"
+        },
+        "id" : {
+          "type" : "string"
+        }
+      }
+    },
+    "InputStream" : {
+      "type" : "object"
+    },
+    "TLogInfo" : {
+      "type" : "object",
+      "properties" : {
+        "businessActivities" : {
+          "type" : "array",
+          "description" : "List of Business activities related to the type of the transaction",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "businessDayUTC" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Business day the transaction. For this field, the required format is 'YYYY-MM-DDThh:mm:ssZ"
+        },
+        "employeeIds" : {
+          "type" : "array",
+          "description" : "Employee Id's based on the transaction category for the transaction.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "employeeNames" : {
+          "type" : "array",
+          "description" : "Employee Name's based on the transaction category for the transaction.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "dataProviderName" : {
+          "type" : "string",
+          "description" : "Name of the originating system or channel that provided the transaction. e.g. 'Aloha'"
+        },
+        "couponIds" : {
+          "type" : "array",
+          "description" : "External id's of the coupon/voucher associated with Coupon information.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "customerId" : {
+          "type" : "string",
+          "description" : "The customer ID belonging to the external system."
+        },
+        "customerName" : {
+          "type" : "string",
+          "description" : "The name of the customer performing the transaction."
+        },
+        "customerEmail" : {
+          "type" : "string",
+          "description" : "Customer's email address, may be used for digital receipt purposes."
+        },
+        "customerPhoneNumber" : {
+          "type" : "string",
+          "description" : "The phone number of the customer performing the transaction."
+        },
+        "itemDepartmentIds" : {
+          "type" : "array",
+          "description" : "In case of item sell - the department ID's linked to the item.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "destinationAccount" : {
+          "type" : "string",
+          "description" : "Identification of the related entity. Dependent on the account type related to Cash Management Destination Id."
+        },
+        "endTransactionDateTimeUTC" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Time when the transaction has been closed in UTC."
+        },
+        "grandAmount" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Information on totals related to Grand Amount"
+        },
+        "itemDiscountIds" : {
+          "type" : "array",
+          "description" : "List of Discount Ids associated with a Item in a transaction.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "isItemReturn" : {
+          "type" : "array",
+          "description" : "Flag is set to true in case the item was returned by the customer and money given back, otherwise False.",
+          "items" : {
+            "type" : "boolean"
+          }
+        },
+        "isItemVoided" : {
+          "type" : "array",
+          "description" : "Flag is set to true in case the item was voided, otherwise False.",
+          "items" : {
+            "type" : "boolean"
+          }
+        },
+        "customerLoyaltyCardNumber" : {
+          "type" : "string",
+          "description" : "The loyalty card from the Customer Information which was used in the transaction."
+        },
+        "itemProductIds" : {
+          "type" : "array",
+          "description" : "List of Product Ids. The main product ID, sometimes is the SKU code (stock keeping unit) or EAN.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "promotionIds" : {
+          "type" : "array",
+          "description" : "Promotion Id's associated with a transaction.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "itemPromotionIds" : {
+          "type" : "array",
+          "description" : "Promotions applied to items",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "receiptNumber" : {
+          "type" : "string",
+          "description" : "Identification of the transaction/receipt as presented to the customer (shown or printed on the receipt)"
+        },
+        "isItemReturnAffectsInventory" : {
+          "type" : "array",
+          "description" : "Flag set for the items returned back",
+          "items" : {
+            "type" : "boolean"
+          }
+        },
+        "sourceAccount" : {
+          "type" : "string",
+          "description" : "Identification of the related entity. Dependent on the account type related to Cash Management Source Id."
+        },
+        "siteInfoId" : {
+          "type" : "string",
+          "description" : "Site identification as known by customer. Unique within one tenant."
+        },
+        "tenderAmounts" : {
+          "type" : "array",
+          "description" : "Information on totals related to Tender Amounts.",
+          "items" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        },
+        "tenderTypes" : {
+          "type" : "array",
+          "description" : "The type of the tender. e.g. cash, credit card, gift card etc.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "tenderIds" : {
+          "type" : "array",
+          "description" : "The ID's of the tender used to pay for the transaction. External id of the tender.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "tlogId" : {
+          "type" : "string",
+          "description" : "Primary unique identification of the transaction"
+        },
+        "touchPointGroup" : {
+          "type" : "string",
+          "description" : "A logical grouping of touch point. A Touchpoint can be any client like POS, Self checkout etc"
+        },
+        "touchPointId" : {
+          "type" : "string",
+          "description" : "The ID of the last terminal / touch point / POS id where the transaction occurred. Unique within the site."
+        },
+        "touchPointType" : {
+          "type" : "string",
+          "description" : "The last front end register type in which the transaction was performed such as: POS, Mobile, e-Commerce, fuel POS etc."
+        },
+        "isTrainingMode" : {
+          "type" : "boolean",
+          "description" : "Flag indicating training mode.",
+          "default" : false
+        },
+        "linkedTransactionIds" : {
+          "type" : "array",
+          "description" : "The unique identifiers of the linked transactions. Represented by the 'transactionLinkId' field in the find API request/response.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "transactionNumber" : {
+          "type" : "string",
+          "description" : "Transaction number based on POS."
+        },
+        "isRecalled" : {
+          "type" : "boolean",
+          "description" : "Flag if the transaction was ever recalled",
+          "default" : false
+        },
+        "isResumed" : {
+          "type" : "boolean",
+          "description" : "Flag if the transaction was ever resumed",
+          "default" : false
+        },
+        "isSuspended" : {
+          "type" : "boolean",
+          "description" : "Flag if the transaction was ever suspended",
+          "default" : false
+        },
+        "transactionType" : {
+          "type" : "string",
+          "description" : "Type of control transaction"
+        },
+        "isVoided" : {
+          "type" : "boolean",
+          "description" : "Flag if the transaction is voided.",
+          "default" : false
+        },
+        "itemRegularUnitPrice" : {
+          "type" : "array",
+          "description" : "The unit price of Item. Positive number in all cases (even if return/refund).",
+          "items" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        },
+        "itemActualUnitPrice" : {
+          "type" : "array",
+          "description" : "The actual unit price single item is sold for, taking into account any price changes (including discounts).",
+          "items" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        },
+        "transactionCategory" : {
+          "type" : "string",
+          "description" : "The category of the transaction: Sale or return, control, cash office or unknown."
+        }
+      },
+      "description" : "Object representing the transaction log information."
+    },
+    "LinkedRawTLogContentResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "description" : "The actual page content.",
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "format" : "byte"
+            }
+          }
+        }
+      },
+      "description" : "Response object containing the collection of LinkedRawTLogContentResponse or empty collection list."
+    },
+    "DateTimeInfo" : {
+      "type" : "object",
+      "required" : [ "dateTime" ],
+      "properties" : {
+        "dateTime" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Zoned Date Time Information"
+        }
+      },
+      "description" : "Date and time. ISO 8601"
+    },
+    "FindTLogRequest" : {
+      "type" : "object",
+      "properties" : {
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32",
+          "minimum" : 0.0,
+          "maximum" : 214748.0,
+          "default" : 0
+        },
+        "pageSize" : {
+          "type" : "integer",
+          "format" : "int32",
+          "minimum" : 10.0,
+          "maximum" : 10000.0,
+          "default" : 200
+        },
+        "returnedFields" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "businessActivities", "businessDayUTC", "employeeIds", "employeeNames", "dataProviderName", "couponIds", "customerId", "customerName", "customerEmail", "customerPhoneNumber", "itemDepartmentIds", "destinationAccount", "endTransactionDateTimeUTC", "grandAmount", "discountIds", "itemDiscountIds", "isItemReturn", "isItemVoided", "customerLoyaltyCardNumber", "itemProductIds", "promotionIds", "itemPromotionIds", "receiptNumber", "isItemReturnAffectsInventory", "sourceAccount", "siteInfoId", "tenderAmounts", "tenderTypes", "tenderIds", "tlogId", "touchPointGroup", "touchPointId", "touchPointType", "isTrainingMode", "linkedTransactionIds", "transactionNumber", "isRecalled", "isResumed", "isSuspended", "transactionType", "isVoided", "itemRegularUnitPrice", "itemActualUnitPrice", "transactionCategory" ]
+          }
+        },
+        "tlogId" : {
+          "type" : "string",
+          "description" : "Primary unique opaque identification of the transaction."
+        },
+        "receiptNumber" : {
+          "type" : "string",
+          "description" : "Identification of the transaction/receipt as presented to the customer (shown or printed on the receipt)."
+        },
+        "transactionNumber" : {
+          "type" : "string",
+          "description" : "Transaction number based on POS (fully up to POS whether this is unique within a site or business day or terminal or all)."
+        },
+        "siteInfoId" : {
+          "type" : "string",
+          "description" : "Site identification as known by customer. Unique within one tenant"
+        },
+        "fromTransactionDateTimeUTC" : {
+          "description" : "Time when the transaction has been opened in UTC.",
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "toTransactionDateTimeUTC" : {
+          "description" : "Time when the transaction has been closed in UTC. Fill in the same value as in open_date_time_utc if the transaction takes zero time.",
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "businessDay" : {
+          "description" : "Business day the transaction. For this field, the required format is 'YYYY-MM-DDThh:mm:ssZ",
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "endTransactionDateTimeUTC" : {
+          "description" : "Time when the transaction has been closed in UTC. Fill in the same value as in open_date_time_utc if the transaction takes zero time.",
+          "$ref" : "#/definitions/DateTimeInfo"
+        },
+        "touchPointId" : {
+          "type" : "string",
+          "description" : "The ID of the last terminal / touch point / POS id where the transaction occurred. Unique within the site."
+        },
+        "transactionCategory" : {
+          "type" : "string",
+          "description" : "The category of the transaction: Sale or return, control, cash office or unknown."
+        },
+        "isTrainingMode" : {
+          "type" : "boolean",
+          "description" : "Flag indicating training mode.",
+          "default" : false
+        },
+        "employeeId" : {
+          "type" : "string",
+          "description" : "Employee Id based on the transaction category for the transaction."
+        },
+        "employeeName" : {
+          "type" : "string",
+          "description" : "Employee Name based on the transaction category for the transaction"
+        },
+        "businessActivities" : {
+          "type" : "array",
+          "description" : "Business activities related to the type of the transaction",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "SIGN_ON", "SIGN_OFF", "START_OF_DAY", "INVALID_PASSWORD", "CHANGE_PASSWORD", "RESET_PASSWORD", "TERMINAL_LOCK", "TERMINAL_UNLOCK", "DRAWER_OPEN", "END_OF_DAY", "TERMINAL_UP", "TERMINAL_DOWN", "SECURITY_ID_ENABLED", "SECURITY_ID_DISABLED" ]
+          }
+        },
+        "isSuspended" : {
+          "type" : "boolean",
+          "description" : "Flag if the transaction was ever saved / suspended",
+          "default" : false
+        },
+        "isResumed" : {
+          "type" : "boolean",
+          "description" : "Flag if the transaction was ever recalled / resumed / retrieved.",
+          "default" : false
+        },
+        "isRecalled" : {
+          "type" : "boolean",
+          "description" : "Flag if the transaction was ever recalled.",
+          "default" : false
+        },
+        "isVoided" : {
+          "type" : "boolean",
+          "description" : "Flag to check whether transaction is marked as voided or not.",
+          "default" : false
+        },
+        "grandAmount" : {
+          "description" : "Information on totals related to Grand Amount",
+          "$ref" : "#/definitions/MoneyInfo"
+        },
+        "tenderAmount" : {
+          "description" : "Information on totals related to Tender Amount",
+          "$ref" : "#/definitions/MoneyInfo"
+        },
+        "tenderId" : {
+          "type" : "string",
+          "description" : "The ID of the tender used to pay for the transaction. External id of the tender."
+        },
+        "touchPointType" : {
+          "type" : "string",
+          "description" : "The last front end register type in which the transaction was performed such as: POS, Mobile, e-Commerce, fuel POS etc."
+        },
+        "touchPointGroup" : {
+          "type" : "string",
+          "description" : "A logical grouping of touch point. A Touchpoint can be any client, e.g. a POS Terminal, Self Checkout."
+        },
+        "linkedTransactionIds" : {
+          "type" : "array",
+          "description" : "The unique identifiers of the linked transactions. Represented by the 'transactionLinkId' field in the find API request/response.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "dataProviderName" : {
+          "type" : "string",
+          "description" : "Name of the originating system or channel that provided the transaction. e.g. 'Aloha'"
+        },
+        "dataProviderVersion" : {
+          "type" : "string",
+          "description" : "Version of the originating system or channel that provided the transaction. e.g. '16.2'."
+        },
+        "tenderType" : {
+          "type" : "string",
+          "description" : "The type of the tender. e.g. cash, credit card, gift card etc.",
+          "enum" : [ "GENERIC", "CASH", "CREDIT_CARD", "DEBIT_CARD", "CASH_CARD", "GIFT_CARD", "GIFT_CERTIFICATE", "HOUSE_ACCOUNT", "PROPERTY_MANAGEMENT", "ACCOUNTS_RECEIVABLE", "ROOM_CHARGE", "SAVED_CUSTOMER", "CAMPUS_CARD", "MEAL_VOUCHER", "CHECK", "ELECTRONIC_BENEFIT_TRANSFER_CASH", "ELECTRONIC_BENEFIT_TRANSFER_FOOD_STAMP", "DRIVE_OR_WALK_OFF", "MANUFACTURER_COUPON", "MONEY_ORDER", "FLEXIBLE_SPENDING_ACCOUNT", "LOCAL_ACCOUNT", "WIC_ELECTRONIC", "WIC_SMARTCARD", "TRAVELERS_CHECK", "LOYALTY_POINTS", "STORED_VALUE", "DONATION" ]
+        },
+        "sourceAccount" : {
+          "type" : "string",
+          "description" : "Identification of the related entity. Dependent on the account type related to Cash Management Source Id."
+        },
+        "destinationAccount" : {
+          "type" : "string",
+          "description" : "Identification of the related entity. Dependent on the account type related to Cash Management Destination Id."
+        },
+        "itemProductIds" : {
+          "type" : "array",
+          "description" : "List of Product Ids. The main product ID, sometimes is the SKU code (stock keeping unit) or EAN. Unique and consistent identification within a location / tenant.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "isItemReturn" : {
+          "type" : "boolean",
+          "description" : "Flag is set to true in case the item was returned by the customer and money given back, otherwise False.",
+          "default" : false
+        },
+        "isItemReturnAffectsInventory" : {
+          "type" : "boolean",
+          "description" : "Flag is set to true in case the item was returned and returned to inventory, False if the item was discarded and not returned to inventory.",
+          "default" : false
+        },
+        "isItemVoided" : {
+          "type" : "boolean",
+          "description" : "Flag is set to true in case the item was voided, otherwise False. If entire transaction is voided, it is not necessary to go into all IsVoided fields and set them to 'true'.",
+          "default" : false
+        },
+        "itemRegularUnitPrice" : {
+          "description" : "The unit price of Item. Positive number in all cases (even if return/refund).",
+          "$ref" : "#/definitions/MoneyInfo"
+        },
+        "itemActualUnitPrice" : {
+          "description" : "The actual unit price single item is sold for, taking into account any price changes (including discounts).",
+          "$ref" : "#/definitions/MoneyInfo"
+        },
+        "itemDepartmentIds" : {
+          "type" : "array",
+          "description" : "In case of item sell - the department ID linked to the item. In case of department sale - the department ID. Not used in Hospitality.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "customerId" : {
+          "type" : "string",
+          "description" : "The customer ID belonging to the external system."
+        },
+        "customerEmail" : {
+          "type" : "string",
+          "description" : "Customer's email address, may be used for digital receipt purposes."
+        },
+        "customerPhoneNumber" : {
+          "type" : "string",
+          "description" : "Customer's phone number"
+        },
+        "customerName" : {
+          "type" : "string",
+          "description" : "Customer's name"
+        },
+        "customerLoyaltyCardNumber" : {
+          "type" : "string",
+          "description" : "The loyalty card from the Customer Information which was used in the transaction. In case several cards were scanned, only the last card in use should be uploaded."
+        },
+        "itemDiscountIds" : {
+          "type" : "array",
+          "description" : "List of DiscountIds associated with a Item in a transaction.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "discountIds" : {
+          "type" : "array",
+          "description" : "Discount Id associated with Discount Information as understood by POS system. Unique within site.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "promotionIds" : {
+          "type" : "array",
+          "description" : "Promotion Id associated with Promotion Information as understood by POS system. Unique within site.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "itemPromotionIds" : {
+          "type" : "array",
+          "description" : "Promotion Id associated withItem  Promotion Information as understood by POS system. Unique within site.",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "couponIds" : {
+          "type" : "array",
+          "description" : "External id of the coupon/voucher associated with Coupon information.",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "description" : "FindTLogRequest object used for the search criteria"
+    },
+    "TLogHbaseEntity" : {
+      "type" : "object",
+      "properties" : {
+        "canonicalTLogJson" : {
+          "type" : "string"
+        },
+        "channel" : {
+          "type" : "string"
+        },
+        "format" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "string"
+        },
+        "rawTLog" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "format" : "byte"
+          }
+        }
+      }
+    },
+    "LinkedCanonicalTLogResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "description" : "The actual content of CanonicalTLogData",
+          "items" : {
+            "$ref" : "#/definitions/CanonicalTLogDataCanonicalTransaction"
+          }
+        }
+      },
+      "description" : "Response Object containing the LinkedCanonicalTLogResponse or empty collection list for the CanonicalTLogIdData."
+    },
+    "FindTLogResponse" : {
+      "type" : "object",
+      "properties" : {
+        "lastPage" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 0.0
+        },
+        "pageContent" : {
+          "type" : "array",
+          "description" : "The actual content for collection of documents for the TLogInfo",
+          "items" : {
+            "$ref" : "#/definitions/TLogInfo"
+          }
+        }
+      },
+      "description" : "Returns the TLog Response Object based on the search criteria."
+    },
+    "CanonicalTransaction" : {
+      "type" : "object"
+    },
+    "ZoneRules" : {
+      "type" : "object",
+      "properties" : {
+        "transitions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ZoneOffsetTransition"
+          }
+        },
+        "transitionRules" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ZoneOffsetTransitionRule"
+          }
+        },
+        "fixedOffset" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "LinkedTransactionInfo" : {
+      "type" : "object",
+      "required" : [ "transactionId" ],
+      "properties" : {
+        "transactionId" : {
+          "type" : "string",
+          "description" : "The id of the linked transaction."
+        },
+        "reasonCode" : {
+          "type" : "string",
+          "description" : "The reason code for the linked transaction"
+        }
+      },
+      "description" : "Contains linked transaction information."
+    },
+    "ReceiptInfo" : {
+      "type" : "object",
+      "required" : [ "contentType" ],
+      "properties" : {
+        "contentType" : {
+          "type" : "string",
+          "description" : "Media type of the receipt info."
+        },
+        "encodingMethod" : {
+          "type" : "string",
+          "description" : "Encoding method used on receipt data",
+          "enum" : [ "base64", "xml", "json" ]
+        },
+        "receiptData" : {
+          "type" : "string",
+          "description" : "Actual receipt data. Expected to be base64 encoded."
+        }
+      },
+      "description" : "Receipt information associated with transaction."
+    },
+    "EnterpriseUnit" : {
+      "type" : "object",
+      "required" : [ "id", "path" ],
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "path" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/EnterpriseUnitNodeInfo"
+          }
+        }
+      }
+    }
+  }
+}

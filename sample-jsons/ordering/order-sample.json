@@ -1,0 +1,66 @@
+{
+  "fulfillment": {
+    "pickupLocation": "Atlanta",
+    "pickupDate": "2017-10-11T17:50:00Z"
+  },
+  "payments": [],
+  "orderLines": [
+    {
+      "lineId": "f7bed72f-4d74-4557-b184-87fddf2423bd",
+      "comments": "",
+      "productId": {
+        "value": "36235",
+        "type": "prod_id"
+      },
+      "description": "Organic Pure Extra Virgin Coconut Oil",
+      "itemType": "Food",
+      "quantity": {
+        "value": 1,
+        "unitOfMeasure": "ea",
+        "unitOfMeasureLabel": "each"
+      },
+      "unitPrice": 3.00,
+      "extendedAmount": 5.00,
+      "taxes": [],
+      "priceModifiers": []
+    },
+    {
+      "lineId": "674a5cf6-6c73-4e84-9bb6-0884a9b4d037",
+      "comments": "",
+      "productId": {
+        "value": "16490",
+        "type": "prod_id"
+      },
+      "description": "Old Fashioned Whole Wheat Bread",
+      "itemType": "Food",
+      "quantity": {
+        "value": 1,
+        "unitOfMeasure": "ea",
+        "unitOfMeasureLabel": "each"
+      },
+      "unitPrice": 9.00,
+      "extendedAmount": 5.00,
+      "taxes": [],
+      "priceModifiers": []
+    }
+  ],
+  "taxes": [],
+  "totalModifiers": [],
+  "referenceId": "4442dada-17b8-480f-bda1-4a1dfa326290",
+  "customer": {
+    "email": "pavel.savara@ncr.com",
+    "id": "ps185162",
+    "name": "Pavel Savara",
+    "phone": "+420123456"
+  },
+  "status": "ReadyForPickup",
+  "comments": "",
+  "currency": "USD",
+  "errorDescription": "",
+  "totals": [
+    {
+      "type": "Net",
+      "value": 456.00
+    }
+  ]
+}

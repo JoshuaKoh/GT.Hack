@@ -1,0 +1,3125 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Enables omni-channel persistence and interaction for selling contexts.",
+    "version" : "2.3.0",
+    "title" : "nr1-order",
+    "contact" : {
+      "name" : "NCR Corporation"
+    },
+    "license" : {
+      "name" : "NCR Proprietary - All rights reserved",
+      "url" : "https://www.ncr.com"
+    }
+  },
+  "basePath" : "/order",
+  "tags" : [ {
+    "name" : "Orders"
+  }, {
+    "name" : "Subscriptions"
+  } ],
+  "paths" : {
+    "/orders" : {
+      "post" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Submit a new order",
+        "description" : "Order ID is automatically generated on create",
+        "operationId" : "create_1",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/OrderData"
+          }
+        }, {
+          "name" : "nep-enterprise-unit",
+          "in" : "header",
+          "description" : "Optional. The NEP Enterprise Unit Id of the order. This Enterprise Unit must be in the same NEP Organization as the organization context of the call. The calling user must also have an Enterprise Unit Grant to this Enterprise Unit.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderViewData"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_ADMINISTRATOR" ]
+        }
+      }
+    },
+    "/orders/find" : {
+      "post" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Find an order",
+        "description" : "Order will have to match ALL provided fields in order to be in the result",
+        "operationId" : "findByCriteria_1",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/OrderFinderCriteria"
+          }
+        }, {
+          "name" : "take",
+          "in" : "query",
+          "description" : "The number of customer orders to return in single response",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "skip",
+          "in" : "query",
+          "description" : "The number of customer orders to skip",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/FindOrdersResult"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_VIEWER" ]
+        }
+      }
+    },
+    "/orders/find-unacknowledged" : {
+      "get" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Find unacknowledged orders",
+        "description" : "Returns all unacknowledged orders for the specified enterprise unit",
+        "operationId" : "resync_1",
+        "parameters" : [ {
+          "name" : "pageNumber",
+          "in" : "query",
+          "description" : "Page number requested",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "maximum" : 214748.0,
+          "minimum" : 0.0,
+          "format" : "int32"
+        }, {
+          "name" : "pageSize",
+          "in" : "query",
+          "description" : "Page size requested",
+          "required" : false,
+          "type" : "integer",
+          "default" : 10,
+          "maximum" : 50.0,
+          "minimum" : 1.0,
+          "format" : "int32"
+        }, {
+          "name" : "nep-enterprise-unit",
+          "in" : "header",
+          "description" : "The enterprise unit ID to search for unacknowledged orders in. The user making the call must have a grant to the enterprise unit.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/ResyncResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Enterprise unit does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_SITE_VIEWER" ]
+        }
+      }
+    },
+    "/orders/{id}" : {
+      "get" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Get an order",
+        "description" : "",
+        "operationId" : "get_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderViewData"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_VIEWER" ]
+        }
+      },
+      "put" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Replace an order",
+        "description" : "Replaces the entire order object with the submitted data",
+        "operationId" : "update_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "If-Match",
+          "in" : "header",
+          "description" : "ETag value used for optimistic locking",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/OrderData"
+          }
+        }, {
+          "name" : "nep-enterprise-unit",
+          "in" : "header",
+          "description" : "Optional. The NEP Enterprise Unit Id of the order. This Enterprise Unit must be in the same NEP Organization as the organization context of the call. The calling user must also have an Enterprise Unit Grant to this Enterprise Unit.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "nr1-device-id",
+          "in" : "header",
+          "description" : "ID of the device that locked the order (required if the order is locked)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderViewData"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "409" : {
+            "description" : "Conflict",
+            "schema" : {
+              "$ref" : "#/definitions/OrderLockedException"
+            }
+          },
+          "412" : {
+            "description" : "Precondition Failed: Order was updated since last read.",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceStaleException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_ADMINISTRATOR" ]
+        }
+      },
+      "patch" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Patch an order",
+        "description" : "Fields not sent in the body are unchanged. Collections are overwritten with sent data, not merged. Fields can be removed by setting them to null.",
+        "operationId" : "patch_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "If-Match",
+          "in" : "header",
+          "description" : "ETag value used for optimistic locking",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object",
+              "properties" : { }
+            }
+          }
+        }, {
+          "name" : "nep-enterprise-unit",
+          "in" : "header",
+          "description" : "Optional. The NEP Enterprise Unit Id of the order. This Enterprise Unit must be in the same NEP Organization as the organization context of the call. The calling user must also have an Enterprise Unit Grant to this Enterprise Unit.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "nr1-device-id",
+          "in" : "header",
+          "description" : "ID of the device that locked the order (required if the order is locked)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderViewData"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "409" : {
+            "description" : "Conflict",
+            "schema" : {
+              "$ref" : "#/definitions/OrderLockedException"
+            }
+          },
+          "412" : {
+            "description" : "Precondition Failed: Order was updated since last read.",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceStaleException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_ADMINISTRATOR" ]
+        }
+      }
+    },
+    "/orders/{id}/acks" : {
+      "post" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Acknowledge receipt of an order",
+        "description" : "",
+        "operationId" : "acknowledge_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nep-enterprise-unit",
+          "in" : "header",
+          "description" : "The NEP Enterprise Unit acknowledging receipt of the order change event. This Enterprise Unit must be in the same NEP Organization as the organization context of the call. The calling user must also have an Enterprise Unit Grant to this Enterprise Unit.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderViewData"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_SITE_ADMINISTRATOR" ]
+        }
+      }
+    },
+    "/orders/{id}/force-lock" : {
+      "post" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Force lock an order",
+        "description" : "Overrides any existing locks on an order",
+        "operationId" : "forceLock_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nr1-device-id",
+          "in" : "header",
+          "description" : "ID of the device to lock the order with",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderViewData"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_LOCK_ADMIN" ]
+        }
+      }
+    },
+    "/orders/{id}/force-unlock" : {
+      "post" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Force unlock an order",
+        "description" : "Overrides any existing locks on an order",
+        "operationId" : "forceUnlock_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nr1-device-id",
+          "in" : "header",
+          "description" : "ID of the device to unlock the order with",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderViewData"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_LOCK_ADMIN" ]
+        }
+      }
+    },
+    "/orders/{id}/lock" : {
+      "post" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Lock an order",
+        "description" : "Only successful if the order is not already locked",
+        "operationId" : "lock_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nr1-device-id",
+          "in" : "header",
+          "description" : "ID of the device to lock the order with",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderViewData"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "409" : {
+            "description" : "Conflict",
+            "schema" : {
+              "$ref" : "#/definitions/OrderLockedException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_ADMINISTRATOR" ]
+        }
+      }
+    },
+    "/orders/{id}/order-lines" : {
+      "post" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Add an order line to an order",
+        "description" : "",
+        "operationId" : "createOrderLine_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/OrderLineData"
+          }
+        }, {
+          "name" : "nr1-device-id",
+          "in" : "header",
+          "description" : "ID of the device that locked the order (required if the order is locked)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderLineData"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "409" : {
+            "description" : "Conflict",
+            "schema" : {
+              "$ref" : "#/definitions/OrderLockedException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_ADMINISTRATOR" ]
+        }
+      }
+    },
+    "/orders/{id}/order-lines/{lineId}" : {
+      "get" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Get an order line from an order",
+        "description" : "",
+        "operationId" : "getOrderLine_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "lineId",
+          "in" : "path",
+          "description" : "The line identifier. Must be unique for this order. Will be generated if not specified.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderLineData"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order or Order Line does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_VIEWER" ]
+        }
+      },
+      "put" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Replace an order line on an order",
+        "description" : "Replaces the entire order line object with the submitted data",
+        "operationId" : "updateOrderLine_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "lineId",
+          "in" : "path",
+          "description" : "The line identifier. Must be unique for this order. Will be generated if not specified.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/OrderLineData"
+          }
+        }, {
+          "name" : "nr1-device-id",
+          "in" : "header",
+          "description" : "ID of the device that locked the order (required if the order is locked)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderLineData"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "409" : {
+            "description" : "Conflict",
+            "schema" : {
+              "$ref" : "#/definitions/OrderLockedException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_ADMINISTRATOR" ]
+        }
+      },
+      "delete" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Delete an order line from an order",
+        "description" : "",
+        "operationId" : "deleteOrderLine_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "lineId",
+          "in" : "path",
+          "description" : "The line identifier. Must be unique for this order. Will be generated if not specified.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nr1-device-id",
+          "in" : "header",
+          "description" : "ID of the device that locked the order (required if the order is locked)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Success"
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order Line item does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "409" : {
+            "description" : "Conflict",
+            "schema" : {
+              "$ref" : "#/definitions/OrderLockedException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_ADMINISTRATOR" ]
+        }
+      },
+      "patch" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Patch an order line on an order",
+        "description" : "Fields not sent in the body are unchanged. Collections are overwritten with sent data, not merged. Fields can be removed by setting them to null.",
+        "operationId" : "patchOrderLine_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "lineId",
+          "in" : "path",
+          "description" : "The line identifier. Must be unique for this order. Will be generated if not specified.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object",
+              "properties" : { }
+            }
+          }
+        }, {
+          "name" : "nr1-device-id",
+          "in" : "header",
+          "description" : "ID of the device that locked the order (required if the order is locked)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderLineData"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order or Order Line does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "409" : {
+            "description" : "Conflict",
+            "schema" : {
+              "$ref" : "#/definitions/OrderLockedException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_ADMINISTRATOR" ]
+        }
+      }
+    },
+    "/orders/{id}/unlock" : {
+      "post" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Unlock an order",
+        "description" : "Only successful if the device ID specified matches the ID on the lock",
+        "operationId" : "unlock_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nr1-device-id",
+          "in" : "header",
+          "description" : "ID of the device to unlock the order with",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderViewData"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "409" : {
+            "description" : "Conflict",
+            "schema" : {
+              "$ref" : "#/definitions/OrderLockedException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_ADMINISTRATOR" ]
+        }
+      }
+    },
+    "/orders/{id}/versions" : {
+      "get" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Get order versions",
+        "description" : "Returns the current and previous versions of an order",
+        "operationId" : "getVersions_1",
+        "parameters" : [ {
+          "name" : "pageNumber",
+          "in" : "query",
+          "description" : "Page number requested",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "maximum" : 214748.0,
+          "minimum" : 0.0,
+          "format" : "int32"
+        }, {
+          "name" : "pageSize",
+          "in" : "query",
+          "description" : "Page size requested",
+          "required" : false,
+          "type" : "integer",
+          "default" : 10,
+          "maximum" : 50.0,
+          "minimum" : 1.0,
+          "format" : "int32"
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderVersionsResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_VIEWER" ]
+        }
+      }
+    },
+    "/orders/{id}/versions/{versionId}" : {
+      "get" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Get order versions",
+        "description" : "Returns the specified version of an order",
+        "operationId" : "getSingleVersion_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Order unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "versionId",
+          "in" : "path",
+          "description" : "Version ID unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/OrderVersionResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Order does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_VIEWER" ]
+        }
+      }
+    },
+    "/subscriptions" : {
+      "post" : {
+        "tags" : [ "Subscriptions" ],
+        "summary" : "Create subscription to specific order service topics",
+        "description" : "",
+        "operationId" : "create_2",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreateOrderSubscriptionRequest"
+          }
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_ADMINISTRATOR" ]
+        }
+      }
+    },
+    "/subscriptions/{name}" : {
+      "delete" : {
+        "tags" : [ "Subscriptions" ],
+        "summary" : "Delete subscription to specific order service topics",
+        "description" : "",
+        "operationId" : "delete_1",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "nep-correlation-id",
+          "in" : "header",
+          "description" : "A unique ID that can be used to correlate one or more related requests for debugging or tracing purposes",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "WUSRB185213-AE7-11243-22a2c887-12a7-48e6-b9af-0ed7fb67e4cb"
+        }, {
+          "name" : "nep-organization",
+          "in" : "header",
+          "description" : "The organization the request applies to",
+          "required" : false,
+          "type" : "string",
+          "maxLength" : 512,
+          "minLength" : 1,
+          "x-example" : "sample-organization"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Success"
+          },
+          "400" : {
+            "description" : "Bad Request: The request is invalid",
+            "schema" : {
+              "$ref" : "#/definitions/PayloadConstraintViolationException"
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized:  The user credentials are invalid",
+            "schema" : {
+              "$ref" : "#/definitions/InvalidCredentialsException"
+            }
+          },
+          "403" : {
+            "description" : "Access denied due to insufficient privileges",
+            "schema" : {
+              "$ref" : "#/definitions/AccessDeniedException"
+            }
+          },
+          "404" : {
+            "description" : "Not Found: Subscription does not exist",
+            "schema" : {
+              "$ref" : "#/definitions/ResourceDoesNotExistException"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessException"
+            }
+          }
+        },
+        "x-authorities" : {
+          "roles" : [ "R1_ORDER_ADMINISTRATOR" ]
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "CustomerData" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "The customer identifier, referencing the NCR platform customer data"
+        },
+        "externalIds" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/CustomerIdData"
+          }
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "The customer name is used for groups, organizations or usernames. Â If specifying an individualâs name, use the first and last name fields."
+        },
+        "firstName" : {
+          "type" : "string",
+          "description" : "The customer's first name"
+        },
+        "lastName" : {
+          "type" : "string",
+          "description" : "The customer's last name"
+        },
+        "phone" : {
+          "type" : "string",
+          "description" : "Phone number, for identification and contact purposes"
+        },
+        "phoneExtension" : {
+          "type" : "string",
+          "description" : "Phone extension, for contact purposes"
+        },
+        "email" : {
+          "type" : "string",
+          "description" : "Email address, for identification and contact purposes"
+        }
+      }
+    },
+    "CustomerIdData" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "The type of customer ID",
+          "enum" : [ "Reference", "Tax", "Loyalty", "Other" ]
+        },
+        "typeLabel" : {
+          "type" : "string",
+          "description" : "If the 'Other' type is used, then provide a label specifying the type"
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "The customer id value"
+        }
+      }
+    },
+    "FeeData" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "The type of fee",
+          "enum" : [ "None", "CallIn", "Catering", "WalkIn", "Delivery", "EatIn", "DriveThru", "Curbside", "FaxedIn", "Web", "ModeCharge", "Other" ]
+        },
+        "typeLabel" : {
+          "type" : "string",
+          "description" : "If the 'Other' type is used, then provide a label specifying the type"
+        },
+        "provider" : {
+          "type" : "string",
+          "description" : "The service provider charging the fee"
+        },
+        "amount" : {
+          "type" : "number",
+          "description" : "Amount of the fee"
+        },
+        "override" : {
+          "type" : "boolean",
+          "description" : "Indicates this fee amount should be used instead of a calculated fee"
+        },
+        "lineId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "FulfillmentAddressBusinessData" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Business name."
+        },
+        "department" : {
+          "type" : "string",
+          "description" : "Specific department name."
+        }
+      }
+    },
+    "FulfillmentAddressData" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "The type of address.",
+          "enum" : [ "Business", "Residential", "Other" ]
+        },
+        "typeLabel" : {
+          "type" : "string",
+          "description" : "If type is 'Other', optionally specify the address type."
+        },
+        "line1" : {
+          "type" : "string",
+          "description" : "First line of the address."
+        },
+        "line2" : {
+          "type" : "string",
+          "description" : "Second line of the address."
+        },
+        "city" : {
+          "type" : "string",
+          "description" : "City of the address"
+        },
+        "state" : {
+          "type" : "string",
+          "description" : "State or province of the address."
+        },
+        "postalCode" : {
+          "type" : "string",
+          "description" : "Postal code of the address."
+        },
+        "notes" : {
+          "type" : "string",
+          "description" : "Delivery notes for the address (e.g. Use entrance on east side)."
+        },
+        "businessInfo" : {
+          "description" : "Additional business data if this is a business address.",
+          "$ref" : "#/definitions/FulfillmentAddressBusinessData"
+        }
+      }
+    },
+    "FulfillmentData" : {
+      "type" : "object",
+      "properties" : {
+        "address" : {
+          "description" : "Address information used in fulfillment (e.g. a delivery address)",
+          "$ref" : "#/definitions/FulfillmentAddressData"
+        },
+        "leadTimes" : {
+          "type" : "array",
+          "description" : "Fulfillment lead time expected for the order, such as delivery time or preparation time",
+          "items" : {
+            "$ref" : "#/definitions/FulfillmentLeadTimeData"
+          }
+        },
+        "notes" : {
+          "type" : "string",
+          "description" : "Notes added to aid in fulfillment (e.g. customer delivery instructions)"
+        },
+        "pickupDate" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "The date when the customer is due to collect the order"
+        },
+        "pickupLocation" : {
+          "type" : "string",
+          "description" : "The store where the customer will collect his order"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "The type of fulfillment needed for this order",
+          "enum" : [ "Delivery", "Pickup", "Notification", "CurbSide", "DriveThru", "Other" ]
+        },
+        "typeLabel" : {
+          "type" : "string",
+          "description" : "If 'Other' is the declared type, use typeLabel to specify the actual type"
+        },
+        "autoRelease" : {
+          "type" : "boolean",
+          "description" : "Indicates if the order should be auto released for fulfillment"
+        }
+      }
+    },
+    "FulfillmentLeadTimeData" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "The type of the lead time.",
+          "enum" : [ "Transit", "Setup", "Preparation", "Other" ]
+        },
+        "typeLabel" : {
+          "type" : "string",
+          "description" : "If the 'Other' type is used, then provide a label specifying the lead time."
+        },
+        "interval" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The measure for the lead time."
+        },
+        "intervalUnits" : {
+          "type" : "string",
+          "description" : "The unit of measure for the lead time",
+          "enum" : [ "Minutes", "Hours", "Days", "Months" ]
+        }
+      }
+    },
+    "LinePriceModifierData" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "number",
+          "description" : "The discount or surcharge amount"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "Description of the price change"
+        },
+        "referenceId" : {
+          "type" : "string",
+          "description" : "The price change reference, like a promotion id"
+        }
+      }
+    },
+    "LineTaxData" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "number",
+          "description" : "The tax amount"
+        },
+        "code" : {
+          "type" : "string",
+          "description" : "The tax code"
+        },
+        "isIncluded" : {
+          "type" : "boolean",
+          "description" : "Indicate if the tax is included in the item price"
+        },
+        "percentage" : {
+          "type" : "number",
+          "description" : "Tax percentage for presentation purposes. May be null"
+        }
+      }
+    },
+    "LockData" : {
+      "type" : "object",
+      "properties" : {
+        "lockedBy" : {
+          "type" : "string",
+          "description" : "The unique Id/Name of the touchpoint that locked the customer order"
+        },
+        "lockedDate" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "The Date/Time when the locked happened, in ISO 8601 format"
+        }
+      }
+    },
+    "OrderLineData" : {
+      "type" : "object",
+      "properties" : {
+        "comments" : {
+          "type" : "string",
+          "description" : "General comments for each line item of an order.  Comments has been deprecated, in favor of using the typed notes feature.",
+          "minLength" : 0,
+          "maxLength" : 4000
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "The line's description"
+        },
+        "extendedAmount" : {
+          "type" : "number",
+          "description" : "The Line extended amount. That is: Quantity X Unit price"
+        },
+        "itemType" : {
+          "type" : "string",
+          "description" : "The order line item type. e.g. Fee, Tare, Fuel..."
+        },
+        "notes" : {
+          "type" : "array",
+          "description" : "The notes applying to this line item, such as cooking instructions, or customer substitutions preferred",
+          "items" : {
+            "$ref" : "#/definitions/OrderLineNoteData"
+          }
+        },
+        "parentLineId" : {
+          "type" : "string",
+          "description" : "The line identifier for the parent item. Parents are used to set up linkage between items, and to build a hierarchy of items."
+        },
+        "priceModifiers" : {
+          "type" : "array",
+          "description" : "The price modifiers for this line only",
+          "items" : {
+            "$ref" : "#/definitions/LinePriceModifierData"
+          }
+        },
+        "productId" : {
+          "description" : "The identifier of the product used to create the order line",
+          "$ref" : "#/definitions/ProductIdData"
+        },
+        "quantity" : {
+          "description" : "The line quantity",
+          "$ref" : "#/definitions/QuantityData"
+        },
+        "substitutionAllowed" : {
+          "type" : "boolean",
+          "description" : "Substitution Allowed for an item"
+        },
+        "taxes" : {
+          "type" : "array",
+          "description" : "The taxes for this line only",
+          "items" : {
+            "$ref" : "#/definitions/LineTaxData"
+          }
+        },
+        "unitPrice" : {
+          "type" : "number",
+          "description" : "The price per unit"
+        },
+        "scanData" : {
+          "type" : "string",
+          "description" : "Applicable for POS where picker writes composite barcode instead of overwriting product ID field. Maximum allowable length is 2710 characters.",
+          "minLength" : 0,
+          "maxLength" : 2710
+        },
+        "supplementalData" : {
+          "type" : "string",
+          "description" : "Use for capturing gift payment (track data), product serial number, IMEI. Maximum allowable length is 2710 characters.",
+          "minLength" : 0,
+          "maxLength" : 2710
+        },
+        "modifierCode" : {
+          "type" : "string",
+          "description" : "The modifier code associated with the item, typically as defined in the POS system, to indicate e.g. 'well done', 'extra ketchup'"
+        },
+        "linkGroupCode" : {
+          "type" : "string",
+          "description" : "Hospitality linkGroupCode, such as codes for 'toppings', 'sides', or Retail 'substitution'"
+        },
+        "lineId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OrderLineNoteData" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "The type of the note.",
+          "enum" : [ "Substitutions", "Preferences", "Other" ]
+        },
+        "typeLabel" : {
+          "type" : "string",
+          "description" : "If the 'Other' type is used, then provide a label specifying the type."
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "The note itself."
+        }
+      }
+    },
+    "OrderViewData" : {
+      "type" : "object",
+      "properties" : {
+        "dateCreated" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "The date the order was created. A read only value that is handled internally, and will be disregarded if sent in a message"
+        },
+        "dateUpdated" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "The last date the order was changed. A read only value that is handled internally, and will be disregarded if sent in a message"
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "Unique identifier. A read only value that is handled internally, and will be disregarded if sent in a message"
+        },
+        "lock" : {
+          "description" : "Orders' owner locking information",
+          "$ref" : "#/definitions/LockData"
+        },
+        "expireAt" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "The expiration date of the order. A read only value that is handled internally, and will be disregarded if sent in a message"
+        },
+        "sourceOrganization" : {
+          "type" : "string",
+          "description" : "Order's source organization name. A read only value that is handled internally"
+        },
+        "dateAcknowledged" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "The date and time that an order was acknowledged as received by an NEP Enterprise Unit. If null, order has not been acknowledged by the target NEP Enterprise Unit."
+        },
+        "enterpriseUnitId" : {
+          "type" : "string",
+          "description" : "Site for which order is placed."
+        },
+        "comments" : {
+          "type" : "string",
+          "description" : "General comments for whole order",
+          "minLength" : 0,
+          "maxLength" : 4000
+        },
+        "channel" : {
+          "type" : "string",
+          "description" : "Channel through which the Order was placed",
+          "enum" : [ "PhoneIn", "WalkIn", "Web", "eMail", "CallCenter", "Mobile", "DriveThru" ]
+        },
+        "currency" : {
+          "type" : "string",
+          "description" : "The currency of all money values in the order. This is the currency code as defined in ISO 4217"
+        },
+        "customer" : {
+          "description" : "The customer of this order",
+          "$ref" : "#/definitions/CustomerData"
+        },
+        "errorDescription" : {
+          "type" : "string",
+          "description" : "Description for an error",
+          "minLength" : 0,
+          "maxLength" : 4000
+        },
+        "owner" : {
+          "type" : "string",
+          "description" : "Responsible party for this order, where party can be application, site, person"
+        },
+        "referenceId" : {
+          "type" : "string",
+          "description" : "External reference identifier"
+        },
+        "source" : {
+          "type" : "string",
+          "description" : "Retail origin of the order, such as an order aggregator or third party ordering system."
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "Status this order is in",
+          "enum" : [ "Canceled", "Finished", "OrderPlaced", "ReadyForPickup", "Error", "InProgress", "ReceivedForFulfillment", "InFulfillment", "InTransit", "Expired", "Abandoned" ]
+        },
+        "totals" : {
+          "type" : "array",
+          "description" : "List of customer order totals",
+          "items" : {
+            "$ref" : "#/definitions/TotalData"
+          }
+        },
+        "fulfillment" : {
+          "description" : "Information needed to fulfill the order delivery",
+          "$ref" : "#/definitions/FulfillmentData"
+        },
+        "fees" : {
+          "type" : "array",
+          "description" : "Fees charged to this order, such as delivery or setup fees",
+          "items" : {
+            "$ref" : "#/definitions/FeeData"
+          }
+        },
+        "orderLines" : {
+          "type" : "array",
+          "description" : "The order line items",
+          "items" : {
+            "$ref" : "#/definitions/OrderLineData"
+          }
+        },
+        "payments" : {
+          "type" : "array",
+          "description" : "Payments information assigned to the order",
+          "items" : {
+            "$ref" : "#/definitions/PaymentData"
+          }
+        },
+        "taxes" : {
+          "type" : "array",
+          "description" : "The taxes calculated for the order",
+          "items" : {
+            "$ref" : "#/definitions/TaxData"
+          }
+        },
+        "taxExempt" : {
+          "type" : "boolean",
+          "description" : "Indicates that this order should be taxÂ exempt. The point of sale should verify the customer is qualified for the order to beÂ exempted."
+        },
+        "totalModifiers" : {
+          "type" : "array",
+          "description" : "Modifiers on the orders' lines total",
+          "items" : {
+            "$ref" : "#/definitions/TicketTotalModifierData"
+          }
+        },
+        "partySize" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "Party size for the order",
+          "minimum" : 0.0
+        },
+        "etag" : {
+          "type" : "string",
+          "example" : "2017-07-06T21:03:46.514Z"
+        }
+      },
+      "description" : "Represents information of the order that is used for viewing purposes."
+    },
+    "PaymentData" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "number",
+          "description" : "The amount paid"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "The payment description"
+        },
+        "gratuity" : {
+          "type" : "number",
+          "description" : "The amount tipped"
+        },
+        "referenceId" : {
+          "type" : "string",
+          "description" : "External reference identifier, to relate the payment line to the payment system"
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "The payment status. i.e. PreAuthorized, Authorized, Paid, PendingVerification"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "The payments' type.",
+          "enum" : [ "AccountsReceivable", "AirmilesConversion", "CapitalBond", "Cash", "Check", "CheckCard", "CoPay", "Coupon", "CustomerAccount", "ElectronicTollCollection", "FoodStamps", "GiftCertificate", "HouseAccount", "InternationalMaestro", "Loyalty", "ManufacturerCoupon", "PurchaseOrder", "StaffDressAllowance", "StoredValue", "TravelersCheck", "UKMaestro", "Voucher", "WICCheck", "CreditDebit", "Other" ]
+        },
+        "subType" : {
+          "type" : "string",
+          "description" : "The payments' subType. Here subType is required for CreditDebit card type. Return error if subType is not given for CreditDebit card type input."
+        },
+        "maskedPAN" : {
+          "type" : "string",
+          "description" : "Masked Personal Account number"
+        },
+        "token" : {
+          "type" : "string",
+          "description" : "Token for payment validation"
+        },
+        "payBalance" : {
+          "type" : "boolean",
+          "description" : "Indicates if remaining balance should be charged to the user"
+        },
+        "lineId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ProductIdData" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "The identifier type. i.e. UPC, SKU, EAN"
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "The identifier value"
+        }
+      }
+    },
+    "QuantityData" : {
+      "type" : "object",
+      "properties" : {
+        "unitOfMeasure" : {
+          "type" : "string",
+          "description" : "The unit of measure. Returns exceptions when this unit of measure contains invalid code.",
+          "enum" : [ "EA", "GLI", "GLL", "LTR", "INH", "FOT", "MMT", "CMQ", "CMT", "MTR", "MTK", "MTQ", "GRM", "KGM", "LBR", "ANN", "CEL", "FAH", "OTHER" ]
+        },
+        "unitOfMeasureLabel" : {
+          "type" : "string",
+          "description" : "The unit of measure label. This field can be populated when unitOfMeasure  is selected/entered as other value."
+        },
+        "value" : {
+          "type" : "number",
+          "description" : "The units value per unit-of-measure. Required field when unitOfMeasure is entered. Accepted decimal and positive/negative numerical value. "
+        }
+      }
+    },
+    "TaxData" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "number",
+          "description" : "The tax amount"
+        },
+        "code" : {
+          "type" : "string",
+          "description" : "The tax code"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "The tax description"
+        },
+        "isIncluded" : {
+          "type" : "boolean",
+          "description" : "Indicates if the tax is included in the item price. Note: the name is for backward compatibility with the v1.1 OrderService API"
+        },
+        "percentage" : {
+          "type" : "number",
+          "description" : "Tax percentage for presentation purposes. May be null"
+        },
+        "lineId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "TicketTotalModifierData" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "number",
+          "description" : "The discount or surcharge amount"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "Description of the price change"
+        },
+        "referenceId" : {
+          "type" : "string",
+          "description" : "The price change reference, like a promotion id"
+        },
+        "lineId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "TotalData" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "The type of the total",
+          "enum" : [ "Net", "TaxExcluded", "TaxIncluded" ]
+        },
+        "value" : {
+          "type" : "number",
+          "description" : "The value of the total"
+        },
+        "lineId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ConstraintViolationData" : {
+      "type" : "object",
+      "properties" : {
+        "invalidValue" : {
+          "type" : "string",
+          "description" : "The value that failed validation"
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "Message describing the violation error"
+        },
+        "propertyPath" : {
+          "type" : "string",
+          "description" : "The path of the property that failed validation"
+        }
+      },
+      "description" : "Captures constraint violation information for an API request"
+    },
+    "PayloadConstraintViolationException" : {
+      "type" : "object",
+      "required" : [ "errorType", "message" ],
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "description" : "The error message"
+        },
+        "errorType" : {
+          "type" : "string",
+          "description" : "Unique ID identifying the type of error",
+          "default" : "com.ncr.nep.common.exception.PayloadConstraintViolationException"
+        },
+        "details" : {
+          "type" : "array",
+          "description" : "Error-specific values that provide more information on the error, such as the reason for failure or error code",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "constraintViolations" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ConstraintViolationData"
+          }
+        }
+      },
+      "description" : "The request failed validation"
+    },
+    "InvalidCredentialsException" : {
+      "type" : "object",
+      "required" : [ "errorType", "message" ],
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "description" : "The error message"
+        },
+        "errorType" : {
+          "type" : "string",
+          "description" : "Unique ID identifying the type of error",
+          "default" : "com.ncr.nep.common.exception.InvalidCredentialsException"
+        },
+        "details" : {
+          "type" : "array",
+          "description" : "Error-specific values that provide more information on the error, such as the reason for failure or error code",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "description" : "The user credentials are invalid"
+    },
+    "AccessDeniedException" : {
+      "type" : "object",
+      "required" : [ "errorType", "message" ],
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "description" : "The error message"
+        },
+        "errorType" : {
+          "type" : "string",
+          "description" : "Unique ID identifying the type of error",
+          "default" : "com.ncr.nep.common.exception.AccessDeniedException"
+        },
+        "details" : {
+          "type" : "array",
+          "description" : "Error-specific values that provide more information on the error, such as the reason for failure or error code",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "description" : "Access denied due to insufficient privileges."
+    },
+    "ResourceDoesNotExistException" : {
+      "type" : "object",
+      "required" : [ "errorType", "message" ],
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "description" : "The error message"
+        },
+        "errorType" : {
+          "type" : "string",
+          "description" : "Unique ID identifying the type of error",
+          "default" : "com.ncr.nep.common.exception.ResourceDoesNotExistException"
+        },
+        "details" : {
+          "type" : "array",
+          "description" : "Error-specific values that provide more information on the error, such as the reason for failure or error code",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "description" : "The resource does not exist"
+    },
+    "BusinessException" : {
+      "type" : "object",
+      "required" : [ "errorType", "message" ],
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "description" : "The error message"
+        },
+        "errorType" : {
+          "type" : "string",
+          "description" : "Unique ID identifying the type of error",
+          "default" : "com.ncr.nep.common.exception.BusinessException"
+        },
+        "details" : {
+          "type" : "array",
+          "description" : "Error-specific values that provide more information on the error, such as the reason for failure or error code",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "description" : "An error occurred while processing a request"
+    },
+    "FindOrdersResult" : {
+      "type" : "object",
+      "properties" : {
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "The total count of the orders that match the find criteria"
+        },
+        "orders" : {
+          "type" : "array",
+          "description" : "List of orders that matches the find criteria, limited to the request skip and limit. By default the limit is 20",
+          "items" : {
+            "$ref" : "#/definitions/OrderBasicViewData"
+          }
+        }
+      },
+      "description" : "The result of a find operation on the orders resource."
+    },
+    "OrderBasicViewData" : {
+      "type" : "object",
+      "properties" : {
+        "dateCreated" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "The date the order was created. A read only value that is handled internally, and will be disregarded if sent in a message"
+        },
+        "dateUpdated" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "The last date the order was changed. A read only value that is handled internally, and will be disregarded if sent in a message"
+        },
+        "id" : {
+          "type" : "string",
+          "description" : "Unique identifier for order. A read only value that is handled internally, and will be disregarded if sent in a message"
+        },
+        "expireAt" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "The expiration date of the order. A read only value that is handled internally, and will be disregarded if sent in a message"
+        },
+        "sourceOrganization" : {
+          "type" : "string",
+          "description" : "Order's source organization name. A read only value that is handled internally"
+        },
+        "enterpriseUnitId" : {
+          "type" : "string",
+          "description" : "Site for which order is placed."
+        },
+        "comments" : {
+          "type" : "string",
+          "description" : "General comments for whole order",
+          "minLength" : 0,
+          "maxLength" : 4000
+        },
+        "channel" : {
+          "type" : "string",
+          "description" : "Channel through which the Order was placed",
+          "enum" : [ "PhoneIn", "WalkIn", "Web", "eMail", "CallCenter", "Mobile", "DriveThru" ]
+        },
+        "currency" : {
+          "type" : "string",
+          "description" : "The currency of all money values in the order. This is the currency code as defined in ISO 4217"
+        },
+        "customer" : {
+          "description" : "The customer of this order",
+          "$ref" : "#/definitions/CustomerData"
+        },
+        "errorDescription" : {
+          "type" : "string",
+          "description" : "Description for an error",
+          "minLength" : 0,
+          "maxLength" : 4000
+        },
+        "owner" : {
+          "type" : "string",
+          "description" : "Responsible party for this order, where party can be application, site, person"
+        },
+        "referenceId" : {
+          "type" : "string",
+          "description" : "External reference identifier"
+        },
+        "source" : {
+          "type" : "string",
+          "description" : "Retail origin of the order, such as an order aggregator or third party ordering system."
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "Status this order is in",
+          "enum" : [ "Canceled", "Finished", "OrderPlaced", "ReadyForPickup", "Error", "InProgress", "ReceivedForFulfillment", "InFulfillment", "InTransit", "Expired", "Abandoned" ]
+        },
+        "totals" : {
+          "type" : "array",
+          "description" : "List of customer order totals",
+          "items" : {
+            "$ref" : "#/definitions/TotalData"
+          }
+        },
+        "etag" : {
+          "type" : "string",
+          "example" : "2017-07-06T21:03:46.514Z"
+        }
+      }
+    },
+    "OrderFinderCriteria" : {
+      "type" : "object",
+      "properties" : {
+        "customerId" : {
+          "type" : "string",
+          "description" : "The Id of the Customer associated with the order"
+        },
+        "fromUpdatedDate" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Order was last updated on this date, or later"
+        },
+        "phoneNumber" : {
+          "type" : "string",
+          "description" : "The Phone of the Customer associated with the order"
+        },
+        "pickupLocationId" : {
+          "type" : "string",
+          "description" : "The location in which the order was picked"
+        },
+        "referenceId" : {
+          "type" : "string",
+          "description" : "The order reference id"
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "The order status",
+          "enum" : [ "Canceled", "Finished", "OrderPlaced", "ReadyForPickup", "Error" ]
+        },
+        "toUpdatedDate" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Order was last updated on this date, or earlier"
+        }
+      },
+      "description" : "Criteria details to search orders. Order will have to match ALL provided fields in order to be in the result."
+    },
+    "JsonNode" : {
+      "type" : "object",
+      "properties" : {
+        "floatingPointNumber" : {
+          "type" : "boolean"
+        },
+        "valueNode" : {
+          "type" : "boolean"
+        },
+        "containerNode" : {
+          "type" : "boolean"
+        },
+        "missingNode" : {
+          "type" : "boolean"
+        },
+        "object" : {
+          "type" : "boolean"
+        },
+        "pojo" : {
+          "type" : "boolean"
+        },
+        "number" : {
+          "type" : "boolean"
+        },
+        "integralNumber" : {
+          "type" : "boolean"
+        },
+        "short" : {
+          "type" : "boolean"
+        },
+        "int" : {
+          "type" : "boolean"
+        },
+        "long" : {
+          "type" : "boolean"
+        },
+        "double" : {
+          "type" : "boolean"
+        },
+        "bigDecimal" : {
+          "type" : "boolean"
+        },
+        "bigInteger" : {
+          "type" : "boolean"
+        },
+        "textual" : {
+          "type" : "boolean"
+        },
+        "boolean" : {
+          "type" : "boolean"
+        },
+        "binary" : {
+          "type" : "boolean"
+        },
+        "float" : {
+          "type" : "boolean"
+        },
+        "nodeType" : {
+          "type" : "string",
+          "enum" : [ "ARRAY", "BINARY", "BOOLEAN", "MISSING", "NULL", "NUMBER", "OBJECT", "POJO", "STRING" ]
+        },
+        "array" : {
+          "type" : "boolean"
+        },
+        "null" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "OrderVersionResponse" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "A generated unique identifier for the order version object"
+        },
+        "dateUpdated" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "The datetime this order update occurred"
+        },
+        "diff" : {
+          "description" : "RFC 6902 JSON Patch Diff",
+          "$ref" : "#/definitions/JsonNode"
+        },
+        "user" : {
+          "type" : "string",
+          "description" : "The user that made the order update"
+        },
+        "deviceId" : {
+          "type" : "string",
+          "description" : "The deviceId making the order update"
+        },
+        "updatingOrganization" : {
+          "type" : "string",
+          "description" : "The organization responsible for this version"
+        }
+      }
+    },
+    "OrderVersionsResponse" : {
+      "type" : "object",
+      "properties" : {
+        "orderId" : {
+          "type" : "string",
+          "description" : "Order ID"
+        },
+        "versions" : {
+          "type" : "array",
+          "description" : "List of order version objects",
+          "items" : {
+            "$ref" : "#/definitions/OrderVersionResponse"
+          }
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "The total count of unacknowledged orders for the specified enterprise unit id"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The total number of pages"
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The page number of the response"
+        },
+        "lastPage" : {
+          "type" : "boolean",
+          "description" : "Last page indicator"
+        },
+        "sourceOrganization" : {
+          "type" : "string",
+          "description" : "The organization that originally created the order"
+        }
+      },
+      "description" : "Response containing all versions of the specified order"
+    },
+    "OrderLockedException" : {
+      "type" : "object",
+      "required" : [ "errorType", "message" ],
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "description" : "The error message"
+        },
+        "errorType" : {
+          "type" : "string",
+          "description" : "Unique ID identifying the type of error",
+          "default" : "com.ncr.nr1.order.OrderLockedException"
+        },
+        "details" : {
+          "type" : "array",
+          "description" : "Error-specific values that provide more information on the error, such as the reason for failure or error code",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "description" : "An error occurred while processing a request"
+    },
+    "ResourceStaleException" : {
+      "type" : "object",
+      "required" : [ "errorType", "message" ],
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "description" : "The error message"
+        },
+        "errorType" : {
+          "type" : "string",
+          "description" : "Unique ID identifying the type of error",
+          "default" : "com.ncr.nr1.order.ResourceStaleException"
+        },
+        "details" : {
+          "type" : "array",
+          "description" : "Error-specific values that provide more information on the error, such as the reason for failure or error code",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "description" : "An error occurred while processing a request"
+    },
+    "ResyncResponse" : {
+      "type" : "object",
+      "properties" : {
+        "orders" : {
+          "type" : "array",
+          "description" : "List of unacknowledged orders for the specified enterprise unit id",
+          "items" : {
+            "$ref" : "#/definitions/OrderViewData"
+          }
+        },
+        "totalResults" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "The total count of unacknowledged orders for the specified enterprise unit id"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The total number of pages"
+        },
+        "pageNumber" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The page number of the response"
+        },
+        "lastPage" : {
+          "type" : "boolean",
+          "description" : "Last page indicator"
+        }
+      },
+      "description" : "Response containing all unacknowledged orders for the specified enterprise unit id"
+    },
+    "OrderData" : {
+      "type" : "object",
+      "properties" : {
+        "fulfillment" : {
+          "description" : "Information needed to fulfill the order delivery",
+          "$ref" : "#/definitions/FulfillmentData"
+        },
+        "fees" : {
+          "type" : "array",
+          "description" : "Fees charged to this order, such as delivery or setup fees",
+          "items" : {
+            "$ref" : "#/definitions/FeeData"
+          }
+        },
+        "orderLines" : {
+          "type" : "array",
+          "description" : "The order line items",
+          "items" : {
+            "$ref" : "#/definitions/OrderLineData"
+          }
+        },
+        "payments" : {
+          "type" : "array",
+          "description" : "Payments information assigned to the order",
+          "items" : {
+            "$ref" : "#/definitions/PaymentData"
+          }
+        },
+        "taxes" : {
+          "type" : "array",
+          "description" : "The taxes calculated for the order",
+          "items" : {
+            "$ref" : "#/definitions/TaxData"
+          }
+        },
+        "taxExempt" : {
+          "type" : "boolean",
+          "description" : "Indicates that this order should be taxÂ exempt. The point of sale should verify the customer is qualified for the order to beÂ exempted."
+        },
+        "totalModifiers" : {
+          "type" : "array",
+          "description" : "Modifiers on the orders' lines total",
+          "items" : {
+            "$ref" : "#/definitions/TicketTotalModifierData"
+          }
+        },
+        "partySize" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "Party size for the order",
+          "minimum" : 0.0
+        },
+        "comments" : {
+          "type" : "string",
+          "description" : "General comments for whole order",
+          "minLength" : 0,
+          "maxLength" : 4000
+        },
+        "channel" : {
+          "type" : "string",
+          "description" : "Channel through which the Order was placed",
+          "enum" : [ "PhoneIn", "WalkIn", "Web", "eMail", "CallCenter", "Mobile", "DriveThru" ]
+        },
+        "currency" : {
+          "type" : "string",
+          "description" : "The currency of all money values in the order. This is the currency code as defined in ISO 4217"
+        },
+        "customer" : {
+          "description" : "The customer of this order",
+          "$ref" : "#/definitions/CustomerData"
+        },
+        "errorDescription" : {
+          "type" : "string",
+          "description" : "Description for an error",
+          "minLength" : 0,
+          "maxLength" : 4000
+        },
+        "owner" : {
+          "type" : "string",
+          "description" : "Responsible party for this order, where party can be application, site, person"
+        },
+        "referenceId" : {
+          "type" : "string",
+          "description" : "External reference identifier"
+        },
+        "source" : {
+          "type" : "string",
+          "description" : "Retail origin of the order, such as an order aggregator or third party ordering system."
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "Status this order is in",
+          "enum" : [ "Canceled", "Finished", "OrderPlaced", "ReadyForPickup", "Error", "InProgress", "ReceivedForFulfillment", "InFulfillment", "InTransit", "Expired", "Abandoned" ]
+        },
+        "totals" : {
+          "type" : "array",
+          "description" : "List of customer order totals",
+          "items" : {
+            "$ref" : "#/definitions/TotalData"
+          }
+        }
+      },
+      "description" : "Represents the order."
+    },
+    "OrderIdData" : {
+      "type" : "object",
+      "required" : [ "id" ],
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        }
+      }
+    },
+    "KeyValueData" : {
+      "type" : "object",
+      "required" : [ "key" ],
+      "properties" : {
+        "key" : {
+          "type" : "string",
+          "description" : "Key that identifies this key value pair."
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "Value associated with the key.",
+          "minLength" : 1,
+          "maxLength" : 512
+        }
+      },
+      "description" : "A simple key-value pair"
+    },
+    "TopicIdData" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 256,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        }
+      }
+    },
+    "UrlEndpointData" : {
+      "type" : "object",
+      "required" : [ "description", "destinationUrl", "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "destinationUrl" : {
+          "type" : "string"
+        }
+      }
+    },
+    "UrlSubscriptionViewData" : {
+      "type" : "object",
+      "required" : [ "description", "endpoint", "name", "topicId" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "topicId" : {
+          "$ref" : "#/definitions/TopicIdData"
+        },
+        "messageAttributePatterns" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/KeyValueData"
+          }
+        },
+        "payloadDelivered" : {
+          "type" : "boolean"
+        },
+        "endpoint" : {
+          "$ref" : "#/definitions/UrlEndpointData"
+        }
+      }
+    },
+    "AuthenticationData" : {
+      "type" : "object",
+      "required" : [ "authenticationType", "credentials" ],
+      "properties" : {
+        "authenticationType" : {
+          "type" : "string",
+          "enum" : [ "BASIC" ]
+        },
+        "credentials" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 500
+        }
+      }
+    },
+    "CreateOrderSubscriptionRequest" : {
+      "type" : "object",
+      "required" : [ "description", "endpoint", "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 200,
+          "pattern" : "\\p{Alpha}[\\w-]*"
+        },
+        "payloadDelivered" : {
+          "type" : "boolean",
+          "description" : "Indicates if payload should be delivered"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "Description of the subscription"
+        },
+        "endpoint" : {
+          "description" : "Data to define the endpoint to which published messages should be sent for subscription",
+          "$ref" : "#/definitions/UrlEndpointData"
+        },
+        "authenticationCredentials" : {
+          "description" : "Authentication credentials needed for endpoint",
+          "$ref" : "#/definitions/AuthenticationData"
+        }
+      }
+    },
+    "TenantAccessDeniedException" : {
+      "type" : "object",
+      "required" : [ "errorType", "message" ],
+      "properties" : {
+        "message" : {
+          "type" : "string",
+          "description" : "The error message"
+        },
+        "errorType" : {
+          "type" : "string",
+          "description" : "Unique ID identifying the type of error",
+          "default" : "com.ncr.nep.common.exception.TenantAccessDeniedException"
+        },
+        "details" : {
+          "type" : "array",
+          "description" : "Error-specific values that provide more information on the error, such as the reason for failure or error code",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "description" : "The user does not have access to the organization specified in the request"
+    }
+  }
+}

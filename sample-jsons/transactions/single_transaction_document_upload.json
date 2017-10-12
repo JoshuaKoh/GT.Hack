@@ -1,27 +1,27 @@
 {
   "businessDay": {
-    "dateTime": "2017-01-01T00:00:01Z"
+    "dateTime": "2017-10-10T00:00:01Z"
   },
   "closeDateTimeUTC": {
-    "dateTime": "2017-01-01T00:00:01Z"
+    "dateTime": "2017-10-10T00:00:01Z"
   },
   "configurationDateTimeUtc": {
-    "dateTime": "2017-01-01T00:00:01Z"
+    "dateTime": "2017-10-10T00:00:01Z"
   },
-  "dataProviderName": "Adam",
+  "dataProviderName": "Pavel",
   "dataProviderVersion": "1.0",
   "documentExpirationDate": {
-    "dateTime": "2017-01-01T00:00:00Z"
+    "dateTime": "2017-10-10T00:00:00Z"
   },
-  "id": "<GUID-Adam>",
+  "id": "4615160b-ffeb-4486-8764-e86ed84254af",
   "isTrainingMode": false,
   "linkedTransactions": [],
   "modelVersion": 1,
   "openDateTimeUTC": {
-    "dateTime": "2017-01-01T00:00:00Z"
+    "dateTime": "2017-10-10T00:00:00Z"
   },
   "siteInfo": {
-    "id": "Adam1",
+    "id": "eafe5b77b5594e9ab575ed4b41d6ee37",
     "name": "Adam's store",
     "siteTimeZone": {
       "timeZone": "Z"
@@ -36,8 +36,8 @@
     "employees": [
       {
         "action": "TRANSACTION_CLOSED",
-        "actionLabel": "dElsxvSebu",
-        "id": "similarEmployeeId",
+        "actionLabel": "Sold!",
+        "id": "22",
         "name": "Pavel",
         "roleId": "Cashier1",
         "roleName": "Master Cashier",
@@ -48,10 +48,10 @@
     "items": [
       {
         "actualAmount": {
-          "amount": 7
+          "amount": 1
         },
         "actualUnitPrice": {
-          "amount": 7
+          "amount": 5.33
         },
         "beginDateTimeUtc": {
           "dateTime": "2017-01-01T00:00:00Z"
@@ -63,7 +63,7 @@
         "conceptId": "Adam's BBQ",
         "departmentId": "13",
         "endTimestampUtc": {
-          "dateTime": "2017-01-01T00:00:00Z"
+          "dateTime": "2017-10-10T00:00:00Z"
         },
         "extendedAmount": {
           "amount": 80
@@ -71,7 +71,7 @@
         "extendedUnitPrice": {
           "amount": 8
         },
-        "id": "itemGUID-ADAM4-egg",
+        "id": "98f32e1a-1f69-44ac-9ea3-b7bb28ac1796",
         "itemDiscounts": [],
         "itemPromotions": [],
         "itemTaxes": [],
@@ -80,12 +80,12 @@
         "overridden": false,
         "overrideInfo": null,
         "parentItemId": null,
-        "productId": "itemGUID-ADAM4-egg",
-        "productName": "Eggs",
+        "productId": "33120",
+        "productName": "Organic Egg Whites",
         "quantity": {
-          "quantity": 10,
-          "unitOfMeasurement": "EA",
-          "unitOfMeasurementLabel": "EACH"
+          "quantity": 1,
+          "unitOfMeasurement": "PIECE",
+          "unitOfMeasurementLabel": "PIECE"
         },
         "regularUnitPrice": {
           "amount": 2
@@ -93,8 +93,8 @@
         "return": true,
         "returnAffectsInventory": true,
         "revenueCenter": {
-          "id": "6c599675-3db0-49e5-a1b4-c5a85f671e1e",
-          "name": "qOeBUVuVbU"
+          "id": "d4b12ac1-173f-4b5f-b385-4235853c89a5",
+          "name": "Adam's shops"
         },
         "surcharges": [
         ],
@@ -111,12 +111,12 @@
     "loyaltyAccount": [],
     "orders": [],
     "recalled": false,
-    "receiptId": "ADAM-GUID2",
+    "receiptId": "4615160b-ffeb-4486-8764-e86ed84254af",
     "receiptInfo": null,
     "resumed": true,
     "revenueCenter": {
-      "id": "ADAM-GUID3",
-      "name": "Food Stores"
+      "id": "d4b12ac1-173f-4b5f-b385-4235853c89a5",
+      "name": "Adam's shops"
     },
     "surcharges": [
     ],

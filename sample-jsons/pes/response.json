@@ -1,0 +1,32 @@
+{
+    "providerResponseTime": "2017-10-13T15:19:56Z",
+    "consumer": {
+        "consumerStatus": "ACTIVE",
+        "firstName": "bNcbkjEBfu"
+    },
+    "sellingEngineNotifications": [
+        {
+            "couponRewards": [
+                {
+                    "promotionId": "505959574153196",
+                    "description": [
+                        {
+                            "key": "sellingEngine",
+                            "localizedValue": {
+                                "values": [
+                                    {
+                                        "locale": "en-US",
+                                        "value": "You have a coupon reward"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "couponCode": "FREE10",
+                    "printAs": "TEXT",
+                    "uses": 0
+                }
+            ]
+        }
+    ]
+}

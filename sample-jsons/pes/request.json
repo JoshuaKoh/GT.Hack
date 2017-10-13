@@ -1,0 +1,13 @@
+{
+	"orderId": "Test829048239",
+	"orderBeginDateTime": "2017-10-31T15:37:31.877Z",
+	"items": [{
+		"sequenceId": 343,
+		"itemCode": "COUPON_REWARD",
+		"itemName": "COUPON_REWARD",
+		"quantity": {
+			"units": 1,
+			"unitType": "SIMPLE_QUANTITY"
+		}
+	}]
+}

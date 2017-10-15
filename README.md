@@ -1,7 +1,17 @@
 # Team Spidget Finner's Hack, HackGT 2017
 
 *rip Chantz Spears*
----
+___
+Requisite technologies to run Catalog_Analysis.ipynb:
+- Python 2.7.10+
+- Jupyter
+- Pandas
+- Numpy
+- Matplotlib
+- wordcloud
+- NetworkX
+___
+
 Without analysis, data just takes up space. This year NCR exposed catalog of retail data to hackers, so we decided to explore their fascinating data sets. Our goals were to show off our ability to ask good questions of the data, learn more about unfamiliar libraries, and generate business-profitable insights from the data.
 
 ## Background
